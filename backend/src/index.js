@@ -6,6 +6,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { MONGODB_URL, PORT } from './config/config.js';
+import {createRoom, joinRoom} from './controllers/citaController.js'
 
 await mongoose.connect(`${MONGODB_URL}`);
 console.log(`Base de datos conectada`);
@@ -15,6 +16,9 @@ export const app = express();
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/', createRoom)
+app.use('/', joinRoom)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
