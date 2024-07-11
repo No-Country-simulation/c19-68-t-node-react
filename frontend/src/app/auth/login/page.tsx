@@ -7,10 +7,10 @@ const Login = () => {
   return (
     <div className="login-container w-full h-screen p-10 flex flex-col ">
       {/* Login Header */}
-      <div className="login-header w-full p-10 mt-10 flex flex-col place-items-center">
+      {/* <div className="login-header w-full p-10 mt-10 flex flex-col place-items-center">
         <h1 className="font-bold text-3xl mb-2">E-Medicine</h1>
         <h2 className="">Comprehensive medicine in comfort of your home</h2>
-      </div>
+      </div> */}
       {/* Login Form */}
       <div className="login-form w-full ">
         <form action="" className="flex flex-col ">
