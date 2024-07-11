@@ -4,14 +4,23 @@
 // actualmente el .env solo contiene el PORT=8080
 
 import express from 'express';
+import morgan from "morgan";
 import { PORT } from './config/config.js';
 import { connectDB } from './db.js';
+import patientsRoutes from './routes/patients.routes.js'
+import doctorsRoutes from "./routes/doctors.routes.js";
 
 const app = express();
+
+app.use(morgan("dev"));
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+//Routes
+app.use("/api", patientsRoutes);
+app.use("/api", doctorsRoutes);
 
 //connect to database from db.js
 connectDB();
