@@ -4,18 +4,20 @@
 // actualmente el .env solo contiene el PORT=8080
 
 import express from 'express';
-import mongoose from 'mongoose';
-import { MONGODB_URL, PORT } from './config/config.js';
+import { PORT } from './config/config.js';
+import { connectDB } from './db.js';
 
-await mongoose.connect(`${MONGODB_URL}`);
-console.log(`Base de datos conectada`);
-
-export const app = express();
+const app = express();
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+//connect to database from db.js
+connectDB();
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
+export default app;
