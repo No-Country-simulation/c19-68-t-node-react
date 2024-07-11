@@ -1,12 +1,59 @@
 import { Router } from "express";
+import bcrypt from "bcrypt";
+import Doc from "../models/doctorModel.js";
 
 const router = Router();
 
-/* Nota: en las arrow funtions es donde iria los controladores pero como no se tienen todavia
-esta contenido en las rutas */
+router.post("/registerDoc", async (req, res) => {
+  const saltRounds = 10;
+  const {
+    name,
+    mail,
+    pass,
+    phone,
+    specialty,
+    licenseNumber,
+    registrationDate,
+    calendar,
+  } = req.body;
 
-router.post("/registerDoc", (req, res) => {
-  res.status(200).json({ message: "register a doctor" });
+  if (
+    !name ||
+    !pass ||
+    !mail ||
+    !phone ||
+    !specialty ||
+    !licenseNumber ||
+    !registrationDate ||
+    !calendar
+  ) {
+    return res.status(400).send("Username and password are required");
+  }
+
+  try {
+    const existingUser = await Doc.findOne({ name });
+    if (existingUser) {
+      return res.status(400).send("All fields must be completed");
+    }
+
+    const hashedPassword = await bcrypt.hash(pass, saltRounds);
+
+    const newDoctor = new Doc({
+      name,
+      mail,
+      pass: hashedPassword,
+      phone,
+      specialty,
+      licenseNumber,
+      registrationDate,
+      calendar,
+    });
+
+    await newDoctor.save();
+    res.status(201).send("Successfully registered doctor");
+  } catch (error) {
+    res.status(500).send("Error registering doctor");
+  }
 });
 
 router.post("/loginDoc", (res, req) => {
