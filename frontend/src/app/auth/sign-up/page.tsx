@@ -1,10 +1,14 @@
+"use client";
 import Input from "@/components/Input";
 import { LuUser2, LuMail, LuPhone, LuKey } from "react-icons/lu";
 import { MdOutlineBadge } from "react-icons/md";
 import { IoDocumentOutline } from "react-icons/io5";
 import Link from "next/link";
+import Speciality from "./Speciality";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [rol, setRol] = useState("doctor");
   return (
     <div className="signup-container w-full h-screen p-10 flex flex-col ">
       {/* Sign Up Header */}
@@ -45,24 +49,20 @@ const SignUp = () => {
           </div>
           <Input type="email" id="email" name="email" twClass="mb-6" />
 
-          <div className="signup-label flex items-center gap-1 pl-5 mb-3 justify-start">
-            <MdOutlineBadge />
-            <label htmlFor="specialty">Speciality</label>
-          </div>
-          <Input type="text" id="specialty" name="specialty" twClass="mb-6" />
+          {rol === "doctor" ? (
+            <Speciality />
+          ) : (
+            <div className="flex gap-4 justify-between">
+              {/* born date */}
+              <div className="signup-label flex items-center gap-1 pl-5 mb-3 justify-center">
+                <LuUser2 />
+                <label htmlFor="bornDate">Born Date</label>
+              </div>
+              <Input type="date" id="bornDate" name="bornDate" twClass="" />
+            </div>
+          )}
 
-          <div className="signup-label flex items-center gap-1 pl-5 mb-3 justify-start">
-            <IoDocumentOutline />
-            <label htmlFor="certificado">Professional Certificate</label>
-          </div>
-          <Input
-            type="file"
-            id="certificado"
-            name="certificado"
-            twClass="mb-6"
-          />
-
-          <div className="signup-label flex items-center gap-1 pl-5 mb-3 justify-start">
+          <div className="signup-label flex items-center gap-1 pl-5 mb-3 mt-4 justify-start">
             <LuKey />
             <label htmlFor="password">Password</label>
           </div>
