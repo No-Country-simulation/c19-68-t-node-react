@@ -13,7 +13,7 @@ const patientSchema = new mongoose.Schema({
     },
     pass: { type: String, required: true },
     phone: { type: String, required: false },
-    registrationDate: { type: Date, required: true },
+    registrationDate: { type: Date, default: Date.now },
     medicalRecords: { type: Array, required: false },
     appointments: {type: Array, required: false}
   });
