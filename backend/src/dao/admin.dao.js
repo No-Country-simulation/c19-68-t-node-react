@@ -2,23 +2,28 @@ import Admin from "./models/admin.model.js";
 
 export class AdminDao {
   async create(adminData) {
-    const admin = await Admin.create(adminData);
-    return admin.toObject()
+    return await Admin.create(adminData);
+  }
+
+  async findAll() {
+    return await Admin.find()
   }
     
   async findById(id) {
-    return await Admin.findById(id).lean();
+    return await Admin.findById(id)
+  }
+
+  async findOne(criteria) {
+    return await Admin.findById(criteria)
   }
     
   async update(id, updateData) {
-    return await Admin.findByIdAndUpdate(id, updateData, { new: true }).lean();
+    return await Admin.findByIdAndUpdate(id, updateData, { new: true })
   }
     
   async delete(id) {
-    return await Admin.findByIdAndDelete(id).lean();
+    return await Admin.findByIdAndDelete(id)
   }
     
-  async findAll() {
-    return await Admin.find().lean();
-  }
+  
 }

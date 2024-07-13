@@ -2,25 +2,24 @@ import Appointments from "./models/appointments.model.js";
 
 export class AppointmentsDao {
   async create(appointmentsData) {
-    const appointments = await Appointments.create(appointmentsData);
-    return appointments.toObject();
+    return await Appointments.create(appointmentsData);
   }
 
   async findById(id) {
-    return await Appointments.findById(id).lean();
+    return await Appointments.findById(id)
   }
 
   async update(id, updateData) {
     return await Appointments.findByIdAndUpdate(id, updateData, {
       new: true,
-    }).lean();
+    })
   }
 
   async delete(id) {
-    return await Appointments.findByIdAndDelete(id).lean();
+    return await Appointments.findByIdAndDelete(id)
   }
 
   async findAll() {
-    return await Appointments.find().lean();
+    return await Appointments.find()
   }
 }

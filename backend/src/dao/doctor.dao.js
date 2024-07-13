@@ -2,25 +2,24 @@ import Doctor from "./models/doctor.model.js";
 
 export class DoctorDao {
   async create(doctorData) {
-    const doctor = await Doctor.create(doctorData);
-    return doctor.toObject();
+    return await Doctor.create(doctorData);
   }
 
   async findById(id) {
-    return await Doctor.findById(id).lean();
+    return await Doctor.findById(id)
   }
 
   async update(id, updateData) {
     return await Doctor.findByIdAndUpdate(id, updateData, {
       new: true,
-    }).lean();
+    })
   }
 
   async delete(id) {
-    return await Doctor.findByIdAndDelete(id).lean();
+    return await Doctor.findByIdAndDelete(id)
   }
 
   async findAll() {
-    return await Doctor.find().lean();
+    return await Doctor.find()
   }
 }
