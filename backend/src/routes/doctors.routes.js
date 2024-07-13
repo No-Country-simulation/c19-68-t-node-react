@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
-import Doc from "../models/doctorModel.js";
+import Doc from "../dao/models/doctorModel.js";
 
 const router = Router();
 
