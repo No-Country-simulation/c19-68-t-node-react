@@ -15,7 +15,8 @@ const patientSchema = new mongoose.Schema({
     phone: { type: String, required: false },
     registrationDate: { type: Date, default: Date.now },
     medicalRecords: { type: Array, required: false },
-    appointments: {type: Array, required: false}
+    appointments: {type: Array, required: false},
+    patientInfoID:{ type: mongoose.Schema.Types.ObjectId, ref: 'PatientInfo', required: true }
   });
   
 const Patient = mongoose.model('Patients', patientSchema);

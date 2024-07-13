@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import Patient from "../models/patientModel.js";
@@ -22,12 +23,17 @@ router.post("/register", async(req, res)=> {
   }
 
 
+  // Iniciamos una sesión de MongoDB
+  const session = await mongoose.startSession();
+
   try {
     const patientExists = await Patient.findOne({ mail });
     if (patientExists) {
       console.error("ERROR: El paciente ya está registrado");
       return res.status(400).send("ERROR: El paciente ya está registrado");
     }
+
+    session.startTransaction();
 
     //Grabamos en el modelo PatientInfo
     const newPatientInfo = new PatientInfo({
@@ -40,7 +46,7 @@ router.post("/register", async(req, res)=> {
       currentMedications,
       medicalHistory
     });
-    let patientInfoSaved = await newPatientInfo.save();
+    let patientInfoSaved = await newPatientInfo.save({ session });
     console.log("Registro exitoso en PatientInfo, el ID es: " + patientInfoSaved._id);
 
 
@@ -52,19 +58,27 @@ router.post("/register", async(req, res)=> {
       mail,
       pass: hashedPassword,
       phone,
-      medicalRecords,
-      appointments
+      patientInfoID: patientInfoSaved._id
     });
-    await newPatient.save();
+    await newPatient.save({ session });
 
-    res.status(201).send("Registro exitoso del paciente");
+    // Commit de la transacción si todo está bien
+    await session.commitTransaction();
+    session.endSession();
+
     console.log("Registro exitoso del paciente");
 
-  } catch (error) {
-    res.status(500).send("Error registering doctor");
-  }
+    res.status(201).send("Registro exitoso del paciente");
 
-  res.status(200).json({message: "ERROR: Ocurrió un error en el registro del paciente"});
+  } catch (error) {
+    console.log("ERROR: " + error);
+    res.status(500).send("ERROR: Ocurrió un error en el registro del paciente");
+
+    // Rollback de la transacción si ocurre algún error
+    await session.abortTransaction();
+    session.endSession();
+    console.log("Se realizo ROLLBACK exitosamente");
+  }
 })
 
 
