@@ -1,75 +1,77 @@
-"use client"
+"use client";
 
 import Input from "@/components/Input";
 
 const page = () => {
   return (
-    <section className="w-screen h-screen">
+    <section className="w-screen h-screen bg-[#FAFAFA]">
       <div className="w-[100%] h-[100%]">
         <header className="w-[85%] h-[15%] m-auto flex items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center w-[191px] border-solid border-b-[3px] pb-[5px] gap-[13px]">
             <img
               className="rounded-full w-14 h-14"
               src="https://media.istockphoto.com/id/1337144146/es/vector/vector-de-icono-de-perfil-de-avatar-predeterminado.jpg?s=612x612&w=0&k=20&c=YiNB64vwYQnKqp-bWd5mB_9QARD3tSpIosg-3kuQ_CI="
               alt=""
             />
-            <h2 className="font-bold">Perfil</h2>
+            <h2 className="font-bold text-[20px]">Editar Perfil</h2>
           </div>
-          <p className="font-bold">X</p>
+          <p className=" text-[33.35px]">X</p>
         </header>
         <main className="w-[75%] m-auto">
-          <form className="flex flex-col gap-4">
-            <label>
-              <span>Nombre y Apellido</span>
-              <Input twClass="w-[100%]" type="string" />
-            </label>
-            <label className="flex justify-between">
-              <span>Sexo</span>
-              <article className='flex gap-x-1 items-center'>
-                <span>Masculino</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-              <article className='flex gap-x-1 items-center'>
-                <span>Femenino</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-              <article className='flex gap-x-1 items-center'>
-                <span>Otro</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-            </label>
-            <label>
+          <div className="flex flex-col items-center justify-center">
+            <img
+              className="rounded-full w-[130px] h-[130px]"
+              src="https://media.istockphoto.com/id/1337144146/es/vector/vector-de-icono-de-perfil-de-avatar-predeterminado.jpg?s=612x612&w=0&k=20&c=YiNB64vwYQnKqp-bWd5mB_9QARD3tSpIosg-3kuQ_CI="
+              alt=""
+            />
+
+            <input
+              className="w-[130.3px]"
+              type="file"
+              id="file"
+              name="file"
+              multiple
+            />
+          </div>
+          <form className="flex flex-col pt-[83px] gap-[26px] text-[12px]">
+            <label className="flex gap-1 items-center">
+              <span> Fecha de Nacimiento</span>
+              <Input twClass="w-[94px]" type="date" />
               <span>Edad</span>
-              <Input twClass="w-[100%]" type="string" />
-            </label>
-            <label>
-              <span>Fecha de Nacimiento</span>
-              <Input twClass="w-[100%]" type="date" />
-            </label>
-            <label className="flex justify-between">
-              <div className='w-[18%] flex flex-col'>
-                <span>ID</span>
-                <Input twClass="w-[100%]" type="string" />
-              </div>
-              <div className='w-[80%] flex flex-col'>
-                <span>#</span>
-                <Input twClass="w-[100%]" type="string" />
-              </div>
-            </label>
-            <label>
-              <span>Dirección de correo</span>
-              <Input twClass="w-[100%]" type="string" />
-            </label>
-            <label>
-              <span>Teléfono</span>
-              <Input twClass='w-[100%]' type="number" />
-            </label>
-            <label>
-              <span>Dirección</span>
-              <Input twClass='w-[100%]' type="string" />
+              <Input twClass="w-[53px]" type="string" />
             </label>
 
-            <button className="w-[70%] rounded-lg bg-gray-400 py-3 m-auto my-4">Guardar</button>
+            <label className="flex justify-between">
+              <span>ID</span>
+              <Input twClass="w-[89px]" type="string" />
+              <span>Número</span>
+              <Input twClass="w-[145px]" type="string" />
+            </label>
+            <label>
+              <span>Email</span>
+              <Input twClass="w-[273px]" type="string" />
+            </label>
+            <label>
+              <span>Direccion</span>
+              <Input twClass="w-[246px]" type="number" />
+            </label>
+            <label>
+              <span>Pais</span>
+              <Input twClass="w-[119px]" type="string" />
+              <span>Cod Postal</span>
+              <Input twClass="w-[93px]" type="string" />
+            </label>
+            <label>
+              <span>Telefono</span>
+              <br />
+              <Input twClass="w-[126px]" type="number" />
+              <span>Nacionalidad</span>
+              <Input twClass="w-[105px]" type="number" />
+            </label>
+
+            <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
+              Guardar
+            </button>
           </form>
         </main>
       </div>

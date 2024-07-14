@@ -9,7 +9,7 @@ interface Props {
 
 const Input = ({type, id, name, twClass}:Props) => {
   return (
-    <input className={`bg-gray-300 py-1 px-2 rounded-lg ${twClass}`}  type={type} id={id} name={name}/>
+    <input className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 ${twClass}`}  type={type} id={id} name={name}/>
   )
 }
 
