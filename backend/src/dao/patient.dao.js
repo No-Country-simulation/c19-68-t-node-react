@@ -10,7 +10,7 @@ class PatientDao {
   }
 
   async findByMail(email) {
-    return await Patient.findOne({ mail: email });
+    return await Patient.findOne({ email: email });
   }
 
   /*
