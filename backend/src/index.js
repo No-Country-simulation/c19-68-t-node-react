@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from "morgan";
 import { PORT } from './config/config.js';
-import { connectDB } from './db.js';
+import { connectDB } from './config/db.js';
 import patientsRoutes from './routes/patients.routes.js'
 import doctorsRoutes from "./routes/doctors.routes.js";
 
