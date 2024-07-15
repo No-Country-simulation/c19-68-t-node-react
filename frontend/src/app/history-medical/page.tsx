@@ -8,7 +8,7 @@ const page = () => {
           <h2 className="font-bold text-[35.19px]">Historia Clinica</h2>
         </header>
         <main className="w-[360px] m-auto">
-          <form className="flex flex-col gap-4 text-[13.2px]">
+          <form className="flex flex-col gap-[23px] text-[13.2px]">
             <label>
               <span>Nombre y Apellido</span>
               <Input twClass="w-[100%]" type="string" />
@@ -28,28 +28,18 @@ const page = () => {
                 <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
               </article>
             </label>
-            <label>
+            <label className="flex justify-between items-end">
               <span>Ocupación</span>
-              <Input twClass="w-[100%]" type="string" />
+              <Input twClass="w-[269.71px]" type="string" />
             </label>
             <label className="flex justify-between">
-              <div className="w-[18%] flex flex-col">
+              <div className="flex">
                 <span>ID</span>
-                <Input twClass="w-[100%]" type="string" />
+                <select className="w-[96.78px] h-4" name="" id=""></select>
               </div>
-              <div className="w-[80%] flex flex-col">
+              <div className="">
                 <span>#</span>
-                <Input twClass="w-[100%]" type="string" />
-              </div>
-            </label>
-            <label className="flex gap-[23px]">
-              <div>
-                <span>Edad</span>
-                <Input twClass="w-[123.17px]" type="string" />
-              </div>
-              <div>
-                <span>Fecha de Nacimiento</span>
-                <Input twClass="w-[213.34px]" type="date" />
+                <Input twClass="w-[193.82px]" type="string" />
               </div>
             </label>
             <label>
@@ -168,9 +158,9 @@ const page = () => {
               <span>Especifique</span>
               <Input twClass="w-[100%]" type="string" />
             </label>
-            <label className="flex flex-col">
+            <label className="flex flex-col gap-[5px]">
               <span>Antecedentes personales No patológicos</span>
-              <article className="inline-block pr-3 pt-[11px]">
+              <article className="inline-block">
                 <div className="flex items-center gap-4">
                   <span>Fuma?</span>
                   <div className="flex items-center gap-1">
@@ -239,7 +229,7 @@ const page = () => {
                   </div>
                 </div>
               </article>
-              <article className="flex">
+              <article className="flex pt-3">
                 <span>Otro:</span>
                 <Input
                   type="text"
@@ -252,7 +242,7 @@ const page = () => {
             <label>
               <h3>Antecedentes Familiares</h3>
 
-              <div>
+              <div className="flex flex-col gap-[17px]">
                 <article>
                   <span>Enfermedades</span>
                   <Input twClass="w-[100%]" type="string" />
@@ -278,9 +268,9 @@ const page = () => {
                 </article>
               </div>
             </label>
-            <label>
+            <label className="flex flex-col gap-4">
               <span>Antecedentes Gineco-Obstétrico:</span>
-              <div className="flex">
+              <div className="flex gap-[11px]">
                 <article className="flex items-end">
                   <span>Menarquia</span>
 
@@ -320,8 +310,8 @@ const page = () => {
             </label>
             <label>
               <span>Exploración física del paciente</span>
-              <div className="flex flex-wrap gap-y-[11px]">
-                <span className="flex items-center">Signos vitales</span>
+              <div className="flex flex-wrap gap-y-4 justify-between">
+                <span className="flex items-end">Signos vitales</span>
                 <article className="flex items-end">
                   <p>
                     T.A. <span className="text-[6.6px]">(Brazo Derecho)</span>
@@ -360,23 +350,23 @@ const page = () => {
                 </article>
                 <article className="flex items-end">
                   <span>Cabeza y Cuello</span>
-                  <Input twClass="w-[100%]" type="string" />
+                  <Input twClass="w-[258px]" type="string" />
                 </article>
                 <article className="flex items-end">
                   <span>Tórax</span>
-                  <Input twClass="w-[100%]" type="string" />
+                  <Input twClass="w-[325px]" type="string" />
                 </article>
                 <article className="flex items-end">
                   <span>Abdomen</span>
-                  <Input twClass="w-[100%]" type="string" />
+                  <Input twClass="w-[300px]" type="string" />
                 </article>
                 <article className="flex items-end">
                   <span>Extremidades</span>
-                  <Input twClass="w-[100%]" type="string" />
+                  <Input twClass="w-[275px]" type="string" />
                 </article>
                 <article className="flex items-end">
                   <span>Neurológico y estado mental</span>
-                  <Input twClass="w-[100%]" type="string" />
+                  <Input twClass="w-[180px]" type="string" />
                 </article>
               </div>
             </label>
