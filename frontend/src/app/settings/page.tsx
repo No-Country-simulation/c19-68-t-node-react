@@ -52,26 +52,7 @@ const SettingsPage = () => {
                 </div>
             </div>
 
-            {/* Footer Navigation */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg flex justify-between px-6 py-2 md:hidden">
-                <button className="text-gray-500">
-                    <div className="rounded-full bg-gray-300 p-3">
-                    <img className="w-12 h-12" src="/llave-inglesa.png" alt="Ajustes" />
-                    </div>
-                </button>
-                <button className="text-gray-500">
-                    <img className="w-6 h-6" src="/calendario-reloj.png" alt="Calendar" />
-                </button>
-                <button className="text-gray-500">
-                        <img className="w-6 h-6" src="/chimenea-de-la-casa.png" alt="Home" />
-                </button>
-                <button className="text-gray-500">
-                    <img className="w-6 h-6" src="/usuario.png" alt="Usuario" />
-                </button>
-                <button className="text-gray-500">
-                    <img className="w-6 h-6" src="/grafico-mixto.png" alt="Grafico" />
-                </button>
-            </div>
+            
         </div>
     );
 };
