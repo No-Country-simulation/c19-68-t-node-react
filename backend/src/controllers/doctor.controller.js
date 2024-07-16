@@ -3,43 +3,57 @@ import bcrypt from "bcrypt";
 
 const controllerDoc = {
   registerDoc: async (req, res) => {
-    try {
-      const doctor = await DoctorDao.create(req.body);
-      res.status(200).json({ message: "Created succesfully", paciente: doctor });
-    } catch (error) {
-      res.status(500).json({ message: "Error creating doctor", error: error.message });
+    const {
+      photo,
+      firstName,
+      lastName,
+      gender,
+      email,
+      password,
+      professionalCertificates,
+      speciality,
+      phone,
+      country,
+      attentionSchedule,
+    } = req.body;
+
+    const saltRounds = 10;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !professionalCertificates ||
+      !speciality
+    ) {
+      return res.status(400).send("All fields are required");
     }
-  },
 
-  logInDoc: async (req, res) => {
-    const { email, password } = req.body;
-    res
-      .status(200)
-      .json({ message: "login the doctor succesfully", email, password });
-  },
-
-  logOutDoc: async (req, res) => {
-    res.status(200).json({ message: "logout doctor" });
-  },
-  editProfileDoc: async (req, res) => {
-    res.status(200).json({ message: "Edit doctor's profile" });
-  },
-
-  getDoc: async (req, res) => {
-    const { id } = req.params
-    res.status(200).json({ message: "show doctor by id", id});
-  },
-
-  profileDoc: async (req, res) => {
-    res.status(200).json({ message: "doctor's profile" });
-  },
-
-  getAllDoc: async (req, res) => {
     try {
-      const patients = await DoctorDao.findAll();
-      res.status(200).json(patients);
+      const existingUser = await DoctorDao.findOne({ email });
+      if (existingUser) return res.status(400).send("All fields must be completed");
+
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const newDoctor = new Doc({
+        photo,
+        firstName,
+        lastName,
+        gender,
+        email,
+        password: hashedPassword,
+        professionalCertificates,
+        speciality,
+        phone,
+        country,
+        attentionSchedule,
+      });
+
+      await newDoctor.save();
+      res.status(201).send("Successfully registered doctor");
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send("Error registering doctor");
     }
   },
 };
