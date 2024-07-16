@@ -22,4 +22,8 @@ export class DoctorDao {
   async findAll() {
     return await Doctor.find()
   }
+
+  async findOne(info){
+    return await Doctor.findOne(info)
+  }
 }
