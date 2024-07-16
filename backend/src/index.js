@@ -1,27 +1,16 @@
-import express from 'express';
-import morgan from "morgan";
-import { PORT } from './config/config.js';
-import { connectDB } from './db.js';
-import patientsRoutes from './routes/patients.routes.js'
-import doctorsRoutes from "./routes/doctors.routes.js";
+import app from "./app.js";
+import connectDB from "./config/db.js";
+import dotenv from "dotenv";
 
-const app = express();
+//config environment variables
+dotenv.config();
 
-app.use(morgan("dev"));
+//alternative port
+const PORT = process.env.PORT || 6000;
 
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
-
-//Routes
-app.use("/api", patientsRoutes);
-app.use("/api", doctorsRoutes);
-
-//connect to database from db.js
+//connect to database from config/db.js
 connectDB();
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
-
-export default app;
