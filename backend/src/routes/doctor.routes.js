@@ -15,6 +15,6 @@ router.get("/getDoc/:id", controllerDoc.getDoc)
 
 router.get("/profileDoc", controllerDoc.profileDoc);
 
-router.get("/showAllDoc", controllerDoc.showAllDoc);
+router.get("/getAllDoc", controllerDoc.getAllDoc);
 
 export default router;

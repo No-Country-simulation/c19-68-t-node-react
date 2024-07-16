@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
-import patientsRoutes from "./routes/patients.routes.js";
-import doctorsRoutes from "./routes/doctors.routes.js";
+import patientsRoutes from "./routes/patient.routes.js";
+import doctorsRoutes from "./routes/doctor.routes.js";
 
 //config app express
 const app = express();
