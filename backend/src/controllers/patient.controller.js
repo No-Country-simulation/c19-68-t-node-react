@@ -1,7 +1,7 @@
 import { PatientDao } from "../dao/patient.dao.js";
 
 const controllerPat = {
-  registerPat: async (req, res) => {
+  registerPat:  async (req, res) => {
     try {
       const patient = await PatientDao.create(req.body);
       res.status(201).json({ message: "Created succesfully", paciente: patient });

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controllerDoc from '../controllers/doctor.controller.js'
+import controllerDoc from "../controllers/doctor.controller.js";
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.post("/logOutDoc", controllerDoc.logOutDoc);
 
 router.post("/editProfileDoc", controllerDoc.editProfileDoc);
 
-router.get("/getDoc/:id", controllerDoc.getDoc)
+router.get("/getDoc/:id", controllerDoc.getDoc);
 
 router.get("/profileDoc", controllerDoc.profileDoc);
 
