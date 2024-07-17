@@ -1,7 +1,7 @@
 import { DoctorDao } from "../dao/doctor.dao.js";
+import { doctorManager } from "../dao/index.dao.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import generateJWT from "../helpers/generateJwt.js";
-import bcrypt from "bcrypt";
+import { doctorService } from "../Services/doctor.Service.js";
 
 const controllerDoc = {
   registerDoc: async (req, res) => {
@@ -19,41 +19,20 @@ const controllerDoc = {
       attentionSchedule,
     } = req.body;
 
-    const saltRounds = 10;
-
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !professionalCertificates ||
-      !speciality
-    ) {
-      return res.status(400).send("All fields are required");
-    }
-
     try {
-      const existingUser = await DoctorDao.findOne({ email });
-      if (existingUser)
-        return res.status(400).send("All fields must be completed");
-
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      const newDoctor = new Doc({
+      await new doctorService().register(
         photo,
         firstName,
         lastName,
         gender,
         email,
-        password: hashedPassword,
+        password,
         professionalCertificates,
         speciality,
         phone,
         country,
-        attentionSchedule,
-      });
-
-      await newDoctor.save();
+        attentionSchedule
+      );
       res.status(201).send("Successfully registered doctor");
     } catch (error) {
       res.status(500).send("Error registering doctor");
@@ -61,50 +40,27 @@ const controllerDoc = {
   },
 
   login: asyncHandler(async (req, res) => {
-    const { mail, pass } = req.body;
+    const { email, pass } = req.body;
     //Validate empty inputs
-    if (!mail || !pass) {
-      const error = new Error("Please, fill email and password fields");
-      return res.status(403).json({ msg: error.message });
-    }
-
-    //Check if doctor exist
-    const existingDoctor = await Doc.findOne({ mail });
-    if (!existingDoctor) {
-      const error = new Error("Doctor already exist");
-      return res.status(403).json({ msg: error.message });
-    }
-
-    //Check if doctor account is confirmed
-    if (!existingDoctor.confirmed) {
-      const error = new Error("Your account has not been confirmed");
-      return res.status(403).json({ msg: error.message });
-    }
-
-    //Check doctor Password
-    if (await existingDoctor.checkPassword(pass)) {
-      res.json({
-        name: existingDoctor.name,
-        mail: existingDoctor.mail,
-        token: generateJWT(existingDoctor._id),
-      });
-    } else {
-      const error = new Error("Invalid password");
-      return res.status(403).json({ msg: error.message });
+    try {
+      res.status(200).json(await new doctorService().login(email, pass));
+    } catch (error) {
+      res
+        .status(403)
+        .json({ message: "Authentication Error", error: error.message });
     }
   }),
 
   confirm: asyncHandler(async (req, res) => {
     const { token } = req.params;
-    const doctorToConfirm = await Doc.findOne({ token });
-    if (!doctorToConfirm) {
-      const error = new Error("Invalid Token");
-      return res.status(400).json({ msg: error.message });
+    try {
+      await new doctorService().confirmed(token);
+      res.json({ msg: "Successfully confirmed user" });
+    } catch (error) {
+      res
+        .status(401)
+        .json({ message: "Generate Token Error", error: error.message });
     }
-    doctorToConfirm.token = null;
-    doctorToConfirm.confirmed = true;
-    await doctorToConfirm.save();
-    res.json({ msg: "Successfully confirmed user" });
   }),
 
   logOutDoc: async (req, res) => {
@@ -126,7 +82,7 @@ const controllerDoc = {
 
   getAllDoc: async (req, res) => {
     try {
-      const patients = await DoctorDao.findAll();
+      const patients = await doctorManager.findAll();
       res.status(200).json(patients);
     } catch (error) {
       res.status(500).json({ message: error.message });

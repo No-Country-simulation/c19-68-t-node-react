@@ -1,9 +1,9 @@
-import { PatientDao } from "../dao/patient.dao.js";
+import { patientManager } from "../dao/index.dao.js";
 
 const controllerPat = {
   registerPat:  async (req, res) => {
     try {
-      const patient = await PatientDao.create(req.body);
+      const patient = await patientManager.create(req.body);
       res.status(201).json({ message: "Created succesfully", paciente: patient });
     } catch (error) {
       res.status(500).json({ message: error.message})
@@ -36,7 +36,7 @@ const controllerPat = {
 
   getAllPat: async (req, res) => {
     try {
-      const patients = await PatientDao.findAll();
+      const patients = await patientManager.findAll();
       res.status(200).json(patients);
     } catch (error) {
       res.status(500).json({ message: error.message });

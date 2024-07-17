@@ -9,6 +9,10 @@ export class AppointmentsDao {
     return await Appointments.findById(id)
   }
 
+  async findOne(criteria) {
+    return await Appointments.findOne(criteria)
+  }
+
   async update(id, updateData) {
     return await Appointments.findByIdAndUpdate(id, updateData, {
       new: true,
