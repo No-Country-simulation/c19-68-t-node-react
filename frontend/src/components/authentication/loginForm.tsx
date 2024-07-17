@@ -5,6 +5,8 @@ import { IoKeyOutline } from "react-icons/io5";
 import Link from "next/link";
 import { login } from "@/utils/actions";
 import { useFormState } from "react-dom";
+import AuthField from "./ui/authField";
+import Image from "next/image";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState<any, FormData>(login, undefined);
@@ -12,45 +14,69 @@ const LoginForm = () => {
   console.log("Lo que trae state: ", state);
 
   return (
-    <div className="login-container w-full h-screen p-10 flex flex-col ">
-      {/* Login Header */}
-      {/* <div className="login-header w-full p-10 mt-10 flex flex-col place-items-center">
-        <h1 className="font-bold text-3xl mb-2">E-Medicine</h1>
-        <h2 className="">Comprehensive medicine in comfort of your home</h2>
-      </div> */}
+    <div className="login-container overflow-hidden w-[80%] h-full flex flex-col items-center bg-white px-4">
       {/* Login Form */}
-      <div className="login-form w-full ">
-        <form action={formAction} className="flex flex-col ">
-          <div className="login-label flex items-center gap-1 pl-5 mb-3 justify-start">
-            <LuUser2 />
-            <label htmlFor="email">Email Address</label>
-          </div>
-          <Input type="email" id="email" name="email" twClass="mb-6" />
+      <div className="login-form w-full max-w-[400px] bg-white  rounded-lg ">
+        <form action={formAction} className="flex flex-col">
+          {/* Email field */}
+          <AuthField
+            id="email-field"
+            type="email"
+            name="email"
+            fieldTitle="Email address"
+            iconSrc="/assets/login/icon-login-type.png"
+            iconInputSrc={"/assets/login/email-input-icon.png"}
+            placeholder={"pepitoperez@email.com"}
+          />
           {state?.errors.email && <p>{state.errors.email}</p>}
-          <div className="login-label flex items-center gap-1 pl-5 mb-3 justify-start">
-            <IoKeyOutline className="rotate-180" />
-            <label htmlFor="password">Password</label>
-          </div>
-          <Input type="password" id="password" name="password" twClass="mb-8" />
+          {/* Password field */}
+          <AuthField
+            id="password-field"
+            type="password"
+            name="password"
+            fieldTitle="Password"
+            iconSrc="/assets/login/icon-login-password.png"
+            iconInputSrc={"/assets/login/password-input-icon.png"}
+            placeholder={" ******* "}
+          />
           {state?.errors.password && <p>{state.errors.password}</p>}
+          <div>
+            <Link
+              href="/auth/forgot-password"
+              className="block text-center m-5"
+            >
+              Did you forgot the password?
+            </Link>
+            {/* Captcha field */}
+            <div className=" flex justify-between items-center border-2 p-4 m-3 rounded-xl">
+              <div className="flex gap-3">
+                <input type="checkbox" className="w-6 " />
+                <span className="font-bold">No soy un robot</span>
+              </div>
+              <Image
+                src="/assets/login/captcha-logo-2.png"
+                width={56}
+                height={56}
+                alt="catpcha-icon"
+              />
+            </div>
+
+            {/* User have not an account */}
+            {/* Registration */}
+            <div className="login-footer-signup w-full flex pt-2 gap-2 justify-center">
+              <p>No tienes una cuenta?</p>
+              <Link className="text-[#812B75] underline" href="/auth/sign-up">
+                Regístrate
+              </Link>
+            </div>
+          </div>
           <button
             type="submit"
-            className="bg-gray-800 text-white py-2 rounded-lg"
+            className="bg-[#812B75] w-[205px] self-center text-white py-2 rounded-lg hover:bg-gray-500 transition mt-20"
           >
-            Login
+            Log In
           </button>
         </form>
-      </div>
-
-      {/* Forgot password */}
-      <Link href="/auth/forgot-password">Did you forgot the password?</Link>
-
-      {/* Registration */}
-      <div className="login-footer-signup w-full flex pt-10 gap-2">
-        <p>You don't have an account?</p>
-        <Link className="text-blue-700 underline" href="/auth/sign-up">
-          Sign up!
-        </Link>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import "server only"; // PAra asegurar que este codigo no se impaortaria en el cliente
+"server only"; // PAra asegurar que este codigo no se impaortaria en el cliente
 
 import { JWTPayload, SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
