@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import generateID from "../../helpers/generateId.js";
 
 const doctorSchema = new mongoose.Schema(
   {
@@ -71,6 +72,14 @@ const doctorSchema = new mongoose.Schema(
         },
       },
     ],
+    token: {
+      type: String,
+      default: generateID(),
+    },
+    confirmed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,
@@ -78,6 +87,6 @@ const doctorSchema = new mongoose.Schema(
   }
 );
 
-const Doctor = mongoose.model('Doctors', doctorSchema);
+const Doctor = mongoose.model("Doctors", doctorSchema);
 
 export default Doctor;

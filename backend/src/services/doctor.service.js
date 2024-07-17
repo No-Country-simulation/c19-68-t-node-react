@@ -1,19 +1,19 @@
 import { doctorManager } from "../dao/index.dao.js";
 import generateJWT from "../helpers/generateJwt.js";
-import bcrypt from "bcrypt";
+import { comparePassword, hashPassword } from "../helpers/password.helper.js";
 
 export class doctorService {
-  async confirmed(token){
+  async confirmed(token) {
     try {
       const doctorToConfirm = await doctorManager.findOne({ token });
-    if (!doctorToConfirm) {
-      throw new Error("Invalid Token")
-    }
-    doctorToConfirm.token = null;
-    doctorToConfirm.confirmed = true;
-    await doctorToConfirm.save();
+      if (!doctorToConfirm) {
+        throw new Error("Invalid Token");
+      }
+      doctorToConfirm.token = null;
+      doctorToConfirm.confirmed = true;
+      await doctorToConfirm.save();
     } catch (error) {
-      throw new Error("Token Error: " + error.message)
+      throw new Error("Token Error: " + error.message);
     }
   }
   async login(email, pass) {
@@ -34,18 +34,19 @@ export class doctorService {
       }
 
       //Check doctor Password
-      if (await existingDoctor.checkPassword(pass)) {
+      if (await comparePassword(pass, existingDoctor.password)) {
         const doctorCredentials = {
-          name: existingDoctor.name,
-          mail: existingDoctor.mail,
+          firstName: existingDoctor.firstName,
+          lastName: existingDoctor.lastName,
+          mail: existingDoctor.email,
           token: generateJWT(existingDoctor._id),
         };
         return doctorCredentials;
       } else {
-        throw new Error("Invalid password")
+        throw new Error("Invalid password");
       }
     } catch (error) {
-      throw new Error("Authentication Error: " + error.message)
+      throw new Error("Authentication Error: " + error.message);
     }
   }
   async register(
@@ -62,7 +63,6 @@ export class doctorService {
     attentionSchedule
   ) {
     try {
-      const saltRounds = 10;
 
       if (
         !firstName ||
@@ -77,7 +77,7 @@ export class doctorService {
       const existingUser = await doctorManager.findOne({ email });
       if (existingUser) throw new Error("All fields must be completed");
 
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const hashedPassword = await hashPassword(password)
 
       const newDoctor = doctorManager.create({
         photo,
@@ -94,6 +94,8 @@ export class doctorService {
       });
 
       return newDoctor;
-    } catch (error) {}
+    } catch (error) {
+      throw new Error("Error register Doctor: " + error.message)
+    }
   }
 }
