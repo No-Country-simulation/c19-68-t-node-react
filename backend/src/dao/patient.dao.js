@@ -2,14 +2,13 @@ import Patient from "./models/patientModel.js";
 
 
 
-class PatientDao {
+const patientDao = {
 
-  async create(patientsData) {
-    const patient = await Patient.create(patientsData);
-    return patient;
-  }
+  create: async (patientsData) => {
+    return await Patient.create(patientsData);
+  },
 
-  async findByMail(email) {
+  findByMail: async (email) => {
     return await Patient.findOne({ email: email });
   }
 
@@ -34,4 +33,4 @@ class PatientDao {
   */
 }
 
-export default new PatientDao();
+export default patientDao;
