@@ -59,6 +59,7 @@ const controllerDoc = {
       res.status(500).send("Error registering doctor");
     }
   },
+
   login: asyncHandler(async (req, res) => {
     const { mail, pass } = req.body;
     //Validate empty inputs
@@ -92,6 +93,7 @@ const controllerDoc = {
       return res.status(403).json({ msg: error.message });
     }
   }),
+
   confirm: asyncHandler(async (req, res) => {
     const { token } = req.params;
     const doctorToConfirm = await Doc.findOne({ token });
@@ -104,6 +106,32 @@ const controllerDoc = {
     await doctorToConfirm.save();
     res.json({ msg: "Successfully confirmed user" });
   }),
+
+  logOutDoc: async (req, res) => {
+    res.status(200).json({ message: "logout doctor" });
+  },
+
+  editProfileDoc: async (req, res) => {
+    res.status(200).json({ message: "Edit doctor's profile" });
+  },
+
+  getDoc: async (req, res) => {
+    const { id } = req.params;
+    res.status(200).json({ message: "show doctor by id", id });
+  },
+
+  profileDoc: async (req, res) => {
+    res.status(200).json({ message: "doctor's profile" });
+  },
+
+  getAllDoc: async (req, res) => {
+    try {
+      const patients = await DoctorDao.findAll();
+      res.status(200).json(patients);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 export default controllerDoc;

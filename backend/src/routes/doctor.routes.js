@@ -4,7 +4,6 @@ import { checkAuth } from "../middlewares/checkAuth.js";
 
 const router = Router();
 
-router.post("/doctors", controllerDoc.registerDoc);
 router.post("/registerDoc", controllerDoc.registerDoc);
 
 router.post("/logOutDoc", controllerDoc.logOutDoc);
