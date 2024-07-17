@@ -19,6 +19,13 @@ export const login = async (
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors };
   }
+
+  // 2. Peticion para traer datos luego de l avalidacion
+
+  // 3. Crear session
+  const user = { id: "2", name: "fullname usertest" };
+
+  await createSession(user.id);
 };
 
 export const signup = async (
