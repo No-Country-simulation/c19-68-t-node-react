@@ -1,6 +1,7 @@
 "use server";
 
 import { loginSchema, signUpFormSchema } from "./definitions";
+import { createSession } from "./session";
 
 export const login = async (
   prevState: { error: undefined | string },
@@ -20,27 +21,42 @@ export const login = async (
   }
 };
 
-export const signup = (
+export const signup = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
   // Comprobando la llegada de la data
 
-  const data = {
+  // const data = {
+  //   fullName: formData.get("fullName"),
+  //   lastName: formData.get("lastName"),
+  //   country: formData.get("country"),
+  //   phone: formData.get("phone"),
+  //   email: formData.get("email"),
+  //   bornDate: formData.get("bornDate"),
+  // };
+  // 1. Validate fields
+
+  const validationResult = signUpFormSchema.safeParse({
     fullName: formData.get("fullName"),
     lastName: formData.get("lastName"),
     country: formData.get("country"),
     phone: formData.get("phone"),
     email: formData.get("email"),
     bornDate: formData.get("bornDate"),
-  };
-  // 1. Validate fields
-
-  const validationResult = signUpFormSchema.safeParse(data);
+  });
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
   // Create user
+  // Encrypt password with bcrypt
+  // try catch
+  // const data = await createUserPost()
+
+  const user = { id: "1", fullName: "User complete name" }; //para pruebas
+
+  // Create session
+  await createSession(user.id);
 };
