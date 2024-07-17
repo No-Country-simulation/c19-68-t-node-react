@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Doc from '../dao/models/doctor.model.js';
+import { doctorManager } from '../dao/index.dao.js';
 
 export const checkAuth = async (req, res, next) => {
   let token
@@ -13,7 +13,7 @@ export const checkAuth = async (req, res, next) => {
       console.log(decodedToken)
 
       //
-      const doctorSession = await Doc.findById(decodedToken.id).select('-pass -token -confirmed')
+      const doctorSession = await doctorManager.findById(decodedToken.id).select('-pass -token -confirmed')
       console.log(doctorSession)
       return next()
     } catch (error) {

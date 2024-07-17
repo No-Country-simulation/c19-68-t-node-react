@@ -9,6 +9,10 @@ export class DoctorDao {
     return await Doctor.findById(id)
   }
 
+  async findOne(criteria) {
+    return await Doctor.findOne(criteria)
+  }
+
   async update(id, updateData) {
     return await Doctor.findByIdAndUpdate(id, updateData, {
       new: true,

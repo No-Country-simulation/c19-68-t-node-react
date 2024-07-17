@@ -14,7 +14,7 @@ export class AdminDao {
   }
 
   async findOne(criteria) {
-    return await Admin.findById(criteria)
+    return await Admin.findOne(criteria)
   }
     
   async update(id, updateData) {
