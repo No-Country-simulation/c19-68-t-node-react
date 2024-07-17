@@ -1,20 +1,76 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const doctorSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    mail: {
+    photo: {
+      type: String,
+      // Optional field
+    },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    gender: {
+      type: String,
+      enum: ["female", "male", "other"],
+      // Optional field
+    },
+    email: {
       type: String,
       required: true,
-      // Validating email format with regular expression and custom message
+      unique: true,
+      lowercase: true,
+      trim: true,
       match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "The email format is not valid"],
     },
-    pass: { type: String, required: true },
-    phone: { type: String, required: false },
-    specialty: { type: String, required: true },
-    licenseNumber: { type: String, required: true },
-    registrationDate: { type: Date, required: true },
-    calendar: { type: Array, required: true },
+    password: {
+      type: String,
+      required: true,
+    },
+    professionalCertificates: [
+      {
+        type: String,
+        required: true,
+        trim: true,
+      },
+    ],
+    speciality: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    attentionSchedule: [
+      {
+        day: {
+          type: String,
+          enum: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          trim: true,
+        },
+        startTime: {
+          type: String,
+          trim: true,
+        },
+        endTime: {
+          type: String,
+          trim: true,
+        },
+      },
+    ],
   },
   {
     versionKey: false,
@@ -22,6 +78,6 @@ const doctorSchema = new mongoose.Schema(
   }
 );
 
-const Doctor = mongoose.model("Doctors", doctorSchema);
+const Doctor = mongoose.model('Doctors', doctorSchema);
 
 export default Doctor;

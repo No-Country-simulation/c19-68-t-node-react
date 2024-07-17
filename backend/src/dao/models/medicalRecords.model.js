@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const medicalRecordsSchema = new mongoose.Schema(
   {
@@ -23,6 +23,7 @@ const medicalRecordsSchema = new mongoose.Schema(
   }
 );
 
-const MedicalRecords = mongoose.model("MedicalRecords", medicalRecordsSchema);
+const MedicalRecords = mongoose.model('MedicalRecords', medicalRecordsSchema);
 
 export default MedicalRecords;
+

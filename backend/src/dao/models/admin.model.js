@@ -1,8 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const adminSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "The email format is not valid"],
+    },
     pass: { type: String, required: true },
   },
   {
@@ -11,6 +18,6 @@ const adminSchema = new mongoose.Schema(
   }
 );
 
-const Admin = mongoose.model("Admin", adminSchema);
+const Admin = mongoose.model('Admin', adminSchema);
 
 export default Admin;

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const appointmentsSchema = new mongoose.Schema(
   {
@@ -28,6 +28,6 @@ const appointmentsSchema = new mongoose.Schema(
   }
 );
 
-const Appointments = mongoose.model("Appointments", appointmentsSchema);
+const Appointments = mongoose.model('Appointments', appointmentsSchema);
 
 export default Appointments;
