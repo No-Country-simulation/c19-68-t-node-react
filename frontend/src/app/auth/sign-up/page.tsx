@@ -18,7 +18,7 @@ const SignUp = () => {
     setStep(step + 1);
   };
   return (
-    <div className="signup-page w-full h-full p-10">
+    <div className="signup-page w-full h-full p-8">
       {step === 1 && (
         <>
           <h1 className="flex justify-center font-bold text-[1.2rem] pb-5">

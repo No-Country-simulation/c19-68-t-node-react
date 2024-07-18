@@ -18,7 +18,7 @@ const AuthField = ({
   fieldTitle,
   iconSrc = "",
   iconInputSrc = "",
-  placeholder,
+  placeholder = "",
 }: AuhtFieldProps) => {
   return (
     <div className="w-full py-5">
