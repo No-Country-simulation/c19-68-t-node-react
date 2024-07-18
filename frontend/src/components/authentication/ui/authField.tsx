@@ -36,14 +36,15 @@ const AuthField = ({
           id={id}
           className="w-full h-[45px] pl-4 pr-10 border-b-2 border-[#89bad8] focus:outline-none focus:border-[#35799f]"
         />
-
-        <Image
-          src={iconInputSrc}
-          width={24}
-          height={24}
-          alt={fieldTitle}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2"
-        />
+        {iconInputSrc && (
+          <Image
+            src={iconInputSrc}
+            width={24}
+            height={24}
+            alt={fieldTitle}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2"
+          />
+        )}
       </div>
     </div>
   );

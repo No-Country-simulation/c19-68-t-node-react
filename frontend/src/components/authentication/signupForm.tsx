@@ -10,9 +10,8 @@ import { useState } from "react";
 import { signup } from "@/utils/actions";
 import { useFormState } from "react-dom";
 
-const SignupForm = () => {
+const SignupForm = ({ role }: { role: string }) => {
   const [state, formAction] = useFormState<any, FormData>(signup, undefined);
-  const [rol, setRol] = useState("patient");
 
   console.log("Lo que trae la data/state del signup: ", state);
 
@@ -57,7 +56,7 @@ const SignupForm = () => {
           </div>
           <Input type="email" id="email" name="email" twClass="mb-6" />
 
-          {rol === "doctor" ? (
+          {role === "professional" ? (
             <Speciality />
           ) : (
             <div className="flex gap-4 justify-between">
