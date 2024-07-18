@@ -39,28 +39,22 @@ const controllerDoc = {
     }
   },
 
-  login: asyncHandler(async (req, res) => {
-    const { email, pass } = req.body;
-    //Validate empty inputs
-    try {
-      res.status(200).json(await new doctorService().login(email, pass));
-    } catch (error) {
-      res
-        .status(403)
-        .json({ message: "Authentication Error", error: error.message });
+  login: asyncHandler(async(req, res) => {
+    const {email, password} = req.body;
+    const loggedDoctor = await new doctorService().login(email, password);
+    if(!loggedDoctor) {
+      return res.status(403).json({msg: "Authentication Error"})
     }
+    res.status(200).json(loggedDoctor);
   }),
 
-  confirm: asyncHandler(async (req, res) => {
-    const { token } = req.params;
-    try {
-      await new doctorService().confirmed(token);
-      res.json({ msg: "Successfully confirmed user" });
-    } catch (error) {
-      res
-        .status(401)
-        .json({ message: "Generate Token Error", error: error.message });
+  confirm: asyncHandler(async(req, res) => {
+    const {token} = req.params;
+    const confirmedDoctor = await new doctorService().confirm(token);
+    if(!confirmedDoctor) {
+      return res.status(401).json({msg: "Token error ", error: error.message});
     }
+    res.json({msg: "Succesfully confirmed user"});
   }),
 
   logOutDoc: async (req, res) => {

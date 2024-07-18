@@ -3,29 +3,31 @@ import generateJWT from "../helpers/generateJwt.js";
 import { comparePassword, hashPassword } from "../helpers/password.helper.js";
 
 export class doctorService {
-  async confirmed(token) {
+  async confirm(token) {
     try {
-      const doctorToConfirm = await doctorManager.findOne({ token });
+      const doctorToConfirm = await doctorManager.findOne({token});
       if (!doctorToConfirm) {
         throw new Error("Invalid Token");
       }
       doctorToConfirm.token = null;
       doctorToConfirm.confirmed = true;
-      await doctorToConfirm.save();
+      const confirmedDoctor = await doctorToConfirm.save();
+      return confirmedDoctor;
     } catch (error) {
       throw new Error("Token Error: " + error.message);
     }
   }
-  async login(email, pass) {
+
+  async login(email, password) {
     try {
-      if (!email || !pass) {
+      if (!email || !password) {
         throw new Error("Please, fill email and password fields");
       }
 
       //Check if doctor exist
       const existingDoctor = await doctorManager.findOne({ email });
       if (!existingDoctor) {
-        throw new Error("Doctor already exist");
+        throw new Error("Doctor does not exist");
       }
 
       //Check if doctor account is confirmed
@@ -34,11 +36,11 @@ export class doctorService {
       }
 
       //Check doctor Password
-      if (await comparePassword(pass, existingDoctor.password)) {
+      if (await comparePassword(password, existingDoctor.password)) {
         const doctorCredentials = {
           firstName: existingDoctor.firstName,
           lastName: existingDoctor.lastName,
-          mail: existingDoctor.email,
+          email: existingDoctor.email,
           token: generateJWT(existingDoctor._id),
         };
         return doctorCredentials;
@@ -49,6 +51,7 @@ export class doctorService {
       throw new Error("Authentication Error: " + error.message);
     }
   }
+
   async register(
     photo,
     firstName,
@@ -75,7 +78,8 @@ export class doctorService {
         throw new Error("All fields are required");
       }
       const existingUser = await doctorManager.findOne({ email });
-      if (existingUser) throw new Error("All fields must be completed");
+      console.log(existingUser);
+      if (existingUser) throw new Error("Doctor already exists");
 
       const hashedPassword = await hashPassword(password)
 
