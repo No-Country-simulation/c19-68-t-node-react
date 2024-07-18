@@ -1,0 +1,25 @@
+.date-true{
+   height: 126.81px;
+   
+   .button__open{
+       display: none;
+   }
+
+   .button__close{
+    display: block;
+}
+}
+.date-false{
+    height: 61.34px;
+    
+    
+    .button__close{
+        display: none;
+    }
+    .button__open{
+        display: block;
+    }
+    .ocultar{
+        display: none;
+    }
+}
