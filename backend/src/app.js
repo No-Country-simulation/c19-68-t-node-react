@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Routes
-app.use("/api", patientsRoutes);
+app.use("/patients", patientsRoutes);
 app.use("/api", doctorsRoutes);
 
 //config show requests
