@@ -6,8 +6,8 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MediCal",
-  description: "Medical appointment scheduling made easy.",
+  title: "E-medicine",
+  description: "Medical appointment videocall scheduling made easy.",
 };
 
 export default function RootLayout({
