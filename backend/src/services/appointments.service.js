@@ -49,7 +49,7 @@ const serviceAppo = {
             return newAppointment;
 
         } catch (error) {
-            throw new Error("Error register Appointment: " + error.message);
+            throw new Error(error.message);
         }
     }
 }
