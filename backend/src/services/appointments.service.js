@@ -26,11 +26,11 @@ const serviceAppo = {
             // Validar existencia del doctor
             await validateDoctor(doctor_id);
 
-             // Verificar si hay solapamiento en la cita del doctor
-             await validateAppointmentDoctor(doctor_id, date, startTime, endTime);           
+            //Validar solo una cita x dia con un doctor
+            await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
 
-            // Verificar si hay solapamiento en la cita del paciente
-            await validateAppointment(patient_id, date, startTime, endTime);
+            // Verificar solapamiento para paciente y doctor
+            await validateAppointment(patient_id, doctor_id, date, startTime, endTime);
 
             //Grabamos el modelo Appointment
             const newAppointment = await appointmentsManager.create({
@@ -70,8 +70,10 @@ async function validateDoctor(doctor_id) {
   }
 }
 
-async function validateAppointment(patient_id, date, startTime, endTime) {
-  const appointmentExists = await appointmentsManager.findOne({ patient_id: patient_id,
+async function validateAppointment(patient_id, doctor_id, date, startTime, endTime) {
+
+  // Verificar solapamiento para el paciente
+  let appointmentExists = await appointmentsManager.findOne({ patient_id: patient_id,
                                                                 date: date,
                                                                 $or: [
                                                                   { 
@@ -89,33 +91,47 @@ async function validateAppointment(patient_id, date, startTime, endTime) {
                                                                 ]
                                                               });
   if (appointmentExists) {
-    console.error("ERROR: El horario de la cita ya está ocupado");
-    throw new Error("Appointment time is already booked");
+    console.error("ERROR: El paciente ya tiene una cita programada en este horario");
+    throw new Error("The patient already has an appointment scheduled at this time");
   }
+
+
+  // Verificar solapamiento para el doctor
+  appointmentExists = await appointmentsManager.findOne({ doctor_id: doctor_id,
+                                                          date: date,
+                                                          $or: [
+                                                            { 
+                                                              $and: [
+                                                                { startTime: { $lte: startTime } },
+                                                                { endTime: { $gt: startTime } }
+                                                              ]
+                                                            },
+                                                            {
+                                                              $and: [
+                                                                { startTime: { $lt: endTime } },
+                                                                { endTime: { $gte: endTime } }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        });
+  if (appointmentExists) {
+    console.error("ERROR: El doctor ya tiene una cita programada en este horario");
+    throw new Error("The doctor already has an appointment scheduled at this time");
+  } 
+
 }
 
 
-async function validateAppointmentDoctor(doctor_id, date, startTime, endTime) {
-  const appointmentExists = await appointmentsManager.findOne({ doctor_id: doctor_id,
-                                                                date: date,
-                                                                $or: [
-                                                                  { 
-                                                                    $and: [
-                                                                      { startTime: { $lte: startTime } },
-                                                                      { endTime: { $gt: startTime } }
-                                                                    ]
-                                                                  },
-                                                                  {
-                                                                    $and: [
-                                                                      { startTime: { $lt: endTime } },
-                                                                      { endTime: { $gte: endTime } }
-                                                                    ]
-                                                                  }
-                                                                ]
-                                                              });
-  if (appointmentExists) {
-    console.error("ERROR: El horario de la cita ya está ocupado");
-    throw new Error("Appointment time is already booked");
+async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
+  // Contar las citas existentes para el paciente con el doctor en el día específico
+  const cantidadCitas = await appointmentsManager.findOne({ patient_id: patient_id,
+                                                            doctor_id: doctor_id,
+                                                            date: date
+                                                          });
+
+  if(cantidadCitas){
+    console.error("ERROR: El paciente ya tiene una cita con este doctor en este día");
+    throw new Error("The patient already has an appointment with this doctor on this day");    
   }
 }
 
