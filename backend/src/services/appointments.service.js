@@ -5,15 +5,17 @@ const serviceAppo = {
 
     registerAppo: async (patient_id, 
                          doctor_id,
-                         date_hour, 
-                         video_call_link, 
+                         date,
+                         startTime,
+                         endTime, 
+                         video_call_link,
                          reasons, 
                          notes) => {
 
         try {
 
             //Validamos los datos obligatorios
-            if ( !patient_id || !doctor_id || !date_hour || !video_call_link || !reasons ||!notes ) {
+            if ( !patient_id || !doctor_id || !date || !startTime || !endTime || !video_call_link || !reasons ||!notes ) {
                 console.error("ERROR: Datos requeridos no recibidos");
                 throw new Error("All fields are required");
             }
@@ -24,35 +26,19 @@ const serviceAppo = {
             // Validar existencia del doctor
             await validateDoctor(doctor_id);
 
-            // Verificar si la cita ya existe
-            await validateAppointment(doctor_id, date_hour);
+             // Verificar si hay solapamiento en la cita del doctor
+             await validateAppointmentDoctor(doctor_id, date, startTime, endTime);           
 
-            /*
-    const citaExistente = await Cita.findOne({
-      doctor: nuevaCita.doctor,
-      fecha: nuevaCita.fecha,
-      $or: [
-        { 
-          $and: [
-            { horaInicio: { $lte: nuevaCita.horaInicio } },
-            { horaFin: { $gt: nuevaCita.horaInicio } }
-          ]
-        },
-        {
-          $and: [
-            { horaInicio: { $lt: nuevaCita.horaFin } },
-            { horaFin: { $gte: nuevaCita.horaFin } }
-          ]
-        }
-      ]
-    });
-            */
+            // Verificar si hay solapamiento en la cita del paciente
+            await validateAppointment(patient_id, date, startTime, endTime);
 
             //Grabamos el modelo Appointment
             const newAppointment = await appointmentsManager.create({
                 patient_id, 
                 doctor_id,
-                date_hour, 
+                date,
+                startTime,
+                endTime, 
                 state: "confirmed",
                 video_call_link, 
                 reasons, 
@@ -84,13 +70,52 @@ async function validateDoctor(doctor_id) {
   }
 }
 
-async function validateAppointment(doctor_id, date_hour) {
-  const appointmentExists = await appointmentsManager.findOne({ doctor_id: doctor_id,
-                                                                date_hour: date_hour
+async function validateAppointment(patient_id, date, startTime, endTime) {
+  const appointmentExists = await appointmentsManager.findOne({ patient_id: patient_id,
+                                                                date: date,
+                                                                $or: [
+                                                                  { 
+                                                                    $and: [
+                                                                      { startTime: { $lte: startTime } },
+                                                                      { endTime: { $gt: startTime } }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    $and: [
+                                                                      { startTime: { $lt: endTime } },
+                                                                      { endTime: { $gte: endTime } }
+                                                                    ]
+                                                                  }
+                                                                ]
                                                               });
   if (appointmentExists) {
-    console.error("ERROR: La cita ya está registrada");
-    throw new Error("Appoinment already exists");
+    console.error("ERROR: El horario de la cita ya está ocupado");
+    throw new Error("Appointment time is already booked");
+  }
+}
+
+
+async function validateAppointmentDoctor(doctor_id, date, startTime, endTime) {
+  const appointmentExists = await appointmentsManager.findOne({ doctor_id: doctor_id,
+                                                                date: date,
+                                                                $or: [
+                                                                  { 
+                                                                    $and: [
+                                                                      { startTime: { $lte: startTime } },
+                                                                      { endTime: { $gt: startTime } }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    $and: [
+                                                                      { startTime: { $lt: endTime } },
+                                                                      { endTime: { $gte: endTime } }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              });
+  if (appointmentExists) {
+    console.error("ERROR: El horario de la cita ya está ocupado");
+    throw new Error("Appointment time is already booked");
   }
 }
 

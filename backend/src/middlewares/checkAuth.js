@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 import Doc from '../dao/models/doctor.model.js';
 
 export const checkAuth = async (req, res, next) => {
+  /*
   let token
   
   if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -27,4 +28,5 @@ export const checkAuth = async (req, res, next) => {
     res.status(403).json({msg: error.message})
   }
   next()
+  */
 }

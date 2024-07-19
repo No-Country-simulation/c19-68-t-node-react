@@ -6,13 +6,15 @@ const controllerAppo = {
   registerAppo:  async (req, res) => {
 
     console.log("Se inicia el registro de una cita");
-    const { patient_id, doctor_id, date_hour, video_call_link, reasons, notes } = req.body;
+    const { patient_id, doctor_id, date, startTime, endTime, video_call_link, reasons, notes } = req.body;
 
     try {
       
       const appointment = await serviceAppo.registerAppo(patient_id, 
                                                          doctor_id,
-                                                         date_hour, 
+                                                         date, 
+                                                         startTime,
+                                                         endTime,
                                                          video_call_link, 
                                                          reasons, 
                                                          notes

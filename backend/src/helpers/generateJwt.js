@@ -1,6 +1,7 @@
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 
 function generateJWT(id) {
+  /*
   return jwt.sign(
     {id}, 
     process.env.JWT_SECRET,
@@ -8,6 +9,7 @@ function generateJWT(id) {
       expiresIn: "30d"
     }
   )
+  */
 }
 
 export default generateJWT

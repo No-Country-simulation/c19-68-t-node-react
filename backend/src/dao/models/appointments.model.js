@@ -12,7 +12,17 @@ const appointmentsSchema = new mongoose.Schema(
       ref: "Doctors",
       required: true,
     },
-    date_hour: { type: Date, required: true },
+    date: { type: Date, required: true },
+    startTime: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    endTime: {
+      type: String,
+      trim: true,
+      required: true
+    },
     state: {
       type: String,
       required: false,
