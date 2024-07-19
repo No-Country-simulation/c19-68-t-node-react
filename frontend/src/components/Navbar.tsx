@@ -1,31 +1,171 @@
-import Link from "next/link"
+import Link from "next/link";
+import "./Navbar.css";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-blue-900 text-white shadow-lg flex justify-between px-6 py-2 md:hidden">
-                <Link href={'/settings'} className="flex hover:scale-[.1] transition-all flex-col items-center text-gray-300">
-                    <img className="w-6 h-6 mb-1" src="/llave-inglesa.png" alt="Configuración" />
-                    <span className="text-xs">Configuración</span>
-                </Link>
-                <Link href={'/'} className="flex hover:scale-[.1] transition-all flex-col items-center text-gray-300">
-                    <img className="w-6 h-6 mb-1" src="/calendario-reloj.png" alt="Agenda" />
-                    <span className="text-xs">Agenda</span>
-                </Link>
-                <Link href={'/'} className="flex hover:scale-[.1] transition-all flex-col items-center text-white">
-                    <img className="w-6 h-6 mb-1" src="/chimenea-de-la-casa.png" alt="Inicio" />
-                    <span className="text-xs">Inicio</span>
-                </Link>
-                <Link href={'/editProfile'} className="flex hover:scale-[.1] transition-all flex-col items-center text-gray-300">
-                    <img className="w-6 h-6 mb-1" src="/usuario.png" alt="Mi perfil" />
-                    <span className="text-xs">Mi perfil</span>
-                </Link>
-                <Link href={'/program-date'} className="flex hover:scale-[.1] transition-all flex-col items-center text-gray-300">
-                    <img className="w-6 h-6 mb-1" src="/grafico-mixto.png" alt="Mi Actividad" />
-                    <span className="text-xs">Mi Actividad</span>
-                </Link>
-                
-            </nav>
-  )
-}
+    <nav className="navbar w-screen fixed bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
+      <div className=" container hidden lg:flex lg:flex-col justify-between w-full h-full py-12">
+        <header className="flex items-center justify-center gap-2 border-b-2 border-[#89BAD8] max-w-[160px] m-auto ">
+          <Image
+            src={"/icon-navbar.png"}
+            alt="icon"
+            width={23.55}
+            height={19.27}
+          />
+          <h1 className="text-[22.23px] font-bold ">E-medicine</h1>
+        </header>
 
-export default Navbar
+        <main className="lg:h-[90%] flex w-[90%] m-auto lg:flex-col justify-evenly">
+          <Link
+            href={"/"}
+            className="link flex border-b-[.25px] pb-[20px] justify-center items-center gap-1  text-gray-300"
+          >
+            <Image
+              src={"/navbar/home.png"}
+              alt="icon"
+              width={14.52}
+              height={16.39}
+            />
+            <span className="hidden lg:block text-xs">Inicio</span>
+          </Link>
+          <Link
+            href={"/"}
+            className="link flex border-b-[.25px] pb-[20px] justify-center items-center gap-1  text-gray-300"
+          >
+            <Image
+              src={"/navbar/calendar_clock.png"}
+              alt="icon"
+              width={19.39}
+              height={20.26}
+            />
+            <span className="hidden lg:block text-xs">Agenda</span>
+          </Link>
+          <Link
+            href={"/editProfile"}
+            className="link flex border-b-[.25px] pb-[20px] justify-center items-center gap-1  text-white"
+          >
+            <Image
+              src={"/navbar/perfil.png"}
+              alt="icon"
+              width={18.85}
+              height={18.85}
+            />
+            <span className="hidden lg:block text-xs">Mi Perfil</span>
+          </Link>
+          <Link
+            href={"/program-date"}
+            className="link flex items-center border-b-[.25px] pb-[20px] justify-center gap-1 text-gray-300"
+          >
+            <Image
+              src={"/navbar/actividad.png"}
+              alt="icon"
+              width={20.65}
+              height={19.58}
+            />
+            <span className="hidden lg:block text-xs">Actividad</span>
+          </Link>
+          <Link
+            href={"/settings"}
+            className="link flex  items-center border-b-[.25px] pb-[20px] justify-center gap-1 text-gray-300"
+          >
+            <Image
+              src={"/navbar/settings.png"}
+              alt="icon"
+              width={18.65}
+              height={20.31}
+            />
+            <span className="hidden lg:block text-xs">Configuración</span>
+          </Link>
+        </main>
+        <footer className=" w-full flex items-center justify-evenly">
+          <div className="flex gap-2  ">
+            <Image
+              src={"/doctor-profile.png"}
+              alt="profile"
+              width={60}
+              height={60}
+            />
+            <ul className="text__doctor flex flex-col justify-center">
+              <li className="text-[18px]">John Doe</li>
+              <li className="text-[13px]">Ortopedia</li>
+            </ul>
+          </div>
+          <Image
+            src={"/logout.png"}
+            alt="profile"
+            width={23.33}
+            height={23.33}
+            className="text__doctor"
+          />
+        </footer>
+      </div>
+      <div className="container m-auto h-[77px] flex justify-between w-full p-4 lg:hidden">
+        <main className="lg:h-[90%] flex lg:flex-col lg:justify-evenly justify-between w-full">
+          <Link
+            href={"/settings"}
+            className="link flex justify-center items-center gap-1  text-gray-300"
+          >
+            <Image
+              src={"/navbar/settings.png"}
+              alt="icon"
+              width={26}
+              height={26}
+            />
+            <span className=" text-xs">Configuración</span>
+          </Link>
+          <Link
+            href={"/"}
+            className="link flex justify-center items-center gap-1  text-gray-300"
+          >
+            <Image
+              src={"/navbar/calendar_clock.png"}
+              alt="icon"
+              width={19.39}
+              height={20.26}
+            />
+            <span className="hidden lg:block text-xs">Agenda</span>
+          </Link>
+          <Link
+            href={"/"}
+            className="link flex justify-center items-center gap-1  text-white"
+          >
+            <Image
+              src={"/navbar/home.png"}
+              alt="icon"
+              width={14.52}
+              height={16.39}
+            />
+            <span className="hidden lg:block text-xs">Inicio</span>
+          </Link>
+          <Link
+            href={"/editProfile"}
+            className="link flex items-center justify-center gap-1 text-gray-300"
+          >
+            <Image
+              src={"/navbar/perfil.png"}
+              alt="icon"
+              width={18.85}
+              height={18.85}
+            />
+            <span className="hidden lg:block text-xs">Mi perfil</span>
+          </Link>
+          <Link
+            href={"/program-date"}
+            className="link flex  items-center justify-center gap-1 text-gray-300"
+          >
+            <Image
+              src={"/navbar/actividad.png"}
+              alt="icon"
+              width={24}
+              height={24}
+            />
+            <span className="hidden lg:block text-xs">Mi Actividad</span>
+          </Link>
+        </main>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
