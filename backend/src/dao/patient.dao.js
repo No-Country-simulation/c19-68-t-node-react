@@ -1,36 +1,29 @@
-import Patient from "./models/patientModel.js";
+import Patient from "./models/patient.model.js";
 
-
-
-const patientDao = {
-
-  create: async (patientsData) => {
+export class PatientDao {
+  async create(patientsData) {
     return await Patient.create(patientsData);
-  },
-
-  findByMail: async (email) => {
-    return await Patient.findOne({ email: email });
   }
 
-  /*
   async findById(id) {
-    return await Patient.findById(id).lean();
+    return await Patient.findById(id);
   }
 
   async update(id, updateData) {
     return await Patient.findByIdAndUpdate(id, updateData, {
       new: true,
-    }).lean();
+    });
   }
 
   async delete(id) {
-    return await Patient.findByIdAndDelete(id).lean();
+    return await Patient.findByIdAndDelete(id);
   }
 
   async findAll() {
-    return await Patient.find().lean();
+    return await Patient.find();
   }
-  */
-}
 
-export default patientDao;
+  async findOne(info) {
+    return await Patient.findOne(info);
+  }
+}

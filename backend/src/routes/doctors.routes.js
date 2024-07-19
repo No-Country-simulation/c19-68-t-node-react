@@ -1,80 +1,26 @@
 import { Router } from "express";
-import bcrypt from "bcrypt";
-import Doc from "../dao/models/doctorModel.js";
+import controllerDoc from "../controllers/doctor.controller.js";
+import { checkAuth } from "../middlewares/checkAuth.js";
 
 const router = Router();
 
-router.post("/registerDoc", async (req, res) => {
-  const saltRounds = 10;
-  const {
-    name,
-    mail,
-    pass,
-    phone,
-    specialty,
-    licenseNumber,
-    registrationDate,
-    calendar,
-  } = req.body;
+router.post("/registerDoc", controllerDoc.registerDoc);
 
-  if (
-    !name ||
-    !pass ||
-    !mail ||
-    !phone ||
-    !specialty ||
-    !licenseNumber ||
-    !registrationDate ||
-    !calendar
-  ) {
-    return res.status(400).send("Username and password are required");
-  }
+router.post("/logOutDoc", controllerDoc.logOutDoc);
 
-  try {
-    const existingUser = await Doc.findOne({ name });
-    if (existingUser) {
-      return res.status(400).send("All fields must be completed");
-    }
+router.post("/editProfileDoc", controllerDoc.editProfileDoc);
 
-    const hashedPassword = await bcrypt.hash(pass, saltRounds);
+router.get("/getDoc/:id", controllerDoc.getDoc);
 
-    const newDoctor = new Doc({
-      name,
-      mail,
-      pass: hashedPassword,
-      phone,
-      specialty,
-      licenseNumber,
-      registrationDate,
-      calendar,
-    });
+router.get("/profileDoc", controllerDoc.profileDoc);
 
-    await newDoctor.save();
-    res.status(201).send("Successfully registered doctor");
-  } catch (error) {
-    res.status(500).send("Error registering doctor");
-  }
-});
+router.get("/getAllDoc", controllerDoc.getAllDoc);
 
-router.post("/loginDoc", (res, req) => {
-  const { email, password} = req.body
+router.get("/confirm/:token", controllerDoc.confirm);
 
-  res
-    .status(200)
-    .json({ message: "login the doctor succesfully", email, password });
-});
+router.post("/login", controllerDoc.login);
 
-router.post("/logoutDoc", (res, req) => {
-  //const {token} = req.body
-  res.status(200).json({ message: "logout doctor" });
-});
-
-router.get("/profileDoc", (res, req) => {
-  res.status(200).json({ message: "doctor's profile" });
-});
-
-router.get("/showAllDoc", (res, req) => {
-  res.status(200).json({ message: "view all doctors" });
-});
+//Private Endpoints
+router.get("/profile", checkAuth, controllerDoc.profileDoc);
 
 export default router;

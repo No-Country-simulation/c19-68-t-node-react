@@ -1,24 +1,15 @@
+import { patientManager } from "../dao/index.dao.js";
 import servicePat from '../services/patients.service.js';
 
-
 const controllerPat = {
-
   registerPat:  async (req, res) => {
-
     console.log("Se inicia el registro de un paciente");
     const { photo, firstName, lastName, gender, email, phone, password, country, 
             creditCard, clinicalData } = req.body;
-  
-  
-    //Validamos los datos obligatorios
-    if ( !firstName || !lastName || !email || !phone || !password ) {
-      console.error("ERROR: Datos requeridos no recibidos");
-      return res.status(400).json({ message: "Datos requeridos no recibidos"});
-    }
 
     try {
       
-      const patient = await servicePat.registerPat({photo, 
+      const patient = await servicePat.registerPat(photo, 
                                                     firstName, 
                                                     lastName, 
                                                     gender, 
@@ -28,9 +19,9 @@ const controllerPat = {
                                                     country, 
                                                     creditCard, 
                                                     clinicalData
-                                                  });
+                                                  );
 
-      res.status(201).json({ message: "Created succesfully", paciente: patient });
+      res.status(201).json({ message: "Successfully registered patient", paciente: patient });
     } catch (error) {
       console.log("ERROR: " + error);
       res.status(500).json({ message: error.message})
@@ -63,7 +54,7 @@ const controllerPat = {
 
   getAllPat: async (req, res) => {
     try {
-      const patients = await PatientDao.findAll();
+      const patients = await patientManager.findAll();
       res.status(200).json(patients);
     } catch (error) {
       res.status(500).json({ message: error.message });
