@@ -14,7 +14,13 @@
     "next": "14.2.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "swiper": "^11.1.4"
+    "swiper": "^11.1.4",
+    "bcrypt": "^5.1.1",
+    "jose": "^5.6.3",
+    "libphonenumber-js": "^1.11.4",
+    "react-icons": "^5.2.1",
+    "react-phone-number-input": "^3.4.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

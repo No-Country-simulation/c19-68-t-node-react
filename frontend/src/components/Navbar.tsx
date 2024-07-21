@@ -5,6 +5,9 @@ import Image from "next/image";
 const Navbar = () => {
   return (
     <nav className="navbar w-screen fixed bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
+      
+      {/* Navbar Desktop */}
+      
       <div className=" container hidden lg:flex lg:flex-col justify-between w-full h-full py-12">
         <header className="flex items-center justify-center gap-2 border-b-2 border-[#89BAD8] max-w-[160px] m-auto ">
           <Image
@@ -100,6 +103,7 @@ const Navbar = () => {
           />
         </footer>
       </div>
+      {/* Navbar Mobile */}
       <div className="container m-auto h-[77px] flex justify-between w-full p-4 lg:hidden">
         <main className="lg:h-[90%] flex lg:flex-col lg:justify-evenly justify-between w-full">
           <Link
