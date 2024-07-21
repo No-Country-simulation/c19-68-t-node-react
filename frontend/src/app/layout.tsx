@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "E-medicine",
+<<<<<<< HEAD
   description: "E-medicine appointment scheduling made easy.",
+=======
+  description: "Medical appointment videocall scheduling made easy.",
+>>>>>>> 7cc2b2aa275142b7c703138c8060d94a4ee46c95
 };
 
 export default function RootLayout({
@@ -16,6 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body className={inter.className}>
         {children}</body>
         {/* Footer Navigation */}
@@ -42,6 +48,13 @@ export default function RootLayout({
     </button>
 </div>
 
+=======
+      <body className={`${inter.className} flex flex-col-reverse lg:flex lg:flex-row`}>
+        <Navbar/>
+        {children}
+
+      </body>
+>>>>>>> 7cc2b2aa275142b7c703138c8060d94a4ee46c95
     </html>
   );
 }
