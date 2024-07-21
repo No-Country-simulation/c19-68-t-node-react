@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "E-medicine",
-  description: "Medical appointment videocall scheduling made easy.",
+  description: "E-medicine appointment scheduling made easy.",
 };
 
 export default function RootLayout({
