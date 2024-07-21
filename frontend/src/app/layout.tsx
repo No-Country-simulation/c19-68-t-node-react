@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import BallBackground from "@/components/ui/ballBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-col-reverse lg:flex lg:flex-row`}>
+      <body className={`${inter.className} relative flex flex-col-reverse lg:flex lg:flex-row`}>
+        <BallBackground/>
         <Navbar/>
         {children}
 
