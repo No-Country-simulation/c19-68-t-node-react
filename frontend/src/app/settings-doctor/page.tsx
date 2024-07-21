@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React from 'react';
 
 const SettingsPage = () => {
@@ -20,29 +19,33 @@ const SettingsPage = () => {
             {/* Settings List */}
             <div className="w-full bg-white p-5 rounded-lg shadow mb-10">
                 <ul className="space-y-4">
-                    <Link href="/program-date" className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/reloj-cinco.png" alt="Clinic" />
-                        <span>Citas Programadas</span>
-                    </Link>
+                    <li className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/computadora.png" alt="Clinic" />
+                        <span>Mi consultorio</span>
+                    </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/usuarios-alt.png" alt="Patients" />
-                        <span>Mi Historia Clinica</span>
+                        <span>Mi lista de pacientes</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/calendario-reloj-azul.png" alt="Appointments" />
-                        <span>Idioma</span>
+                        <span>Citas</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/libro-atlas.png" alt="Language" />
-                        <span>Configuración de pagos</span>
+                        <span>Idioma</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/tarjeta-de-credito.png" alt="Payments" />
-                        <span>Cambiar Contraseña</span>
+                        <span>Mis pagos</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/llave.png" alt="Change Password" />
-                        <span>Ayuda y Soporte</span>
+                        <span>Cambiar contraseña</span>
+                    </li>
+                    <li className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/interrogatorio.png" alt="Support" />
+                        <span>Ayuda y soporte</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/rectangulo-xmark.png" alt="Delete Account" />
