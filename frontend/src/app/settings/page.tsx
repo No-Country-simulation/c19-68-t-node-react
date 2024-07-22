@@ -1,58 +1,56 @@
+import Link from 'next/link';
 import React from 'react';
+import "./page.css";
 
 const SettingsPage = () => {
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8">
+        <div className="w-[430px] h-[932px] setting bg-gray-100 flex flex-col items-center p-4">
             {/* Header */}
             <div className="flex items-center w-full justify-between mb-4">
                 <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center">
                         <img className="w-6 h-6" src="/llave-inglesa.png" alt="Settings Icon" />
                     </div>
                     <span className="font-semibold">Configuración</span>
                 </div>
-                <button className="text-gray-500">
-                    <img className="w-6 h-6" src="/x.png" alt="Close Icon" />
-                </button>
             </div>
 
-            {/* Settings List and Logout Button */}
-            <div className="w-full bg-white p-5 rounded-lg shadow flex-grow flex flex-col justify-between mb-10">
-                <ul className="space-y-4 flex-grow">
+            {/* Settings List */}
+            <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
+                    <Link href={"/program-date"} className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/reloj-cinco-treinta.png" alt="Clinic" />
+                        <span>Citas Programadas</span>
+                    </Link>
+                    <Link href={"/user"} className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/documento-firmado.png" alt="Patients" />
+                        <span>Mi Historia Clinica</span>
+                    </  Link>
                     <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
-                        <span>Citas programadas</span>
-                    </li>
-                    <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
+                        <img className="w-6 h-6 mr-4" src="/libro-atlas.png" alt="Appointments" />
                         <span>Idioma</span>
                     </li>
                     <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
+                        <img className="w-6 h-6 mr-4" src="/tarjeta-de-credito.png" alt="Language" />
                         <span>Configuración de pagos</span>
                     </li>
                     <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
-                        <span>Cambiar contraseña</span>
+                        <img className="w-6 h-6 mr-4" src="/llave.png" alt="Payments" />
+                        <span>Cambiar Contraseña</span>
                     </li>
                     <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
-                        <span>Ayuda y soporte</span>
+                        <img className="w-6 h-6 mr-4" src="/interrogatorio.png" alt="Change Password" />
+                        <span>Ayuda y Soporte</span>
                     </li>
                     <li className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
+                        <img className="w-6 h-6 mr-4" src="/rectangulo-xmark.png" alt="Delete Account" />
                         <span>Cerrar la cuenta</span>
                     </li>
-                </ul>
-                <div className="mt-auto flex justify-center">
-                    <button className="w-full bg-gray-200 text-gray-700 py-5 rounded flex items-center justify-center">
-                        <span>Cerrar sesión</span>
-                        <img className="w-6 h-6 ml-2" src="/cerrar-sesion-alt.png" alt="Logout Icon" />
-                    </button>
-                </div>
             </div>
 
-            
+            {/* Logout Button */}
+            <button className="w-full bg-purple-500 text-white py-3 rounded-lg flex items-center justify-center">
+                <span>Cerrar sesión</span>
+            </button>
         </div>
     );
 };

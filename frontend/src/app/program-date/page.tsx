@@ -72,8 +72,8 @@ const page = () => {
                 Ingresar
               </button>
             </div>
-            
-            <Calendar calendar={calendar}/>
+
+            <Calendar calendar={calendar} />
           </article>
         ))}
 
@@ -128,31 +128,31 @@ const page = () => {
         <h2 className="text-[15.58px] font-bold text-center">Ultimas consultas</h2>
 
         <div>
-        {doctors.map((doctor) => (
-          <article className="bg-[#89BAD8] rounded-[11px] px-5 py-2 flex flex-col justify-between w-[331.03px] h-[90px]">
-            <div className="flex">
-              <img
-                className="w-[40px] h-[40px] mr-3"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR81iX4Mo49Z3oCPSx-GtgiMAkdDop2uVmVvw&s"
-                alt=""
-              />
-              <ul className="text-[10px]">
-                <li>
-                  <span className="text-[12px] font-semibold">
-                    {doctor.name}
-                  </span>
-                </li>
-                <li>{doctor.alias}</li>
-                <li>⭐ ⭐ ⭐</li>
+          {doctors.map((doctor) => (
+            <article className="bg-[#89BAD8] rounded-[11px] px-5 py-2 flex flex-col justify-between w-[331.03px] h-[90px]">
+              <div className="flex">
+                <img
+                  className="w-[40px] h-[40px] mr-3"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR81iX4Mo49Z3oCPSx-GtgiMAkdDop2uVmVvw&s"
+                  alt=""
+                />
+                <ul className="text-[10px]">
+                  <li>
+                    <span className="text-[12px] font-semibold">
+                      {doctor.name}
+                    </span>
+                  </li>
+                  <li>{doctor.alias}</li>
+                  <li>⭐ ⭐ ⭐</li>
+                </ul>
+              </div>
+              <ul className="flex justify-between text-[10px]">
+                <li className="flex flex-col"><span>Diagnostico:</span> {doctor.diagnostico}</li>
+                <li className="flex flex-col"><span>Formulacion:</span> {doctor.formulacion}</li>
               </ul>
-            </div>
-            <ul className="flex justify-between text-[10px]">
-              <li className="flex flex-col"><span>Diagnostico:</span> {doctor.diagnostico}</li>
-              <li className="flex flex-col"><span>Formulacion:</span> {doctor.formulacion}</li>
-            </ul>
 
-          </article>
-        ))}
+            </article>
+          ))}
         </div>
       </div>
     </section>

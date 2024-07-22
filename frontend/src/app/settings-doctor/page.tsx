@@ -1,8 +1,10 @@
 import React from 'react';
+import Link from 'next/link';
+import "./page.css";
 
 const SettingsPage = () => {
     return (
-        <div className="w-[430px] h-[932px] bg-gray-100 flex flex-col items-center p-4">
+        <div className="w-[430px] h-[932px] settingDoctor bg-gray-100 flex flex-col items-center p-4">
             {/* Header */}
             <div className="flex items-center w-full justify-between mb-4">
                 <div className="flex items-center space-x-4">
@@ -11,14 +13,10 @@ const SettingsPage = () => {
                     </div>
                     <span className="font-semibold">Configuración</span>
                 </div>
-                <button className="text-gray-500">
-                    <img className="w-6 h-6" src="/x.png" alt="Close Icon" />
-                </button>
             </div>
 
             {/* Settings List */}
-            <div className="w-full bg-white p-5 rounded-lg shadow mb-10">
-                <ul className="space-y-4">
+            <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/computadora.png" alt="Clinic" />
                         <span>Mi consultorio</span>
@@ -51,7 +49,6 @@ const SettingsPage = () => {
                         <img className="w-6 h-6 mr-4" src="/rectangulo-xmark.png" alt="Delete Account" />
                         <span>Cerrar la cuenta</span>
                     </li>
-                </ul>
             </div>
 
             {/* Logout Button */}

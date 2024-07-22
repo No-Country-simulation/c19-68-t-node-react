@@ -113,8 +113,8 @@ const Navbar = () => {
             <Image
               src={"/navbar/settings.png"}
               alt="icon"
-              width={26}
-              height={26}
+              width={27}
+              height={27}
             />
             <span className=" text-xs">Configuración</span>
           </Link>
