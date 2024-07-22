@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import BallBackground from "@/components/ui/ballBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "E-medicine",
-  description: "Medical appointment videocall scheduling made easy.",
+  description: "E-medicine appointment scheduling made easy.",
 };
 
 export default function RootLayout({
@@ -17,8 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-      <Navbar/>
+      <body className={`${inter.className} relative flex flex-col-reverse lg:flex lg:flex-row`}>
+        <BallBackground/>
+        <Navbar/>
+        {children}
+
+      </body>
     </html>
   );
 }

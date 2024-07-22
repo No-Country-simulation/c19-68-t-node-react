@@ -51,7 +51,7 @@ const page = () => {
 
   return (
     <section className={`w-screen h-screen`}>
-      <div className="w-[78%] items-center h-full m-auto mt-5 flex flex-col gap-[30px]">
+      <div className="w-[78%] max-w-[331px] items-center h-[90%] m-auto mt-5 flex flex-col gap-[30px]">
         <h2 className="text-[31.16px] text-center font-bold">
           Citas Programadas
         </h2>

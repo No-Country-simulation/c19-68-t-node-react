@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import React from 'react';
-import "./page.css";
 
 const SettingsPage = () => {
     return (
-        <div className="w-[430px] h-[932px] setting bg-gray-100 flex flex-col items-center p-4">
+        <div className="w-[430px] h-[932px] bg-gray-100 flex flex-col items-center p-4">
             {/* Header */}
             <div className="flex items-center w-full justify-between mb-4">
                 <div className="flex items-center space-x-4">
@@ -19,35 +17,41 @@ const SettingsPage = () => {
             </div>
 
             {/* Settings List */}
-            <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
-                    <Link href="/program-date" className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/reloj-cinco.png" alt="Clinic" />
-                        <span>Citas Programadas</span>
-                    </Link>
+            <div className="w-full bg-white p-5 rounded-lg shadow mb-10">
+                <ul className="space-y-4">
+                    <li className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/computadora.png" alt="Clinic" />
+                        <span>Mi consultorio</span>
+                    </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/usuarios-alt.png" alt="Patients" />
-                        <span>Mi Historia Clinica</span>
+                        <span>Mi lista de pacientes</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/calendario-reloj-azul.png" alt="Appointments" />
-                        <span>Idioma</span>
+                        <span>Citas</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/libro-atlas.png" alt="Language" />
-                        <span>Configuración de pagos</span>
+                        <span>Idioma</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/tarjeta-de-credito.png" alt="Payments" />
-                        <span>Cambiar Contraseña</span>
+                        <span>Mis pagos</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/llave.png" alt="Change Password" />
-                        <span>Ayuda y Soporte</span>
+                        <span>Cambiar contraseña</span>
+                    </li>
+                    <li className="flex items-center">
+                        <img className="w-6 h-6 mr-4" src="/interrogatorio.png" alt="Support" />
+                        <span>Ayuda y soporte</span>
                     </li>
                     <li className="flex items-center">
                         <img className="w-6 h-6 mr-4" src="/rectangulo-xmark.png" alt="Delete Account" />
                         <span>Cerrar la cuenta</span>
                     </li>
+                </ul>
             </div>
 
             {/* Logout Button */}
