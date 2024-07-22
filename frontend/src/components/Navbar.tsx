@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <nav className="navbar w-screen fixed bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
+    <nav className="navbar w-screen sticky bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
       
       {/* Navbar Desktop */}
       
