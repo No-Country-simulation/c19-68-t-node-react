@@ -14,7 +14,7 @@ h1 {
 
 @media (min-width: 1024px) {
   .navbar {
-    transition: all 0.5s;
+    transition: all .5s ;
     &:hover {
       width: 325px;
       div {
