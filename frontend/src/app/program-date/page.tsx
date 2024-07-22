@@ -77,9 +77,6 @@ const page = () => {
               </button>
             </div>
 
-<<<<<<< HEAD
-            <Calendar calendar={calendar} />
-=======
             <Calendar
               twClass="justify-self-end"
               sizeCalendar="w-[91px] h-[91px] text-[40px]"
@@ -88,7 +85,6 @@ const page = () => {
             sizeDay="text-[35px]"
             sizeMonthAndYear=" text-[13px]"
             />
->>>>>>> 2b2b8ac9b99315814641e93cbe0347d12dab0500
           </article>
         ))}
 
@@ -150,11 +146,7 @@ const page = () => {
 
         <div>
           {doctors.map((doctor) => (
-<<<<<<< HEAD
-            <article className="bg-[#89BAD8] rounded-[11px] px-5 py-2 flex flex-col justify-between w-[331.03px] h-[90px]">
-=======
             <article className="bg-[#89bad845] rounded-[11px] px-5 py-2 flex flex-col justify-between w-[320px] h-[120px]">
->>>>>>> 2b2b8ac9b99315814641e93cbe0347d12dab0500
               <div className="flex">
                 <img
                   className="w-[40px] h-[40px] mr-3"
@@ -172,12 +164,6 @@ const page = () => {
                 </ul>
               </div>
               <ul className="flex justify-between text-[10px]">
-<<<<<<< HEAD
-                <li className="flex flex-col"><span>Diagnostico:</span> {doctor.diagnostico}</li>
-                <li className="flex flex-col"><span>Formulacion:</span> {doctor.formulacion}</li>
-              </ul>
-
-=======
                 <li className="flex flex-col">
                   <span>Diagnostico:</span> {doctor.diagnostico}
                 </li>
@@ -185,7 +171,6 @@ const page = () => {
                   <span>Formulacion:</span> {doctor.formulacion}
                 </li>
               </ul>
->>>>>>> 2b2b8ac9b99315814641e93cbe0347d12dab0500
             </article>
           ))}
         </div>
