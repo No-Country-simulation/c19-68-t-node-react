@@ -1,12 +1,13 @@
 import { Router } from "express";
-import controllerDoc from "../controllers/doctor.controller.js";
+import controllerLogin from "../controllers/login.controller.js";
 import { checkAuth } from "../middlewares/checkAuth.js";
+import controllerDoc from "../controllers/doctor.controller.js";
 
 const router = Router();
 
 router.post("/registerDoc", controllerDoc.registerDoc);
 
-router.post("/logOutDoc", controllerDoc.logOutDoc);
+router.post("/logOutDoc", controllerLogin.logOut);
 
 router.post("/editProfileDoc", controllerDoc.editProfileDoc);
 
@@ -16,9 +17,9 @@ router.get("/profileDoc", controllerDoc.profileDoc);
 
 router.get("/getAllDoc", controllerDoc.getAllDoc);
 
-router.get("/confirm/:token", controllerDoc.confirm);
+router.get("/confirm/:token", controllerLogin.confirm);
 
-router.post("/login", controllerDoc.login);
+router.post("/login", controllerLogin.login);
 
 //Private Endpoints
 router.get("/profile", checkAuth, controllerDoc.profileDoc);

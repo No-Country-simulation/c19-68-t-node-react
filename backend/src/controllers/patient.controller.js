@@ -27,7 +27,7 @@ const controllerPat = {
       res.status(500).json({ message: error.message})
     }
   },
-
+/*
   logInPat: async (req, res) => {
     const { email, password } = req.body;
     res
@@ -38,7 +38,7 @@ const controllerPat = {
   logOutPat: async (req, res) => {
     res.status(200).json({ message: "logout patient" });
   },
-
+*/
   editProfilePat: async (req, res) => {
     res.status(200).json({ message: "Edit patient's profile" });
   },
