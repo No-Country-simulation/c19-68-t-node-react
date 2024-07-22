@@ -5,9 +5,8 @@ import Image from "next/image";
 const Navbar = () => {
   return (
     <nav className="navbar w-screen fixed bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
-      
       {/* Navbar Desktop */}
-      
+
       <div className=" container hidden lg:flex lg:flex-col justify-between w-full h-full py-12">
         <header className="flex items-center justify-center gap-2 border-b-2 border-[#89BAD8] max-w-[160px] m-auto ">
           <Image
@@ -33,7 +32,7 @@ const Navbar = () => {
             <span className="hidden lg:block text-xs">Inicio</span>
           </Link>
           <Link
-            href={"/"}
+            href={"/agendar-turnos"}
             className="link flex border-b-[.25px] pb-[20px] justify-center items-center gap-1  text-gray-300"
           >
             <Image
@@ -119,7 +118,7 @@ const Navbar = () => {
             <span className=" text-xs">Configuración</span>
           </Link>
           <Link
-            href={"/"}
+            href={"/agendar-turnos"}
             className="link flex justify-center items-center gap-1  text-gray-300"
           >
             <Image

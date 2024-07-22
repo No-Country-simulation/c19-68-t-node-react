@@ -1,16 +1,28 @@
 import React from "react";
 
 interface Professional {
-  name: string;
-  rating: number;
-  specialty: string;
-  imageUrl: string;
+  id: string | number;
+  photo: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  password: string;
+  professionalCertificates: string[];
+  speciality: string;
+  phone: string;
+  country: string;
+  attentionSchedule: {
+    day: string;
+    startTime: string;
+    endTime: string;
+  }[];
 }
 
 interface ProfRadioCardProps {
   professionals: Professional[];
-  selectedProfessional: string;
-  onProfessionalSelect: (value: string) => void;
+  selectedProfessional: number;
+  onProfessionalSelect: (value: number) => void;
 }
 
 const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
@@ -24,25 +36,25 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
       <div className="flex flex-col gap-2">
         {professionals.map((professional, index) => (
           <label
-            key={index}
+            key={professional.id}
             className="flex items-center gap-4 p-4 border border-gray-300 rounded-md cursor-pointer"
           >
             <img
-              src={professional.imageUrl}
-              alt={professional.name}
+              src={professional.photo}
+              alt={professional.lastName}
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-1">
               <div className="flex justify-between">
                 <div>
                   <span className="font-semibold block">
-                    {professional.name}
+                    {professional.firstName} {professional.lastName}
                   </span>
                   <span className="text-sm text-gray-600">
-                    {professional.specialty}
+                    {professional.speciality}
                   </span>
                   <div className="flex gap-1">
-                    {Array.from({ length: professional.rating }, (_, i) => (
+                    {Array.from({ length: 4 }, (_, i) => (
                       <span key={i}>★</span>
                     ))}
                   </div>
@@ -52,9 +64,9 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
             <input
               type="radio"
               name="professional"
-              value={professional.name}
-              checked={selectedProfessional === professional.name}
-              onChange={() => onProfessionalSelect(professional.name)}
+              value={professional.id}
+              checked={selectedProfessional === professional.id}
+              onChange={() => onProfessionalSelect(Number(professional.id))}
               className="form-radio"
             />
           </label>

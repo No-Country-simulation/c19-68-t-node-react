@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .available-date {
+  background-color: #4caf50;
+  color: white;
+}
+
+.unavailable-date {
+  background-color: #f44336;
+  color: white;
+  pointer-events: none;
+} */
+
+.react-datepicker__month-container {
+  background: rgba(53, 121, 159, 1);
+  width: 100%;
+  border-radius: 30px;
+}
+
+.react-datepicker__header {
+  background: red;
+}
