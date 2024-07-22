@@ -1,6 +1,7 @@
 "use client";
 
 import Input from "@/components/Input";
+import Image from "next/image";
 
 const page = () => {
   return (
@@ -33,46 +34,8 @@ const page = () => {
               multiple
             />
           </div>
-          <form className="flex flex-col pt-[83px] gap-[26px] text-[12px]">
-            <label className="flex gap-1 items-center">
-              <span> Fecha de Nacimiento</span>
-              <Input twClass="w-[94px]" type="date" />
-              <span>Edad</span>
-              <Input twClass="w-[53px]" type="string" />
-            </label>
-
-            <label className="flex justify-between">
-              <span>ID</span>
-              <Input twClass="w-[89px]" type="string" />
-              <span>Número</span>
-              <Input twClass="w-[145px]" type="string" />
-            </label>
-            <label>
-              <span>Email</span>
-              <Input twClass="w-[273px]" type="string" />
-            </label>
-            <label>
-              <span>Direccion</span>
-              <Input twClass="w-[246px]" type="number" />
-            </label>
-            <label>
-              <span>Pais</span>
-              <Input twClass="w-[119px]" type="string" />
-              <span>Cod Postal</span>
-              <Input twClass="w-[93px]" type="string" />
-            </label>
-            <label>
-              <span>Telefono</span>
-              <br />
-              <Input twClass="w-[126px]" type="number" />
-              <span>Nacionalidad</span>
-              <Input twClass="w-[105px]" type="number" />
-            </label>
-
-            <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
-              Guardar
-            </button>
-          </form>
+          {/* Form */}
+          
         </main>
       </div>
     </section>

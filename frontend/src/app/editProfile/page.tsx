@@ -1,34 +1,33 @@
 import React from "react";
 import "./page.css";
+import Input from "@/components/Input";
+import Image from "next/image";
 const EditProfilePage = () => {
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
-
+      
         {/* Header */}
-        <div className="flex items-center w-full justify-between lg:hidden">
-          <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+        <header className="self-start m-4 pb-[5px] w-[197px] lg:hidden gradient">
+          <div className="flex w-[197px] items-center justify-center space-x-4">
+            
               <img
-                className="w-5 h-5"
+                className="w-[48px] h-[48px] "
                 src="/circulo-de-usuario.png"
                 alt="User Icon"
               />
-            </div>
-            <span className="font-semibold">Editar Perfil</span>
+            <span className="font-bold text-[20px]">Editar Perfil</span>
           </div>
-          <button className="text-gray-500">
-            <img className="w-6 h-6" src="/x.png" alt="Close Icon" />
-          </button>
-        </div>
+
+        </header>
 
         {/* Profile Picture */}
-        <div className="w-full flex flex-col items-center mb-4 lg:grid lg:mb-0 grid__profile">
+        <div className="w-full py-10 z-10 flex flex-col items-center lg:grid grid__profile">
           <h2 className="hidden lg:block font-bold text-[24px] self-start justify-self-center pr-40">
             Mi perfil
           </h2>
-          <div className="w-24 h-24 lg:w-[150px] lg:h-[150px] bg-blue-200 rounded-full flex items-center justify-center mb-2 lg:mb-0 lg:justify-self-center">
+          <div className="w-[150px] h-[150px] bg-blue-200 rounded-full flex items-center justify-center mb-2 lg:mb-0 lg:justify-self-center">
             <img
-              className="w-12 h-12 "
+              className="w-[20px] h-[20px] "
               src="/lapiz-de-usuario.png"
               alt="Edit Photo"
             />
@@ -38,7 +37,7 @@ const EditProfilePage = () => {
           </button>
           <article className="hidden lg:block justify-self-center">
             <h3 className="font-bold text-[20px]">Informacion personal</h3>
-            <ul className="grid grid-cols-3 grid-rows-3 gap-1">
+            <ul className="grid grid-cols-3 text-[12px] grid-rows-3 gap-1">
               <li className="flex flex-col ">
                 <span className="font-semibold">Nombre</span>Nombre
               </li>
@@ -65,86 +64,103 @@ const EditProfilePage = () => {
         </div>
 
         {/* Form */}
-        <form className="w-full bg-white p-4 rounded-lg shadow lg:h-[90%] lg:max-h-[550px]">
-          <div className="mb-4">
-            <label className="block text-gray-700">Fecha de Nacimiento</label>
-            <input
-              type="text"
-              className="w-full border-gray-300 rounded mt-1"
-              placeholder="AAAA, MM, DD"
-            />
-          </div>
-          <div className="mb-4 flex space-x-4">
-            <div className="flex-1">
-              <label className="block text-gray-700">Edad</label>
-              <input
-                type="text"
-                className="w-full border-gray-300 rounded mt-1"
+        <form className="flex flex-col gap-[26px] text-[12px] max-w-[325px]">
+            {/* Fecha de nacimiento y Edad */}
+            <label className="flex gap-1 items-center justify-between">
+              <div className="flex items-end">
+                <span> Fecha de Nacimiento</span>
+              <Input twClass="w-[105px]" type="date" />
+                </div>
+              
+              <div  className="flex items-end">
+
+              <span>Edad</span>
+              <Input twClass="w-[53px]" type="string" />
+              </div>
+            </label>
+            {/* Género */}
+            <label className="flex flex-col">
+              <div className="flex justify-between">
+
+              <article className="flex items-center gap-2">
+              <Image
+              src={'/venus-marte.png'}
+              width={28.78}
+              height={28.78}
+              alt="genre"
               />
-            </div>
-            <div className="flex-1">
-              <label className="block text-gray-700">ID</label>
-              <input
-                type="text"
-                className="w-full border-gray-300 rounded mt-1"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-gray-700">Número</label>
-              <input
-                type="text"
-                className="w-full border-gray-300 rounded mt-1"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">E-mail</label>
-            <input
-              type="email"
-              className="w-full border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Dirección</label>
-            <input
-              type="text"
-              className="w-full border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div className="mb-4 flex space-x-4">
-            <div className="flex-1">
-              <label className="block text-gray-700">País</label>
-              <input
-                type="text"
-                className="w-full border-gray-300 rounded mt-1"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-gray-700">Código postal</label>
-              <input
-                type="text"
-                className="w-full border-gray-300 rounded mt-1"
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Teléfono</label>
-            <input
-              type="text"
-              className="w-full border-gray-300 rounded mt-1"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Nacionalidad</label>
-            <input
-              type="text"
-              className="w-full border-gray-300 rounded mt-1"
-            />
-          </div>
-          <button className="w-full bg-purple-500 text-white py-2 rounded">
-            Guardar
-          </button>
-        </form>
+              <span>Sexo</span>
+              </article>
+              <label className="flex gap-x-1 items-center">
+                <span>Masculino</span>
+                <input className="radio" type="radio"  name="genre" id="genre"  />
+              </label>
+              <article className="flex gap-x-1 items-center">
+                <span>Femenino</span>
+                <input className="radio" type="radio"  name="genre" id="genre"  />
+              </article>
+              <article className="flex gap-x-1 items-center">
+                <span>Otro</span>
+                <input className="radio" type="radio"  name="genre" id="genre"  />
+              </article>
+              </div>
+              <p className="text-[8px]">El sexo solo se puede editar una vez recuerda que si necesitas modificarlo una vez más debes contactarte con soporte de la app</p>
+            </label>
+            {/* Identificación */}
+            <label className="flex justify-between">
+              <div  className="flex items-end">
+
+              <span>ID</span>
+              <Input twClass="w-[89px]" type="string" />
+              </div>
+              
+              <div  className="flex items-end">
+
+              <span>Número</span>
+              <Input twClass="w-[145px]" type="string" />
+              </div>
+            </label>
+            {/* Teléfono */}
+            <label className="flex justify-between">
+              <div  className="flex items-end justify-between ">
+
+              <span>Telefono</span>
+              <Input twClass="w-[90px]" type="string" />
+              </div>
+              <div  className="flex items-end justify-between ">
+
+              <span>Cod Postal</span>
+              <Input twClass="w-[90px]" type="string" />
+              </div>
+            </label>
+            {/* Dirección */}
+            <label className="flex items-end justify-between ">
+              <span>Direccion</span>
+              <Input twClass="w-[260px]" type="string" />
+            </label>
+            {/* País */}
+            <label className="flex justify-between">
+              <div  className="flex items-end">
+
+              <span>Pais</span>
+              <Input twClass="w-[119px]" type="string" />
+              </div>
+              <div  className="flex items-end justify-between ">
+
+              <span>Ciudad</span>
+              <Input twClass="w-[120px]" type="string" />
+              </div>
+            </label>
+            {/* Email */}
+            <label className="justify-between flex items-end ">
+              <span>Email</span>
+              <Input twClass="w-[285px]" type="string" />
+            </label>
+
+            <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
+              Guardar
+            </button>
+          </form>
     </div>
   );
 };
