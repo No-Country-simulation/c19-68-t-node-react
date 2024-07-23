@@ -170,9 +170,8 @@ function updateAvailability(availability, appointment) {
       // Si el bloque incluye la fecha de la cita, se necesita actualizarlo
       let updatedTimeSlots = timeSlots;
 
-      // Si la fecha de la cita está dentro del bloque de disponibilidad
+      // Eliminar la franja horaria de la disponibilidad
       if (appointmentDateString >= startDateString && appointmentDateString <= endDateString) {
-          // Eliminar la franja horaria de la disponibilidad
           updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
       }
 
