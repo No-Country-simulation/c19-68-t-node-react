@@ -16,7 +16,7 @@ const controllerDoc = {
       speciality,
       phone,
       country,
-      attentionSchedule,
+      attentionScavailabilityhedule,
     } = req.body;
 
     try {
@@ -31,7 +31,7 @@ const controllerDoc = {
         speciality,
         phone,
         country,
-        attentionSchedule
+        availability
       );
       res.status(201).send("Successfully registered doctor");
     } catch (error) {

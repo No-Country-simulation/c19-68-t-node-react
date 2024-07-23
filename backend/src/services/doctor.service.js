@@ -63,7 +63,7 @@ export class doctorService {
     speciality,
     phone,
     country,
-    attentionSchedule
+    availability
   ) {
     try {
 
@@ -94,7 +94,7 @@ export class doctorService {
         speciality,
         phone,
         country,
-        attentionSchedule,
+        availability,
       });
 
       return newDoctor;

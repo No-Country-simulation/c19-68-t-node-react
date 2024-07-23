@@ -46,6 +46,12 @@ const serviceAppo = {
             });
 
             console.log("Registro exitoso de la cita");
+
+            // Actualizamos la disponibilidad del doctor
+            const updatedAvailability = updateAvailability(doctor.availability, { date, startTime, endTime });
+            doctor.availability = updatedAvailability;
+            await doctor.save();
+
             return newAppointment;
 
         } catch (error) {
@@ -133,6 +139,63 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
     console.error("ERROR: El paciente ya tiene una cita con este doctor en este día");
     throw new Error("The patient already has an appointment with this doctor on this day");    
   }
+}
+
+
+/**
+ * Actualiza la disponibilidad de un doctor en función de una cita.
+ * @param {Array} availability - La disponibilidad actual del doctor.
+ * @param {Object} appointment - La cita reservada.
+ * @returns {Array} - La nueva disponibilidad actualizada.
+ */
+function updateAvailability(availability, appointment) {
+  const { date, startTime, endTime } = appointment;
+  const appointmentTimeSlot = `${startTime}-${endTime}`;
+
+  return availability.reduce((updatedAvailability, block) => {
+      const { startDate, endDate, timeSlots } = block;
+
+      // Convertir las fechas a cadenas para comparación
+      const startDateString = new Date(startDate).toISOString().split('T')[0];
+      const endDateString = new Date(endDate).toISOString().split('T')[0];
+      const appointmentDateString = new Date(date).toISOString().split('T')[0];
+
+      // Si el bloque no incluye la fecha de la cita, se mantiene igual
+      if (appointmentDateString < startDateString || appointmentDateString > endDateString) {
+          updatedAvailability.push(block);
+          return updatedAvailability;
+      }
+
+      // Si el bloque incluye la fecha de la cita, se necesita actualizarlo
+      const updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
+
+      // Agregar bloques actualizados
+      if (startDateString < appointmentDateString) {
+          updatedAvailability.push({
+              startDate: startDateString,
+              endDate: new Date(new Date(date).setDate(new Date(date).getDate() - 1)).toISOString().split('T')[0],
+              timeSlots: timeSlots
+          });
+      }
+
+      if (startDateString <= appointmentDateString && endDateString >= appointmentDateString) {
+          updatedAvailability.push({
+              startDate: appointmentDateString,
+              endDate: appointmentDateString,
+              timeSlots: updatedTimeSlots
+          });
+      }
+
+      if (endDateString > appointmentDateString) {
+          updatedAvailability.push({
+              startDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().split('T')[0],
+              endDate: endDateString,
+              timeSlots: timeSlots
+          });
+      }
+
+      return updatedAvailability;
+  }, []);
 }
 
 export default serviceAppo;
