@@ -64,6 +64,11 @@ const doctorSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    availabilityStatus: {
+      type: String,
+      enum: ['available', 'not_available'],
+      default: 'available'
+    }
   },
   {
     versionKey: false,

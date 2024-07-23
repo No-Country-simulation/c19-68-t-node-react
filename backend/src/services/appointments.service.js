@@ -49,7 +49,16 @@ const serviceAppo = {
 
             // Actualizamos la disponibilidad del doctor
             const updatedAvailability = updateAvailability(doctor.availability, { date, startTime, endTime });
-            doctor.availability = updatedAvailability;
+
+            //Verificamos si el doctor se quedo sin horas disponibles
+            if (!hasAvailableTimeSlots(updatedAvailability)) {
+              console.warn("El doctor ya no tiene franjas horarias disponibles.");
+              //Actualizar el estado del doctor a "no disponible"
+              doctor.availabilityStatus = 'not_available';
+            } else {
+              doctor.availability = updatedAvailability;
+            }
+
             await doctor.save();
 
             return newAppointment;
@@ -200,6 +209,32 @@ function updateAvailability(availability, appointment) {
       return updatedAvailability;
   }, []);
 }
+
+
+/**
+ * Verifica si el doctor tiene franjas horarias (timeSlots) disponibles.
+ * @param {Array} availability - La disponibilidad actual del doctor.
+ * @returns {Boolean} - Retorna `true` si hay franjas horarias disponibles, `false` en caso contrario.
+ */
+function hasAvailableTimeSlots(availability) {
+  return availability.some(block => block.timeSlots.length > 0);
+}
+
+
+const updateDoctorAvailability = async (doctor, updatedAvailability) => {
+  // Verificar si hay franjas horarias disponibles
+  if (!hasAvailableTimeSlots(updatedAvailability)) {
+    console.warn("El doctor ya no tiene franjas horarias disponibles.");
+    // Actualizar el estado del doctor a "no disponible"
+    doctor.availabilityStatus = 'not_available';
+  } else {
+    doctor.availabilityStatus = 'available';
+    doctor.availability = updatedAvailability;
+  }
+
+  // Guardar los cambios en la base de datos
+  await doctor.save();
+};
 
 
 export default serviceAppo;
