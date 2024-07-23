@@ -51,11 +51,13 @@ const controllerDoc = {
 
   confirm: asyncHandler(async(req, res) => {
     const {token} = req.params;
-    const confirmedDoctor = await new doctorService().confirm(token);
-    if(!confirmedDoctor) {
-      return res.status(401).json({msg: "Token error ", error: error.message});
-    }
-    res.json({msg: "Succesfully confirmed user"});
+    try {
+      await new doctorService().confirm(token);
+      
+      res.status(201).json({message: "Succesfully confirmed user"});
+  } catch (error) {
+      res.status(401).json({msg: "Token error ", error: error.message});
+  }
   }),
 
   logOutDoc: async (req, res) => {
