@@ -36,7 +36,7 @@ const controllerDoc = {
       res.status(201).json({message: "Successfully registered doctor"});
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({message: "Error registering doctor"});
+      res.status(500).json({message: "Error registering doctor", error: error.message});
     }
   },
 
