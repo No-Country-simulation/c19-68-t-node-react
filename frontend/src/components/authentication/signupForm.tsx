@@ -7,11 +7,12 @@ import { signup, signupPatient } from "@/utils/actions";
 import { useFormState } from "react-dom";
 import AuthField from "./ui/authField";
 import AuthGenderField from "./ui/authGenderField";
-import PhoneInput from "react-phone-number-input/input";
-import { E164Number } from "libphonenumber-js";
 import PhoneNumberInput from "./ui/authPhoneField";
+import { redirect } from "next/navigation";
+import CompleteDataModal from "./completeDataModal";
 
 const SignupForm = ({ role }: { role: string }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, formAction] = useFormState<any, FormData>(
     role == "professional" ? signup : signupPatient,
     undefined
@@ -138,12 +139,17 @@ const SignupForm = ({ role }: { role: string }) => {
           )}
 
           <button
-            type="submit"
+            type="button"
             className="bg-gray-800 text-white py-2 rounded-lg"
+            onClick={() => setIsModalOpen(true)}
           >
             Continue
           </button>
         </form>
+        <CompleteDataModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
 
       {/* Login Redirect */}

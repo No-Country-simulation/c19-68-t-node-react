@@ -101,21 +101,21 @@ export const signupPatient = async (
 
   // User Registration
 
-  try {
-    const result = await createPatient(data);
+  // try {
+  //   const result = await createPatient(data);
 
-    if (result.message) {
-      return { error: result.message };
-    }
-    console.log("result del registro: ", result);
+  //   if (result.message) {
+  //     return { error: result.message };
+  //   }
+  //   console.log("result del registro: ", result);
 
-    // Create session
-    // await createSession(result.user.id);
+  //   // Create session
+  //   // await createSession(result.user.id);
 
-    return { user: result.user };
-  } catch (error: unknown) {
-    return { error: (error as Error).message };
-  }
+  //   return { user: result.user };
+  // } catch (error: unknown) {
+  //   return { error: (error as Error).message };
+  // }
 
   // Create user
   // Encrypt password with bcrypt
