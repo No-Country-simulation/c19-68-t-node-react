@@ -34,7 +34,7 @@ const AuthGenderField = () => {
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="woman"
+            value="female"
           />
         </label>
 
@@ -44,7 +44,7 @@ const AuthGenderField = () => {
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="man"
+            value="male"
           />
         </label>
 

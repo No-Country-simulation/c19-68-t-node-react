@@ -3,7 +3,15 @@ import Image from "next/image";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
-const PhoneNumberInput = ({ value, onChange }) => {
+const PhoneNumberInput = ({
+  value,
+  onChange,
+  name,
+}: {
+  value: any;
+  onChange: any;
+  name: any;
+}) => {
   return (
     <div className="flex flex-col justify-between p-[0.38rem] w-[40vw]">
       <div className="flex">
@@ -20,6 +28,7 @@ const PhoneNumberInput = ({ value, onChange }) => {
         defaultCountry="US"
         value={value}
         onChange={onChange}
+        name={name}
         className=" border-b-2 border-[#89bad8] focus:outline-none focus:border-[#35799f] "
       />
     </div>

@@ -1,6 +1,10 @@
 "use server";
 
-import { loginSchema, signUpFormSchema } from "./definitions";
+import {
+  loginSchema,
+  signUpFormSchema,
+  signUpPatientFormSchema,
+} from "./definitions";
 import { createSession } from "./session";
 
 export const login = async (
@@ -14,6 +18,8 @@ export const login = async (
 
   // 1. Validate fields
 
+  console.log("La data que llega al login: ", formData);
+
   const validationResult = loginSchema.safeParse(data);
 
   if (!validationResult.success) {
@@ -23,34 +29,31 @@ export const login = async (
   // 2. Peticion para traer datos luego de l avalidacion
 
   // 3. Crear session
-  const user = { id: "2", name: "fullname usertest" };
+  // const user = { id: "2", name: "fullname usertest" };
 
-  await createSession(user.id);
+  // await createSession(user.id);
 };
 
 export const signup = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  // Comprobando la llegada de la data
+  console.log("Lo que trae el signup para doctor: ", formData);
+};
 
-  // const data = {
-  //   fullName: formData.get("fullName"),
-  //   lastName: formData.get("lastName"),
-  //   country: formData.get("country"),
-  //   phone: formData.get("phone"),
-  //   email: formData.get("email"),
-  //   bornDate: formData.get("bornDate"),
-  // };
-  // 1. Validate fields
+export const signupPatient = async (
+  prevState: { error: undefined | string },
+  formData: FormData
+) => {
+  console.log("Lo que trae el signup para paciente: ", formData);
 
-  const validationResult = signUpFormSchema.safeParse({
-    fullName: formData.get("fullName"),
+  const validationResult = signUpPatientFormSchema.safeParse({
+    firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
-    country: formData.get("country"),
-    phone: formData.get("phone"),
     email: formData.get("email"),
-    bornDate: formData.get("bornDate"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+    repassword: formData.get("repassword"),
   });
 
   if (!validationResult.success) {
@@ -62,8 +65,8 @@ export const signup = async (
   // try catch
   // const data = await createUserPost()
 
-  const user = { id: "1", fullName: "User complete name" }; //para pruebas
+  // const user = { id: "1", fullName: "User complete name" }; //para pruebas
 
   // Create session
-  await createSession(user.id);
+  // await createSession(user.id);
 };

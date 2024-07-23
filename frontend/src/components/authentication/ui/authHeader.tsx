@@ -10,7 +10,7 @@ const AuthHeader = () => {
         <div className="text-center">
           <div className="flex items-center justify-center">
             <img src="/logo.png" alt="E-medicine Logo" className="mx-3" />
-            <h1 className="text-[1.8rem] font-bold">E-medicine</h1>
+            <h2 className="text-[1.8rem] font-bold">E-medicine</h2>
           </div>
 
           <div className="w-full h-[4px] mb-4 rounded-[200px] bg-gradient-to-r from-[#812B75] via-[#89BAD8] to-[#35799F]"></div>

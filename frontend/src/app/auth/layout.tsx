@@ -11,8 +11,8 @@ export default function LoginLayout({
   return (
     <html lang="en">
       <body className={manrope.className}>
-        {children}
         <AuthHeader />
+        {children}
       </body>
     </html>
   );
