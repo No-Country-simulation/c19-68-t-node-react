@@ -29,7 +29,7 @@ const doctorSchema = new mongoose.Schema(
     professionalCertificates: [
       {
         type: String,
-        required: true,
+        required: false,
         trim: true,
       },
     ],
