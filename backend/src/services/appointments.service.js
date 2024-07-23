@@ -12,6 +12,9 @@ const serviceAppo = {
                          reasons, 
                          notes) => {
 
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
         try {
 
             //Validamos los datos obligatorios
@@ -43,7 +46,9 @@ const serviceAppo = {
                 video_call_link, 
                 reasons, 
                 notes
-            });
+              },
+              { session } // Pasar la sesión a create
+            );
 
             console.log("Registro exitoso de la cita");
 
@@ -59,7 +64,7 @@ const serviceAppo = {
               doctor.availability = updatedAvailability;
             }
 
-            await doctor.save();
+            await doctor.save({ session });
 
             return newAppointment;
 
