@@ -33,13 +33,13 @@ const controllerDoc = {
         country,
         attentionSchedule
       );
-      res.status(201).send("Successfully registered doctor");
+      res.status(201).json({ message: "Successfully registered doctor"});
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Error registering doctor");
     }
   },
-/*
+  /*
   login: asyncHandler(async(req, res) => {
     const {email, password} = req.body;
     const loggedDoctor = await new doctorService().login(email, password);
