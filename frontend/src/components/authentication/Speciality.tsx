@@ -36,14 +36,14 @@ const Speciality = () => {
         <div className="w-1/2">
           <div className="signup-label flex items-center gap-1 mb-3 justify-start">
             <IoDocumentOutline />
-            <label htmlFor="certificado" className="text-xs">
-              Certificado Profesional
+            <label htmlFor="professionalCertificates" className="text-xs">
+              URL del Certificado Profesional
             </label>
           </div>
           <Input
-            type="file"
-            id="certificado"
-            name="certify"
+            type="text"
+            id="professionalCertificates"
+            name="professionalCertificates"
             twClass="bg-gray-300 py-2 px-3 rounded-lg w-full"
           />
         </div>

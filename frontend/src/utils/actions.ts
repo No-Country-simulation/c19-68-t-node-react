@@ -5,7 +5,7 @@ import {
   signUpFormSchema,
   signUpPatientFormSchema,
 } from "./definitions";
-import { createUser } from "./handlers";
+import { createDoctor, createPatient } from "./handlers";
 import { createSession } from "./session";
 
 export const login = async (
@@ -51,6 +51,7 @@ export const signup = async (
     phone: formData.get("phone"),
     password: formData.get("password"),
     repassword: formData.get("repassword"),
+    professionalCertificates: formData.get("professionalCertificates"),
   };
 
   const validationResult = signUpFormSchema.safeParse(data);
@@ -60,7 +61,7 @@ export const signup = async (
   }
 
   try {
-    const result = await createUser(data);
+    const result = await createDoctor(data);
 
     if (result.message) {
       return { error: result.message };
@@ -101,7 +102,7 @@ export const signupPatient = async (
   // User Registration
 
   try {
-    const result = await createUser(data);
+    const result = await createPatient(data);
 
     if (result.message) {
       return { error: result.message };

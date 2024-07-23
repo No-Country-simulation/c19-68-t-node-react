@@ -19,6 +19,12 @@ export const signUpFormSchema = z
     speciality: z
       .string()
       .min(3, { message: "Speciality must be at least 3 characters long" }),
+    professionalCertificates: z
+      .string()
+      .min(8, { message: "URL certificate must be 8 or more characters long" }),
+    // professionalCertificates: z.array(z.string()).nonempty({
+    //   message: "At least one professional certificate is required",
+    // }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters long" }),
