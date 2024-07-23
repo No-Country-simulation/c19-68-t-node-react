@@ -152,22 +152,19 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
 function updateAvailability(availability, appointment) {
   const { date, startTime, endTime } = appointment;
   const appointmentTimeSlot = `${startTime}-${endTime}`;
+  const appointmentDateString = new Date(date).toISOString().split('T')[0];
   
   return availability.reduce((updatedAvailability, block) => {
       const { startDate, endDate, timeSlots } = block;
-
-      // Convertir las fechas a cadenas para comparación
       const startDateString = new Date(startDate).toISOString().split('T')[0];
       const endDateString = new Date(endDate).toISOString().split('T')[0];
-      const appointmentDateString = new Date(date).toISOString().split('T')[0];
-
+      
       // Si el bloque no incluye la fecha de la cita, se mantiene igual
       if (appointmentDateString < startDateString || appointmentDateString > endDateString) {
           updatedAvailability.push(block);
           return updatedAvailability;
       }
 
-      // Si el bloque incluye la fecha de la cita, se necesita actualizarlo
       let updatedTimeSlots = timeSlots;
 
       // Eliminar la franja horaria de la disponibilidad
@@ -179,7 +176,7 @@ function updateAvailability(availability, appointment) {
       if (startDateString < appointmentDateString) {
           updatedAvailability.push({
               startDate: startDateString,
-              endDate: appointmentDateString,
+              endDate: new Date(new Date(date).setDate(new Date(date).getDate() - 1)).toISOString().split('T')[0],
               timeSlots: timeSlots
           });
       }
