@@ -24,7 +24,7 @@ const serviceAppo = {
             await validatePatient(patient_id);
 
             // Validar existencia del doctor
-            await validateDoctor(doctor_id);
+            const doctor = await validateDoctor(doctor_id);
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
