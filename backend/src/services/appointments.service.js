@@ -172,6 +172,7 @@ function updateAvailability(availability, appointment) {
 
       // Si la fecha de la cita está dentro del bloque de disponibilidad
       if (appointmentDateString >= startDateString && appointmentDateString <= endDateString) {
+          // Eliminar la franja horaria de la disponibilidad
           updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
       }
 
@@ -179,7 +180,7 @@ function updateAvailability(availability, appointment) {
       if (startDateString < appointmentDateString) {
           updatedAvailability.push({
               startDate: startDateString,
-              endDate: new Date(new Date(date).setDate(new Date(date).getDate() - 1)).toISOString().split('T')[0],
+              endDate: appointmentDateString,
               timeSlots: timeSlots
           });
       }
@@ -203,5 +204,6 @@ function updateAvailability(availability, appointment) {
       return updatedAvailability;
   }, []);
 }
+
 
 export default serviceAppo;
