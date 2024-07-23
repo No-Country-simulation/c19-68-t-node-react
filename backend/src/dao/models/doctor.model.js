@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 import generateID from "../../helpers/generateId.js";
 
+
+const availabilityBlockSchema = new mongoose.Schema({
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  timeSlots: [{ type: String, required: true }] // Arreglo de franjas horarias disponibles
+});
+
+
 const doctorSchema = new mongoose.Schema(
   {
     photo: {
@@ -47,31 +55,7 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    attentionSchedule: [
-      {
-        day: {
-          type: String,
-          enum: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ],
-          trim: true,
-        },
-        startTime: {
-          type: String,
-          trim: true,
-        },
-        endTime: {
-          type: String,
-          trim: true,
-        },
-      },
-    ],
+    availability: [availabilityBlockSchema],
     token: {
       type: String,
       default: generateID(),
