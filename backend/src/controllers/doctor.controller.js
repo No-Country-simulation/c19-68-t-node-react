@@ -16,7 +16,7 @@ const controllerDoc = {
       speciality,
       phone,
       country,
-      attentionScavailabilityhedule,
+      availability,
     } = req.body;
 
     try {

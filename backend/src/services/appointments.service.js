@@ -152,7 +152,7 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
 function updateAvailability(availability, appointment) {
   const { date, startTime, endTime } = appointment;
   const appointmentTimeSlot = `${startTime}-${endTime}`;
-
+  
   return availability.reduce((updatedAvailability, block) => {
       const { startDate, endDate, timeSlots } = block;
 
@@ -168,7 +168,12 @@ function updateAvailability(availability, appointment) {
       }
 
       // Si el bloque incluye la fecha de la cita, se necesita actualizarlo
-      const updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
+      let updatedTimeSlots = timeSlots;
+
+      // Si la fecha de la cita está dentro del bloque de disponibilidad
+      if (appointmentDateString >= startDateString && appointmentDateString <= endDateString) {
+          updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
+      }
 
       // Agregar bloques actualizados
       if (startDateString < appointmentDateString) {
