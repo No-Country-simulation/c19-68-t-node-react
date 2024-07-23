@@ -28,6 +28,6 @@ export class AppointmentsDao {
   }
 
   async createWithSession(appointmentsData, session) {
-    return await Appointments.create(appointmentsData, { session });
+    return await Appointments.create([appointmentsData], { session });
   }
 }
