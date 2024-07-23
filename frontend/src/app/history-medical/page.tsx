@@ -1,60 +1,114 @@
 import Input from "@/components/Input";
+import Image from "next/image";
 
 const page = () => {
   return (
     <section className="w-screen h-screen">
       <div className="w-[375.83px] m-auto h-[100%]">
-        <header className="w-[85%] h-[15%] m-auto flex items-center justify-between">
-          <h2 className="font-bold text-[35.19px]">Historia Clinica</h2>
+        <header className="w-[200px] mt-6 mb-20  h-[50px] flex items-end gap-1 gradient">
+          <Image src={"/logo.png"} width={23} height={19} alt="logo" />
+          <h2 className="font-bold text-[20px]">Historia Clinica</h2>
         </header>
         <main className="w-[360px] m-auto">
           <form className="flex flex-col gap-[23px] text-[13.2px]">
-            <label>
-              <span>Nombre y Apellido</span>
+            <label className="z-10">
+              <div className="flex items-end">
+                <Image
+                  src={"/history-medical/user-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
+                <span>Nombre y Apellido</span>
+              </div>
               <Input twClass="w-[100%]" type="string" />
             </label>
-            <label className="flex justify-between">
-              <span>Sexo</span>
-              <article className="flex gap-x-1 items-center">
+            <article className="flex justify-between z-10">
+              <div className="flex items-end gap-1">
+                <Image
+                  src={"/venus-marte.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
+                <span>Sexo</span>
+              </div>
+              <label className="flex gap-x-1 items-center">
                 <span>Masculino</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-              <article className="flex gap-x-1 items-center">
+                <Input type="radio" twClass="radio" name="genre" id="genre" />
+              </label>
+              <label className="flex gap-x-1 items-center">
                 <span>Femenino</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-              <article className="flex gap-x-1 items-center">
+                <Input type="radio" twClass="radio" name="genre" id="genre" />
+              </label>
+              <label className="flex gap-x-1 items-center">
                 <span>Otro</span>
-                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-              </article>
-            </label>
+                <Input type="radio" twClass="radio" name="genre" id="genre" />
+              </label>
+            </article>
+            {/* Identificación */}
+            <article className="flex justify-between z-10">
+              <label className="flex">
+                <div className="flex items-end gap-1">
+                <Image
+                  src={"/history-medical/id-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
+                <span>ID</span>
+                </div>
+                <Input twClass="w-[96.78px]" type="string" />
+              </label>
+              <label className="">
+                <span># Nro</span>
+                <Input twClass="w-[150px]" type="string" />
+              </label>
+            </article>
+            {/* Ocupación */}
             <label className="flex justify-between items-end">
-              <span>Ocupación</span>
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/ocupation-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
+                <span>Ocupación</span>
+                </div>
               <Input twClass="w-[269.71px]" type="string" />
             </label>
+            {/* Motivo de consulta */}
             <label className="flex justify-between">
-              <div className="flex">
-                <span>ID</span>
-                <select className="w-[96.78px] h-4" name="" id=""></select>
-              </div>
-              <div className="">
-                <span>#</span>
-                <Input twClass="w-[193.82px]" type="string" />
-              </div>
-            </label>
-            <label>
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/consult-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Motivo de consulta</span>
-              <Input twClass="w-[100%]" type="string" />
+              </div>
+              <Input twClass="w-[210px]" type="string" />
             </label>
+            {/* Antecedentes personales */}
             <label className="flex flex-col w-full">
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/radiograph-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Antecedentes personales patológicos</span>
+              </div>
               <div>
                 <article className="inline-block pr-3 pt-[11px]">
                   <div className="flex items-center gap-1">
                     <span>Cardiovasculares</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -65,7 +119,7 @@ const page = () => {
                     <span>Quirurgicos</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -76,7 +130,7 @@ const page = () => {
                     <span>Pulmonares</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -87,7 +141,7 @@ const page = () => {
                     <span>Diabetes</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -98,7 +152,7 @@ const page = () => {
                     <span>Digestivos</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -109,7 +163,7 @@ const page = () => {
                     <span>Alérgicos</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -120,7 +174,7 @@ const page = () => {
                     <span>Renales</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -131,7 +185,7 @@ const page = () => {
                     <span>Transfusiones</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -142,7 +196,7 @@ const page = () => {
                     <span>Inmunodeficiencias</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
@@ -150,83 +204,96 @@ const page = () => {
                 </article>
               </div>
             </label>
-            <label>
+            {/* Medicamentos */}
+            <label className="flex justify-between">
+              <div className="flex items-center gap-1">
+              <Image
+                  src={"/history-medical/medicine-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Medicamentos</span>
-              <Input twClass="w-[100%]" type="string" />
+              </div>
+              <Input twClass="w-[240px]" type="string" />
             </label>
-            <label>
-              <span>Especifique</span>
-              <Input twClass="w-[100%]" type="string" />
-            </label>
-            <label className="flex flex-col gap-[5px]">
+            <article className="flex flex-col gap-[5px]">
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/radiograph-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Antecedentes personales No patológicos</span>
+              </div>
               <article className="inline-block">
                 <div className="flex items-center gap-4">
                   <span>Fuma?</span>
-                  <div className="flex items-center gap-1">
+                  <label className="flex items-center gap-1">
                     <span>Sí</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
-                  <div className="flex items-center gap-1">
+                  </label>
+                  <label className="flex items-center gap-1">
                     <span>No</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
+                  </label>
                 </div>
               </article>
               <article className="inline-block pr-3 pt-[11px]">
                 <div className="flex items-center gap-4">
                   <span>Toma Alcohol?</span>
-                  <div className="flex items-center gap-1">
+                  <label className="flex items-center gap-1">
                     <span>Sí</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
-                  <div className="flex items-center gap-1">
+                  </label>
+                  <label className="flex items-center gap-1">
                     <span>No</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
+                  </label>
                 </div>
               </article>
               <article className="inline-block pr-3 pt-[11px]">
                 <div className="flex items-center gap-4">
                   <span>Usa sustancias psicoactivas?</span>
-                  <div className="flex items-center gap-1">
+                  <label className="flex items-center gap-1">
                     <span>Sí</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
-                  <div className="flex items-center gap-1">
+                  </label>
+                  <label className="flex items-center gap-1">
                     <span>No</span>
                     <Input
                       type="radio"
-                      twClass="w-4 h-4"
+                      twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
+                  </label>
                 </div>
               </article>
               <article className="flex pt-3">
@@ -238,38 +305,66 @@ const page = () => {
                   id="genre"
                 />
               </article>
-            </label>
-            <label>
+            </article>
+            <article>
+              <div className="flex items-center gap-1">
+              <Image
+                  src={"/history-medical/family-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <h3>Antecedentes Familiares</h3>
+              </div>
 
               <div className="flex flex-col gap-[17px]">
-                <article>
+                <label className="flex items-center">
                   <span>Enfermedades</span>
                   <Input twClass="w-[100%]" type="string" />
+                </label>
+                <article className="flex items-center justify-between gap-1">
+
+                  <span>Hermanos</span>
+                  <label className="flex items-center gap-1">
+                  <span>Sí</span>
+                  <Input twClass="radio" type="radio" />
+                  </label>
+                  <label className="flex items-center gap-1">
+                  <span>No</span>
+                  <Input twClass="radio" type="radio" />
+                  </label>
+                  <label>
+                    <span>¿Cuantos?</span>
+                    <Input twClass="w-[75px]" type="string" />
+                  </label>
                 </article>
-                <article>
-                  <span>Cantidad de hermanos</span>
-                  <Input twClass="w-[100%]" type="string" />
-                </article>
-                <article>
+                <label className="flex justify-between items-end">
                   <span>Enfermedades que padece:</span>
-                  <Input twClass="w-[100%]" type="string" />
-                </article>
+                  <Input twClass="w-[180px]" type="string" />
+                </label>
                 <article className="flex gap-4">
                   <span>¿Convive con más personas?</span>
-                  <div className="flex items-center gap-1">
+                  <label className="flex items-center gap-1">
                     <span>Sí</span>
-                    <Input twClass="w-4 h-4" type="radio" />
-                  </div>
-                  <div className="flex items-center gap-1">
+                    <Input twClass="radio" type="radio" />
+                  </label>
+                  <label className="flex items-center gap-1">
                     <span>No</span>
-                    <Input twClass="w-4 h-4" type="radio" />
-                  </div>
+                    <Input twClass="radio" type="radio" />
+                  </label>
                 </article>
               </div>
-            </label>
+            </article>
             <label className="flex flex-col gap-4">
-              <span>Antecedentes Gineco-Obstétrico:</span>
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/radiograph-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
+                <span>Antecedentes Gineco-Obstétrico:</span>
+                </div>
               <div className="flex gap-[11px]">
                 <article className="flex items-end">
                   <span>Menarquia</span>
@@ -287,29 +382,45 @@ const page = () => {
                   <Input twClass="w-[66.53px]" type="string" />
                 </article>
               </div>
-              <article className="flex gap-4">
-                <span>Usa métodos anticonceptivos</span>
+              <article className="flex justify-between gap-4">
+                <span>¿Usa métodos anticonceptivos?</span>
                 <div className="flex items-center gap-1">
                   <span>Sí</span>
-                  <Input twClass="w-4 h-4" type="radio" />
+                  <Input twClass="radio" type="radio" />
                 </div>
                 <div className="flex items-center gap-1">
                   <span>No</span>
-                  <Input twClass="w-4 h-4" type="radio" />
+                  <Input twClass="radio" type="radio" />
                 </div>
               </article>
               <article className="flex items-end">
-                <span>Cuales:</span>
+                <span>¿Cuales?</span>
 
                 <Input twClass="w-[320.29px]" type="string" />
               </article>
             </label>
             <label className="flex flex-col">
+              <div className="flex items-end gap-1">
+              <Image
+                  src={"/history-medical/radiograph-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Enfermedad actual del paciente</span>
+              </div>
               <Input twClass="w-full" type="string" />
             </label>
             <label>
+              <div className="flex items-center gap-1">
+              <Image
+                  src={"/history-medical/estetoscopio-icon.png"}
+                  width={23}
+                  height={19}
+                  alt="logo"
+                />
               <span>Exploración física del paciente</span>
+              </div>
               <div className="flex flex-wrap gap-y-4 justify-between">
                 <span className="flex items-end">Signos vitales</span>
                 <article className="flex items-end">
@@ -370,7 +481,6 @@ const page = () => {
                 </article>
               </div>
             </label>
-
             <button className="w-[70%] rounded-lg bg-gray-400 py-3 m-auto my-4">
               Guardar
             </button>
