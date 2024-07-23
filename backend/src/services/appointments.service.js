@@ -74,6 +74,7 @@ async function validateDoctor(doctor_id) {
       console.error("ERROR: El doctor no existe");
       throw new Error("Doctor does not exist");
   }
+  return isDoctorValid;
 }
 
 async function validateAppointment(patient_id, doctor_id, date, startTime, endTime) {
