@@ -50,6 +50,7 @@ export const signupPatient = async (
   const validationResult = signUpPatientFormSchema.safeParse({
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
+    gender: formData.get("gender"),
     email: formData.get("email"),
     phone: formData.get("phone"),
     password: formData.get("password"),
