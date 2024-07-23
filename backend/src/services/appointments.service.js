@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { appointmentsManager, patientManager, doctorManager } from "../dao/index.dao.js";
 
 
