@@ -26,4 +26,8 @@ export class AppointmentsDao {
   async findAll() {
     return await Appointments.find()
   }
+
+  async createWithSession(appointmentsData, session) {
+    return await Appointments.create(appointmentsData, { session });
+  }
 }

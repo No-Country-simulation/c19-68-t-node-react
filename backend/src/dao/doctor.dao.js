@@ -26,4 +26,11 @@ export class DoctorDao {
   async findOne(info){
     return await Doctor.findOne(info)
   }
+
+  async updateWithSession(id, updateData, session) {
+    return await Doctor.findByIdAndUpdate(id, updateData, {
+        new: true,
+        session
+    });
+  }
 }

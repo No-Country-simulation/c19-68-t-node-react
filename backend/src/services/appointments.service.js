@@ -36,7 +36,7 @@ const serviceAppo = {
             await validateAppointment(patient_id, doctor_id, date, startTime, endTime);
 
             //Grabamos el modelo Appointment
-            const newAppointment = await appointmentsManager.create({
+            const newAppointment = await appointmentsManager.createWithSession({
                 patient_id, 
                 doctor_id,
                 date,
@@ -47,7 +47,7 @@ const serviceAppo = {
                 reasons, 
                 notes
               },
-              { session } // Pasar la sesión a create
+              session
             );
 
             console.log("Registro exitoso de la cita");
@@ -55,20 +55,27 @@ const serviceAppo = {
             // Actualizamos la disponibilidad del doctor
             const updatedAvailability = updateAvailability(doctor.availability, { date, startTime, endTime });
 
-            //Verificamos si el doctor se quedo sin horas disponibles
-            if (!hasAvailableTimeSlots(updatedAvailability)) {
-              console.warn("El doctor ya no tiene franjas horarias disponibles.");
-              //Actualizar el estado del doctor a "no disponible"
-              doctor.availabilityStatus = 'not_available';
-            } else {
-              doctor.availability = updatedAvailability;
-            }
+            // Verificamos si el doctor ya no tiene franjas horarias disponibles
+            const hasAvailableTimeSlots = updatedAvailability.some(block => block.timeSlots.length > 0);
 
-            await doctor.save({ session });
+            // Actualizamos la disponibilidad y el estado del doctor
+            await doctorManager.updateWithSession(
+                                                    doctor_id,
+                                                    {
+                                                      availability: updatedAvailability,
+                                                      availabilityStatus: hasAvailableTimeSlots ? 'available' : 'not_available'
+                                                    },
+                                                    session
+                                                  );
+
+            await session.commitTransaction();
+            session.endSession();
 
             return newAppointment;
 
         } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
             throw new Error(error.message);
         }
     }
