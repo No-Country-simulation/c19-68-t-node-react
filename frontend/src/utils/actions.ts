@@ -5,6 +5,7 @@ import {
   signUpFormSchema,
   signUpPatientFormSchema,
 } from "./definitions";
+import { createUser } from "./handlers";
 import { createSession } from "./session";
 
 export const login = async (
@@ -39,6 +40,40 @@ export const signup = async (
   formData: FormData
 ) => {
   console.log("Lo que trae el signup para doctor: ", formData);
+
+  const data = {
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    gender: formData.get("gender"),
+    email: formData.get("email"),
+    country: formData.get("country"),
+    speciality: formData.get("speciality"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+    repassword: formData.get("repassword"),
+  };
+
+  const validationResult = signUpFormSchema.safeParse(data);
+
+  if (!validationResult.success) {
+    return { errors: validationResult.error.flatten().fieldErrors };
+  }
+
+  try {
+    const result = await createUser(data);
+
+    if (result.message) {
+      return { error: result.message };
+    }
+    console.log("result del registro: ", result);
+
+    // Create session
+    // await createSession(result.user.id);
+
+    return { user: result.user };
+  } catch (error: unknown) {
+    return { error: (error as Error).message };
+  }
 };
 
 export const signupPatient = async (
@@ -47,7 +82,7 @@ export const signupPatient = async (
 ) => {
   console.log("Lo que trae el signup para paciente: ", formData);
 
-  const validationResult = signUpPatientFormSchema.safeParse({
+  const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     gender: formData.get("gender"),
@@ -55,10 +90,30 @@ export const signupPatient = async (
     phone: formData.get("phone"),
     password: formData.get("password"),
     repassword: formData.get("repassword"),
-  });
+  };
+
+  const validationResult = signUpPatientFormSchema.safeParse(data);
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors };
+  }
+
+  // User Registration
+
+  try {
+    const result = await createUser(data);
+
+    if (result.message) {
+      return { error: result.message };
+    }
+    console.log("result del registro: ", result);
+
+    // Create session
+    // await createSession(result.user.id);
+
+    return { user: result.user };
+  } catch (error: unknown) {
+    return { error: (error as Error).message };
   }
 
   // Create user

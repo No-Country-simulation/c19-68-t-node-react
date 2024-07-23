@@ -20,12 +20,12 @@ const Speciality = () => {
         <div className="w-1/2">
           <div className="signup-label flex items-center gap-1 mb-3 justify-start">
             <MdOutlineBadge />
-            <label htmlFor="specialty">Especialidad</label>
+            <label htmlFor="speciality">Especialidad</label>
           </div>
           <select
             className="bg-gray-300 py-2 px-3 rounded-lg w-full"
-            name="specialty"
-            id="specialty"
+            name="speciality"
+            id="speciality"
           >
             <option disabled value=""></option>
             <option value="cardiology">Cardiología</option>
@@ -43,7 +43,7 @@ const Speciality = () => {
           <Input
             type="file"
             id="certificado"
-            name="certificado"
+            name="certify"
             twClass="bg-gray-300 py-2 px-3 rounded-lg w-full"
           />
         </div>
