@@ -27,8 +27,8 @@ const serviceAppo = {
             // Validar existencia del paciente
             await validatePatient(patient_id);
 
-            // Validar existencia del doctor
-            const doctor = await validateDoctor(doctor_id);
+            // Validar existencia del doctor y si existe, su estado
+            await validateDoctorAndStatus(doctor_id);
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
@@ -74,13 +74,15 @@ async function validatePatient(patient_id) {
   }
 }
 
-async function validateDoctor(doctor_id) {
-  const isDoctorValid = await doctorManager.findById(doctor_id);
-  if (!isDoctorValid) {
+async function validateDoctorAndStatus(doctor_id) {
+  const doctor = await doctorManager.findById(doctor_id);
+  if (!doctor) {
       console.error("ERROR: El doctor no existe");
       throw new Error("Doctor does not exist");
+  }else if(doctor.availabilityStatus !== 'available'){
+    console.error("ERROR: El doctor no está disponible");
+    throw new Error("Doctor is not available");
   }
-  return isDoctorValid;
 }
 
 async function validateAppointment(patient_id, doctor_id, date, startTime, endTime) {
