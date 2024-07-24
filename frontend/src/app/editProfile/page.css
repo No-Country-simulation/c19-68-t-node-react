@@ -5,17 +5,8 @@
   align-items: center;
 }
 
-.gradient {
-  border-bottom: 3px solid transparent;
-  border-image: linear-gradient(to left, #812B75 18.9%, #89BAD8 57.9%, #35799F 100%
-  ) 1; 
-}
 
-.radio{
-  accent-color: #812B75;
-  width: 15px;
-  height: 15px;
-}
+
 @media (min-width: 1024px) {
   .grid__profile {
     grid-template-rows: 28px 350px 180px;
