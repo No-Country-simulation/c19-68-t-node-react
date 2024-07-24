@@ -57,7 +57,7 @@ const serviceAppo = {
                 date,
                 startTime,
                 endTime, 
-                state: "confirmed",
+                state: "pending",
                 video_call_link, 
                 reasons, 
                 notes
