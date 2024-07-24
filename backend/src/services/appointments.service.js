@@ -30,6 +30,9 @@ const serviceAppo = {
             // Validar existencia del doctor y si existe, su estado
             await validateDoctorAndStatus(doctor_id);
 
+            // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
+            await checkAvailability(doctor_id, date, startTime, endTime);
+
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
 
@@ -147,6 +150,26 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
   if(cantidadCitas){
     console.error("ERROR: El paciente ya tiene una cita con este doctor en este día");
     throw new Error("The patient already has an appointment with this doctor on this day");    
+  }
+}
+
+
+async function checkAvailability(doctor_id, date, startTime, endTime) {
+  const doctor = await doctorManager.findById(doctor_id);
+
+  // Obtener la disponibilidad horaria actualizada del doctor
+  const realAvailability = await getRealAvailability(doctor_id, date, date);
+
+  // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
+  const isAvailable = realAvailability.some(slot => 
+    slot.date.toISOString() === date.toISOString() &&
+    slot.startTime <= startTime &&
+    slot.endTime >= endTime
+  );
+
+  if (!isAvailable) {
+    console.error("ERROR: La franja horaria seleccionada no está disponible");
+    throw new Error("The selected time slot is not available");
   }
 }
 
