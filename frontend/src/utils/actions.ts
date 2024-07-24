@@ -29,7 +29,17 @@ export const login = async (
 
   const result = await userLogin(data);
 
+  //Crea session o localstorage
+  if (result.message) {
+    return { error: result.message };
+  }
   console.log(result);
+
+  // Create session
+
+  await createSession(result.token, result.role);
+
+  return result;
 };
 
 export const signup = async (

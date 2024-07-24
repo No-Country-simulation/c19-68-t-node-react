@@ -1,28 +1,27 @@
 "use server";
+import axios from "axios";
 
 export const userLogin = async (data: Record<string, unknown>) => {
   try {
-    const response = await fetch(
-      "https://inmobiliariaasg.schasemback.com/user/logged",
+    const response = await axios.post(
+      "http://localhost:4700/user/logged",
+      data,
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       }
     );
 
-    if (!response.ok) {
-      const errorDetails = await response.json();
-      throw new Error(
-        `Failed to create user: ${errorDetails.message || response.statusText}`
-      );
-    }
-
-    return await response.json();
+    return response.data;
   } catch (error: unknown) {
-    throw new Error(`Failed to login user: ${(error as Error).message}`);
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        `Failed to login user: ${error.response?.data.message || error.message}`
+      );
+    } else {
+      throw new Error("Failed to login user: An unknown error occurred");
+    }
   }
 };
 
