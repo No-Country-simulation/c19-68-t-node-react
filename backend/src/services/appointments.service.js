@@ -30,8 +30,11 @@ const serviceAppo = {
             // Validar existencia del doctor y si existe, su estado
             await validateDoctorAndStatus(doctor_id);
 
+            // Obtener la disponibilidad horaria actualizada del doctor
+            const realAvailability = await getRealAvailability(doctor_id, date, date);
+
             // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
-            await checkAvailability(doctor_id, date, startTime, endTime);
+            await checkAvailability(realAvailability, date, startTime, endTime);
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
@@ -55,6 +58,11 @@ const serviceAppo = {
             );
 
             console.log("Registro exitoso de la cita");
+
+            //Si al doctor ya no le quedan mas citas disponibles, se cambia su estado a not_available
+            if(realAvailability.length == 1){
+              doctorManager.updateWithSession(doctor_id, {availabilityStatus: "not_available"}, session);
+            }
 
             await session.commitTransaction();
             session.endSession();
@@ -154,12 +162,7 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
 }
 
 
-async function checkAvailability(doctor_id, date, startTime, endTime) {
-  const doctor = await doctorManager.findById(doctor_id);
-
-  // Obtener la disponibilidad horaria actualizada del doctor
-  const realAvailability = await getRealAvailability(doctor_id, date, date);
-
+async function checkAvailability(realAvailability, date, startTime, endTime) {
   // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
   const isAvailable = realAvailability.some(slot => 
     slot.date.toISOString() === date.toISOString() &&
