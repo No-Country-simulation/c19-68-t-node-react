@@ -30,7 +30,17 @@ const serviceAppo = {
             // Validar existencia del doctor
             await validateDoctor(doctor_id);
 
-            await getTimeSlotsForDate(doctor_id, date);
+            // Buscamos la disponibilidad general del doctor para el día específico
+            const doctorTimeSlots = await getDoctorTimeSlotsForDate(doctor_id, date);
+
+            // Buscamos las citas del doctor para el dia especifico
+            const doctorAppo = await getAppoinmentsForDate(doctor_id, date);
+
+            //Obtenemos las horas disponibles del doctor para el dia especifico
+            const availableTimeSlots = await getAvailableTimeSlots(doctorTimeSlots, doctorAppo);
+
+            
+
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
@@ -158,7 +168,7 @@ const getDoctorTimeSlotsForDate = async (doctorId, targetDate) => {
   const endOfDay = new Date(date.setHours(23, 59, 59, 999));
 
   try {
-    // Buscar el doctor y su disponibilidad para el día específico
+    // Buscar su disponibilidad para el día específico
     const doctor = await doctorManager.findOne({
       _id: doctorId,
       'availability.startDate': { $lte: endOfDay },
@@ -172,6 +182,7 @@ const getDoctorTimeSlotsForDate = async (doctorId, targetDate) => {
 
     const timeSlots = doctor.availability[0].timeSlots;
     console.log("timeSlots --> " + timeSlots);
+    return timeSlots;
 
   } catch (error) {
     console.error(error.message);
@@ -179,33 +190,37 @@ const getDoctorTimeSlotsForDate = async (doctorId, targetDate) => {
   }
 }
 
-const getAppoinmentsTimeSlotsForDate = async (doctorId, targetDate) => {
-  // Convertir la fecha objetivo a un formato de solo fecha (sin hora)
-  const date = new Date(targetDate);
-  const startOfDay = new Date(date.setHours(0, 0, 0, 0));
-  const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+const getAppoinmentsForDate = async (doctorId, targetDate) => {
+  console.log("targetDate --> " + targetDate);
 
   try {
     // Buscar las citas del doctor para el día específico
-    const doctor = await doctorManager.findOne({
-      _id: doctorId,
-      'availability.startDate': { $lte: endOfDay },
-      'availability.endDate': { $gte: startOfDay }
+    const appo = await appointmentsManager.find({
+      doctor_id: doctorId,
+      date: targetDate
     });
 
-    if (!doctor) {
-      console.log("No hay horario disponible para esa fecha");
-      throw new Error("There is no time available for that date");
-    }
-
-    const timeSlots = doctor.availability[0].timeSlots;
-    console.log("timeSlots --> " + timeSlots);
+    return appo;
 
   } catch (error) {
     console.error(error.message);
     throw new Error(error.message);
   }
 }
+
+const getAvailableTimeSlots = (generalSlots, bookedSlots) => {
+  // Helper function to check if a time slot is within the booked slots
+  const isSlotBooked = (slot, bookedSlots) => {
+    return bookedSlots.some(booked => 
+      slot === `${booked.startTime}-${booked.endTime}`
+    );
+  };
+
+  // Filter out the booked slots from the general slots
+  const availableSlots = generalSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
+
+  return availableSlots;
+};
 
 
 export default serviceAppo;
