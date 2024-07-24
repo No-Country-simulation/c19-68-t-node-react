@@ -53,22 +53,6 @@ const serviceAppo = {
 
             console.log("Registro exitoso de la cita");
 
-            // Actualizamos la disponibilidad del doctor
-            const updatedAvailability = updateAvailability(doctor.availability, { date, startTime, endTime });
-
-            // Verificamos si el doctor ya no tiene franjas horarias disponibles
-            const hasAvailableTimeSlots = updatedAvailability.some(block => block.timeSlots.length > 0);
-
-            // Actualizamos la disponibilidad y el estado del doctor
-            await doctorManager.updateWithSession(
-                                                    doctor_id,
-                                                    {
-                                                      availability: updatedAvailability,
-                                                      availabilityStatus: hasAvailableTimeSlots ? 'available' : 'not_available'
-                                                    },
-                                                    session
-                                                  );
-
             await session.commitTransaction();
             session.endSession();
 
@@ -165,88 +149,43 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
 }
 
 
-/**
- * Actualiza la disponibilidad de un doctor en función de una cita.
- * @param {Array} availability - La disponibilidad actual del doctor.
- * @param {Object} appointment - La cita reservada.
- * @returns {Array} - La nueva disponibilidad actualizada.
- */
-function updateAvailability(availability, appointment) {
-  const { date, startTime, endTime } = appointment;
-  const appointmentTimeSlot = `${startTime}-${endTime}`;
-  const appointmentDateString = new Date(date).toISOString().split('T')[0];
+const getRealAvailability = async (doctorId, startDate, endDate) => {
+  // Obtener la disponibilidad general del doctor
+  const doctor = await doctorManager.findById(doctorId);
   
-  return availability.reduce((updatedAvailability, block) => {
-      const { startDate, endDate, timeSlots } = block;
-      const startDateString = new Date(startDate).toISOString().split('T')[0];
-      const endDateString = new Date(endDate).toISOString().split('T')[0];
-      
-      // Si el bloque no incluye la fecha de la cita, se mantiene igual
-      if (appointmentDateString < startDateString || appointmentDateString > endDateString) {
-          updatedAvailability.push(block);
-          return updatedAvailability;
-      }
+  // Obtener citas dentro del rango de fechas
+  const appointments = await appointmentsManager.findOne({ doctor_id: doctorId,
+                                                           date: { $gte: startDate, $lte: endDate }
+                                                         });
 
-      let updatedTimeSlots = timeSlots;
+  // Convertir disponibilidad general a un arreglo
+  let generalAvailability = [];
+  doctor.availability.forEach(block => {
+    if (block.startDate <= endDate && block.endDate >= startDate) {
+      block.timeSlots.forEach(slot => {
+        let currentDate = new Date(block.startDate);
+        while (currentDate <= block.endDate) {
+          if (currentDate >= startDate && currentDate <= endDate) {
+            generalAvailability.push({
+              date: new Date(currentDate),
+              startTime: slot.startTime,
+              endTime: slot.endTime,
+            });
+          }
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      });
+    }
+  });
 
-      // Eliminar la franja horaria de la disponibilidad
-      if (appointmentDateString >= startDateString && appointmentDateString <= endDateString) {
-          updatedTimeSlots = timeSlots.filter(timeSlot => timeSlot !== appointmentTimeSlot);
-      }
+  // Restar citas de la disponibilidad general
+  appointments.forEach(appointment => {
+    generalAvailability = generalAvailability.filter(
+      slot => !(slot.date.toISOString() === appointment.date.toISOString() && slot.startTime === appointment.startTime)
+    );
+  });
 
-      // Agregar bloques actualizados
-      if (startDateString < appointmentDateString) {
-          updatedAvailability.push({
-              startDate: startDateString,
-              endDate: new Date(new Date(date).setDate(new Date(date).getDate() - 1)).toISOString().split('T')[0],
-              timeSlots: timeSlots
-          });
-      }
-
-      if (startDateString <= appointmentDateString && endDateString >= appointmentDateString) {
-          updatedAvailability.push({
-              startDate: appointmentDateString,
-              endDate: appointmentDateString,
-              timeSlots: updatedTimeSlots
-          });
-      }
-
-      if (endDateString > appointmentDateString) {
-          updatedAvailability.push({
-              startDate: new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString().split('T')[0],
-              endDate: endDateString,
-              timeSlots: timeSlots
-          });
-      }
-
-      return updatedAvailability;
-  }, []);
-}
-
-
-/**
- * Verifica si el doctor tiene franjas horarias (timeSlots) disponibles.
- * @param {Array} availability - La disponibilidad actual del doctor.
- * @returns {Boolean} - Retorna `true` si hay franjas horarias disponibles, `false` en caso contrario.
- */
-function hasAvailableTimeSlots(availability) {
-  return availability.some(block => block.timeSlots.length > 0);
-}
-
-
-const updateDoctorAvailability = async (doctor, updatedAvailability) => {
-  // Verificar si hay franjas horarias disponibles
-  if (!hasAvailableTimeSlots(updatedAvailability)) {
-    console.warn("El doctor ya no tiene franjas horarias disponibles.");
-    // Actualizar el estado del doctor a "no disponible"
-    doctor.availabilityStatus = 'not_available';
-  } else {
-    doctor.availabilityStatus = 'available';
-    doctor.availability = updatedAvailability;
-  }
-
-  // Guardar los cambios en la base de datos
-  await doctor.save();
+  return generalAvailability;
 };
 
 
