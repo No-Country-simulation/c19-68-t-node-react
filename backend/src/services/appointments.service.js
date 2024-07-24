@@ -211,12 +211,15 @@ const getRealAvailability = async (doctorId) => {
     }
   });
 
-  // Restar citas de la disponibilidad general
-  appointments.forEach(appointment => {
-    generalAvailability = generalAvailability.filter(
-      slot => !(slot.date.toISOString() === appointment.date.toISOString() && slot.startTime === appointment.startTime)
-    );
-  });
+  
+  if(appointments != null && appointments.length > 0){
+    // Restar citas de la disponibilidad general
+    appointments.forEach(appointment => {
+      generalAvailability = generalAvailability.filter(
+        slot => !(slot.date.toISOString() === appointment.date.toISOString() && slot.startTime === appointment.startTime)
+      );
+    });
+  }
 
   return generalAvailability;
 };
