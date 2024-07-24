@@ -33,6 +33,7 @@ const serviceAppo = {
             // Buscamos la disponibilidad general del doctor para el día de la cita
             const doctorTimeSlots = await getDoctorTimeSlotsForDate(doctor_id, date);
 
+
             // Buscamos las citas del doctor para el dia de la cita que se quiere registrar
             const doctorAppo = await getAppoinmentsForDate(doctor_id, date);
 
@@ -41,6 +42,7 @@ const serviceAppo = {
 
             //Verificamos si la hora de la cita deseada esta en el horario disponible del doctor
             isTimeSlotAvailable(availableTimeSlots, startTime, endTime);
+
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
