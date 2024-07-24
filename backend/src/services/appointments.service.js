@@ -178,6 +178,11 @@ async function checkAvailability(realAvailability, date, startTime, endTime) {
 
 
 const getRealAvailability = async (doctorId, startDate, endDate) => {
+
+  const now = new Date();
+  const startDate = new Date(now.getFullYear(), now.getMonth(), 1); // Primer día del mes actual
+  const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // Último día del mes actual
+
   // Obtener la disponibilidad general del doctor
   const doctor = await doctorManager.findById(doctorId);
   
