@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { SetStateAction, useState } from "react";
 
 const AuthGenderField = () => {
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("test");
 
   const handleGenderChange = (event: {
     target: { value: SetStateAction<string> };
@@ -14,10 +14,7 @@ const AuthGenderField = () => {
   console.log("gender: ", gender);
 
   return (
-    <label
-      htmlFor="gender-patiend"
-      className="w-full flex justify-between py-5"
-    >
+    <label htmlFor="gender" className="w-full flex justify-between py-5">
       <div className="flex gap-2 ">
         <Image
           src="/assets/signup/gender-icon.png"
@@ -34,7 +31,7 @@ const AuthGenderField = () => {
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="woman"
+            value="female"
           />
         </label>
 
@@ -44,7 +41,7 @@ const AuthGenderField = () => {
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="man"
+            value="male"
           />
         </label>
 
