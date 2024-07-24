@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //alternative port
-const PORT = process.env.PORT || 6000;
+//const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 8080;
 
 //connect to database from config/db.js
 connectDB();
