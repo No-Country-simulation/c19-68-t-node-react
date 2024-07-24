@@ -1,6 +1,10 @@
+import dotenv from "dotenv";
+//config environment variables
+dotenv.config();
+
 import Stripe from 'stripe';
 
-const stripe = new Stripe('sk_test_51PeYvGKd1BoJcpBk1btv0VfLMCWQk99th9mJbGFmhQoiRhPWCOWSJh69ryDCqdr7N46BLBkHCH6R7NKD7ctlkx82005sDcRt2p');
+const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 
 const controllerPay = {
