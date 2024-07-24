@@ -27,14 +27,10 @@ const serviceAppo = {
             // Validar existencia del paciente
             await validatePatient(patient_id);
 
-            // Validar existencia del doctor y si existe, su estado
-            await validateDoctorAndStatus(doctor_id);
+            // Validar existencia del doctor
+            await validateDoctor(doctor_id);
 
-            // Obtener la disponibilidad horaria actualizada del doctor
-            const realAvailability = await getRealAvailability(doctor_id);
-
-            // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
-            await checkAvailability(realAvailability, date, startTime, endTime);
+            await getTimeSlotsForDate(doctor_id, date);
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
@@ -59,11 +55,6 @@ const serviceAppo = {
 
             console.log("Registro exitoso de la cita");
 
-            //Si al doctor ya no le quedan mas citas disponibles, se cambia su estado a not_available
-            if(realAvailability.length == 1){
-              doctorManager.updateWithSession(doctor_id, {availabilityStatus: "not_available"}, session);
-            }
-
             await session.commitTransaction();
             session.endSession();
 
@@ -85,14 +76,11 @@ async function validatePatient(patient_id) {
   }
 }
 
-async function validateDoctorAndStatus(doctor_id) {
+async function validateDoctor(doctor_id) {
   const doctor = await doctorManager.findById(doctor_id);
   if (!doctor) {
       console.error("ERROR: El doctor no existe");
       throw new Error("Doctor does not exist");
-  }else if(doctor.availabilityStatus !== 'available'){
-    console.error("ERROR: El doctor no está disponible");
-    throw new Error("Doctor is not available");
   }
 }
 
@@ -162,67 +150,33 @@ async function verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date) {
 }
 
 
-async function checkAvailability(realAvailability, date, startTime, endTime) {
-  // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
-  const isAvailable = realAvailability.some(slot => 
-    slot.date.toISOString() === date.toISOString() &&
-    slot.startTime <= startTime &&
-    slot.endTime >= endTime
-  );
 
-  if (!isAvailable) {
-    console.error("ERROR: La franja horaria seleccionada no está disponible");
-    throw new Error("The selected time slot is not available");
+const getTimeSlotsForDate = async (doctorId, targetDate) => {
+  // Convertir la fecha objetivo a un formato de solo fecha (sin hora)
+  const date = new Date(targetDate);
+  const startOfDay = new Date(date.setHours(0, 0, 0, 0));
+  const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+
+  try {
+    // Buscar el doctor y su disponibilidad para el día específico
+    const doctor = await doctorManager.findOne({
+      _id: doctorId,
+      'availability.startDate': { $lte: endOfDay },
+      'availability.endDate': { $gte: startOfDay }
+    });
+
+    if (!doctor) {
+      console.log("No hay horario disponible para esa fecha");
+      throw new Error("There is no time available for that date");
+    }
+
+    const timeSlots = doctor.availability[0].timeSlots;
+
+  } catch (error) {
+    console.error(error.message);
+    throw new Error(error.message);
   }
 }
-
-
-const getRealAvailability = async (doctorId) => {
-
-  const now = new Date();
-  const startDate = new Date(now.getFullYear(), now.getMonth(), 1); // Primer día del mes actual
-  const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // Último día del mes actual
-
-  // Obtener la disponibilidad general del doctor
-  const doctor = await doctorManager.findById(doctorId);
-  
-  // Obtener citas dentro del rango de fechas
-  const appointments = await appointmentsManager.findOne({ doctor_id: doctorId,
-                                                           date: { $gte: startDate, $lte: endDate }
-                                                         });
-
-  // Convertir disponibilidad general a un arreglo
-  let generalAvailability = [];
-  doctor.availability.forEach(block => {
-    if (block.startDate <= endDate && block.endDate >= startDate) {
-      block.timeSlots.forEach(slot => {
-        let currentDate = new Date(block.startDate);
-        while (currentDate <= block.endDate) {
-          if (currentDate >= startDate && currentDate <= endDate) {
-            generalAvailability.push({
-              date: new Date(currentDate),
-              startTime: slot.startTime,
-              endTime: slot.endTime,
-            });
-          }
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      });
-    }
-  });
-
-  
-  if(appointments != null && appointments.length > 0){
-    // Restar citas de la disponibilidad general
-    appointments.forEach(appointment => {
-      generalAvailability = generalAvailability.filter(
-        slot => !(slot.date.toISOString() === appointment.date.toISOString() && slot.startTime === appointment.startTime)
-      );
-    });
-  }
-
-  return generalAvailability;
-};
 
 
 export default serviceAppo;
