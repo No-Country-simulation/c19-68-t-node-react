@@ -76,7 +76,8 @@ export const signup = async (
       return { error: result.message };
     }
 
-    return { user: result.user };
+    await createSession(result.token, result.role);
+    return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
   }
@@ -117,7 +118,8 @@ export const signupPatient = async (
     // Create session
     // await createSession(result.user.id);
 
-    return { user: result.user };
+    await createSession(result.token, result.role);
+    return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
   }
