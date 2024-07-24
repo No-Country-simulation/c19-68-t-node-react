@@ -31,7 +31,7 @@ const serviceAppo = {
             await validateDoctorAndStatus(doctor_id);
 
             // Obtener la disponibilidad horaria actualizada del doctor
-            const realAvailability = await getRealAvailability(doctor_id, date, date);
+            const realAvailability = await getRealAvailability(doctor_id);
 
             // Verificar si la cita está dentro de la disponibilidad horaria actualizada del doctor
             await checkAvailability(realAvailability, date, startTime, endTime);
@@ -177,7 +177,7 @@ async function checkAvailability(realAvailability, date, startTime, endTime) {
 }
 
 
-const getRealAvailability = async (doctorId, startDate, endDate) => {
+const getRealAvailability = async (doctorId) => {
 
   const now = new Date();
   const startDate = new Date(now.getFullYear(), now.getMonth(), 1); // Primer día del mes actual
