@@ -5,7 +5,7 @@ import {
   signUpFormSchema,
   signUpPatientFormSchema,
 } from "./definitions";
-import { createDoctor, createPatient } from "./handlers";
+import { createDoctor, createPatient, userLogin } from "./handlers";
 import { createSession } from "./session";
 
 export const login = async (
@@ -27,12 +27,9 @@ export const login = async (
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  // 2. Peticion para traer datos luego de l avalidacion
+  const result = await userLogin(data);
 
-  // 3. Crear session
-  // const user = { id: "2", name: "fullname usertest" };
-
-  // await createSession(user.id);
+  console.log(result);
 };
 
 export const signup = async (
@@ -54,6 +51,8 @@ export const signup = async (
     professionalCertificates: formData.get("professionalCertificates"),
   };
 
+  console.log("Lo de la data: ", data);
+
   const validationResult = signUpFormSchema.safeParse(data);
 
   if (!validationResult.success) {
@@ -66,10 +65,6 @@ export const signup = async (
     if (result.message) {
       return { error: result.message };
     }
-    console.log("result del registro: ", result);
-
-    // Create session
-    // await createSession(result.user.id);
 
     return { user: result.user };
   } catch (error: unknown) {
@@ -101,21 +96,21 @@ export const signupPatient = async (
 
   // User Registration
 
-  // try {
-  //   const result = await createPatient(data);
+  try {
+    const result = await createPatient(data);
 
-  //   if (result.message) {
-  //     return { error: result.message };
-  //   }
-  //   console.log("result del registro: ", result);
+    if (result.message) {
+      return { error: result.message };
+    }
+    console.log("result del registro: ", result);
 
-  //   // Create session
-  //   // await createSession(result.user.id);
+    // Create session
+    // await createSession(result.user.id);
 
-  //   return { user: result.user };
-  // } catch (error: unknown) {
-  //   return { error: (error as Error).message };
-  // }
+    return { user: result.user };
+  } catch (error: unknown) {
+    return { error: (error as Error).message };
+  }
 
   // Create user
   // Encrypt password with bcrypt

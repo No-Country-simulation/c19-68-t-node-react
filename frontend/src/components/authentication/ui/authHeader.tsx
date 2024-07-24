@@ -1,4 +1,5 @@
 import BallBackground from "@/components/ui/ballBackground";
+import Image from "next/image";
 import React from "react";
 
 const AuthHeader = () => {
@@ -9,7 +10,13 @@ const AuthHeader = () => {
       <div className="header-container">
         <div className="text-center">
           <div className="flex items-center justify-center">
-            <img src="/logo.png" alt="E-medicine Logo" className="mx-3" />
+            <Image
+              src="/logo.png"
+              alt="E-medicine Logo"
+              className="mx-3"
+              width={24}
+              height={24}
+            />
             <h2 className="text-[1.8rem] font-bold">E-medicine</h2>
           </div>
 

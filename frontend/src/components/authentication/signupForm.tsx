@@ -31,7 +31,7 @@ const SignupForm = ({ role }: { role: string }) => {
       {/* Sign Up Form */}
       <div className="signup-form w-full ">
         <form action={formAction} className="flex flex-col ">
-          {/* fullname field */}
+          {/* firstname field */}
           <AuthField
             id="firstName"
             type="text"
@@ -139,9 +139,9 @@ const SignupForm = ({ role }: { role: string }) => {
           )}
 
           <button
-            type="button"
+            type="submit"
             className="bg-gray-800 text-white py-2 rounded-lg"
-            onClick={() => setIsModalOpen(true)}
+            // onClick={() => setIsModalOpen(true)}
           >
             Continue
           </button>
