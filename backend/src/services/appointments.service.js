@@ -30,17 +30,17 @@ const serviceAppo = {
             // Validar existencia del doctor
             await validateDoctor(doctor_id);
 
-            // Buscamos la disponibilidad general del doctor para el día específico
+            // Buscamos la disponibilidad general del doctor para el día de la cita
             const doctorTimeSlots = await getDoctorTimeSlotsForDate(doctor_id, date);
 
-            // Buscamos las citas del doctor para el dia especifico
+            // Buscamos las citas del doctor para el dia de la cita que se quiere registrar
             const doctorAppo = await getAppoinmentsForDate(doctor_id, date);
 
-            //Obtenemos las horas disponibles del doctor para el dia especifico
+            //Obtenemos las horas disponibles del doctor para el dia de la cita
             const availableTimeSlots = await getAvailableTimeSlots(doctorTimeSlots, doctorAppo);
 
-            
-
+            //Verificamos si la hora de la cita deseada esta en el horario disponible del doctor
+            isTimeSlotAvailable(availableTimeSlots, startTime, endTime);
 
             //Validar solo una cita x dia con un doctor
             await verifyQuantityAppointmentsPerDay(patient_id, doctor_id, date);
@@ -220,6 +220,20 @@ const getAvailableTimeSlots = (generalSlots, bookedSlots) => {
   const availableSlots = generalSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
 
   return availableSlots;
+};
+
+
+const isTimeSlotAvailable = (slotsArray, startTime, endTime) => {
+  // Construir la franja horaria a partir de startTime y endTime
+  const timeSlot = `${startTime}-${endTime}`;
+
+  // Verificar si el timeSlot está en el arreglo de franjas horarias
+  const result = slotsArray.includes(timeSlot);
+
+  if(!result){
+    console.log("La franja horaria solicitada no está disponible");
+    throw new Error("The requested time slot is not available");
+  }
 };
 
 
