@@ -1,6 +1,6 @@
 import paymentGatewayService from "../services/paymentGateway.service.js";
 
-class PaymentGatewayController {
+const paymentGatewayController = {
   async createSession(req, res) {
     const { name, description, currency, unit_amount, quantity, mode, success_url, cancel_url } = req.body;
 
@@ -10,7 +10,7 @@ class PaymentGatewayController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async getCheckoutSession(req, res) {
     const { sessionID } = req.query;
@@ -21,7 +21,7 @@ class PaymentGatewayController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async cancel(req, res) {
     try {
@@ -30,6 +30,6 @@ class PaymentGatewayController {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   }
-}
+};
 
-export default new PaymentGatewayController();
+export default paymentGatewayController;

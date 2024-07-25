@@ -1,7 +1,7 @@
 import { doctorManager } from "../dao/index.dao.js";
 import doctorService from "../services/doctor.service.js";
 
-class DoctorController {
+const doctorController = {
   async registerDoc(req, res) {
     const {
       photo,
@@ -37,7 +37,7 @@ class DoctorController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async logOutDoc(req, res) {
     try {
@@ -45,7 +45,7 @@ class DoctorController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async editProfileDoc(req, res) {
     const { id } = req.params;
@@ -55,18 +55,19 @@ class DoctorController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async getDoc(req, res) {
     const { id } = req.params;
     try {
+      const doctor = await doctorManager.findById(id);
       res
         .status(200)
-        .json({ message: "Doctor retrieved successfully", doctor: id });
+        .json({ message: "Doctor retrieved successfully", doctor });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async profileDoc(req, res) {
     const { id } = req.params;
@@ -78,7 +79,7 @@ class DoctorController {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 
   async getAllDoc(req, res) {
     try {
@@ -90,6 +91,6 @@ class DoctorController {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   }
-}
+};
 
-export default new DoctorController();
+export default doctorController;
