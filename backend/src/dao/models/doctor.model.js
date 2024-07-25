@@ -62,7 +62,7 @@ const doctorSchema = new mongoose.Schema(
     },
     confirmed: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     availabilityStatus: {
       type: String,
