@@ -1,7 +1,7 @@
 import { doctorManager, patientManager } from "../dao/index.dao.js";
-import { comparePassword, hashPassword } from "../helpers/password.helper.js";
+import {comparePassword} from "../helpers/password.helper.js";
 
-export class loginService {
+export class authService {
   async login(email, password) {
     try {
       if(!email || !password) {

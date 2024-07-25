@@ -1,5 +1,4 @@
 import { doctorManager } from "../dao/index.dao.js";
-import generateJWT from "../helpers/generateJwt.js";
 import { comparePassword, hashPassword } from "../helpers/password.helper.js";
 
 export class doctorService {
