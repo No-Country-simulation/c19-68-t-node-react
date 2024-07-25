@@ -3,15 +3,11 @@ import axios from "axios";
 
 export const userLogin = async (data: Record<string, unknown>) => {
   try {
-    const response = await axios.post(
-      "http://localhost:4700/user/logged",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post("http://localhost:4700/", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     return response.data;
   } catch (error: unknown) {

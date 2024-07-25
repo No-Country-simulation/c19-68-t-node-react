@@ -1,0 +1,242 @@
+[
+  {
+    "photo": "https://i.pravatar.cc/150?u=1",
+    "firstName": "John",
+    "lastName": "Smith",
+    "gender": "male",
+    "email": "john.smith1@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado1", "Certificado3"],
+    "speciality": "Cardiología",
+    "phone": "+1234567890",
+    "country": "USA",
+    "attentionSchedule": [
+      {
+        "day": "Monday",
+        "startTime": "08:00",
+        "endTime": "16:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "11:00",
+        "endTime": "15:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=2",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "gender": "female",
+    "email": "jane.doe2@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado2", "Certificado4"],
+    "speciality": "Neurología",
+    "phone": "+1987654321",
+    "country": "Canada",
+    "attentionSchedule": [
+      {
+        "day": "Tuesday",
+        "startTime": "09:00",
+        "endTime": "17:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "10:00",
+        "endTime": "14:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=3",
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "gender": "female",
+    "email": "alice.johnson3@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado1", "Certificado5"],
+    "speciality": "Pediatría",
+    "phone": "+1122334455",
+    "country": "UK",
+    "attentionSchedule": [
+      {
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "18:00"
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "12:00",
+        "endTime": "16:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=4",
+    "firstName": "Robert",
+    "lastName": "Brown",
+    "gender": "male",
+    "email": "robert.brown4@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado3", "Certificado6"],
+    "speciality": "Dermatología",
+    "phone": "+2233445566",
+    "country": "Australia",
+    "attentionSchedule": [
+      {
+        "day": "Tuesday",
+        "startTime": "08:00",
+        "endTime": "15:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "09:00",
+        "endTime": "13:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=5",
+    "firstName": "Emily",
+    "lastName": "Davis",
+    "gender": "female",
+    "email": "emily.davis5@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado2", "Certificado7"],
+    "speciality": "Oftalmología",
+    "phone": "+3344556677",
+    "country": "Germany",
+    "attentionSchedule": [
+      {
+        "day": "Monday",
+        "startTime": "11:00",
+        "endTime": "17:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=6",
+    "firstName": "Michael",
+    "lastName": "Wilson",
+    "gender": "male",
+    "email": "michael.wilson6@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado1", "Certificado8"],
+    "speciality": "Endocrinología",
+    "phone": "+4455667788",
+    "country": "France",
+    "attentionSchedule": [
+      {
+        "day": "Wednesday",
+        "startTime": "09:00",
+        "endTime": "17:00"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "10:00",
+        "endTime": "14:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=7",
+    "firstName": "Sophia",
+    "lastName": "Taylor",
+    "gender": "female",
+    "email": "sophia.taylor7@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado4", "Certificado9"],
+    "speciality": "Ginecología",
+    "phone": "+5566778899",
+    "country": "Italy",
+    "attentionSchedule": [
+      {
+        "day": "Monday",
+        "startTime": "08:00",
+        "endTime": "14:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "12:00",
+        "endTime": "18:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=8",
+    "firstName": "James",
+    "lastName": "Anderson",
+    "gender": "male",
+    "email": "james.anderson8@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado5", "Certificado10"],
+    "speciality": "Urología",
+    "phone": "+6677889900",
+    "country": "Spain",
+    "attentionSchedule": [
+      {
+        "day": "Tuesday",
+        "startTime": "09:00",
+        "endTime": "16:00"
+      },
+      {
+        "day": "Friday",
+        "startTime": "10:00",
+        "endTime": "15:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=9",
+    "firstName": "Olivia",
+    "lastName": "Martinez",
+    "gender": "female",
+    "email": "olivia.martinez9@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado6", "Certificado11"],
+    "speciality": "Neumología",
+    "phone": "+7788990011",
+    "country": "Netherlands",
+    "attentionSchedule": [
+      {
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "17:00"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "08:00",
+        "endTime": "12:00"
+      }
+    ]
+  },
+  {
+    "photo": "https://i.pravatar.cc/150?u=10",
+    "firstName": "Liam",
+    "lastName": "Garcia",
+    "gender": "male",
+    "email": "liam.garcia10@example.com",
+    "password": "SecurePassword123",
+    "professionalCertificates": ["Certificado7", "Certificado12"],
+    "speciality": "Hematología",
+    "phone": "+8899001122",
+    "country": "Sweden",
+    "attentionSchedule": [
+      {
+        "day": "Tuesday",
+        "startTime": "08:00",
+        "endTime": "16:00"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "11:00",
+        "endTime": "15:00"
+      }
+    ]
+  }
+]
