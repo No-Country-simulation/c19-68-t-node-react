@@ -2,7 +2,7 @@ import React from "react";
 
 const SectionTitle = ({ title }: { title: string }) => {
   return (
-    <div className="w-fit text-start ">
+    <div className="w-fit text-start self-start ">
       <div className="flex items-center pr-4">
         <img src="/logo.png" alt="E-medicine Logo" className="mx-3" />
         <h3 className="text-[1.3rem] font-bold">{title}</h3>
