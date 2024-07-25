@@ -30,7 +30,7 @@ interface Doctor {
 }
 
 const AgendarTurno = () => {
-  const endpoint = "https://669e59d19a1bda36800656ad.mockapi.io/doctor";
+  const endpoint = "http://localhost:4700/doctors/getAllDoc";
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [professionals, setProfessionals] = useState<Doctor[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState<number>(0);
@@ -50,11 +50,11 @@ const AgendarTurno = () => {
   useEffect(() => {
     if (data) {
       const uniqueSpecialties = Array.from(
-        new Set(data.map((doctor) => doctor.speciality))
+        new Set(data.doctors.map((doctor) => doctor.speciality))
       );
-      const options = uniqueSpecialties.map((specialty) => ({
-        label: specialty.charAt(0).toUpperCase() + specialty.slice(1),
-        value: specialty.toLowerCase().replace(/\s+/g, ""),
+      const options = uniqueSpecialties.map((speciality) => ({
+        label: speciality.charAt(0).toUpperCase() + speciality.slice(1),
+        value: speciality.toLowerCase().replace(/\s+/g, ""),
       }));
       setSpecialityOptions(options);
     }
@@ -64,7 +64,7 @@ const AgendarTurno = () => {
     setSelectedSpecialty(value);
 
     const filteredProfessionals =
-      data?.filter(
+      data?.doctors.filter(
         (doctor) =>
           doctor.speciality.toLowerCase().replace(/\s+/g, "") === value
       ) || [];

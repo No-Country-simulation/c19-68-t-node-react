@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "next/image";
 
 interface Professional {
   id: string | number;
@@ -39,9 +39,11 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
             key={professional.id}
             className="flex items-center gap-4 p-4 border border-gray-300 rounded-md cursor-pointer"
           >
-            <img
+            <Image
               src={professional.photo}
               alt={professional.lastName}
+              width={40}
+              height={40}
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-1">
