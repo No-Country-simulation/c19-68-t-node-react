@@ -18,11 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} relative flex flex-col-reverse lg:flex lg:flex-row`}
-      >
-        {/* <BallBackground /> */}
-        {/* <Navbar /> */}
+      <body className={`${inter.className} relative flex flex-col-reverse lg:flex lg:flex-row`}>
+        <BallBackground/>
+        <Navbar/>
         {children}
       </body>
     </html>

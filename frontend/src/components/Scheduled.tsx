@@ -8,17 +8,39 @@ import Image from "next/image";
 
 interface Props {
   appointment: Appointment;
-  calendar: string[];
 }
 
 interface Appointment {
-  title: string;
-  doctor: string;
+  id: string;
+  patient_id: string;
+  doctor_data: Doctor;
   date: string;
-  hour: number;
+  startTime: string;
+  endTime: string;
+  video_call_link: string;
+  state: string;
+  reasons: string;
+  notes: string;
 }
 
-const Scheduled = ({ appointment, calendar }: Props) => {
+interface Doctor {
+  id: string;
+  photo: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  email: string;
+  password: string;
+  professionalCertificates: [string, string];
+  speciality: string;
+  phone: string;
+  country: string;
+}
+
+
+const Scheduled = ({ appointment }: Props) => {
+
+  /* Despligue de la card */
   const [dateOpen, setDateOpen] = useState<Boolean>(false);
 
   const handleOpenSheduled = () => {
@@ -28,12 +50,12 @@ const Scheduled = ({ appointment, calendar }: Props) => {
   const handleCloseSheduled = () => {
     setDateOpen(false);
   };
+  /* Formato de la cita */
+  const date = new Date(appointment.date);
 
-  const date = new Date("2024-07-07");
+  const day = format(date, "dddd, MMMM D, YYYY", "es");
 
-  const day = format(date, "dddd, MMMM D, YYYY", 'es')
-
-  const dayPrueba = day.replaceAll(',', ' ').split(" ");
+  const dayPrueba = day.replaceAll(",", " ").split(" ");
 
   return (
     <>
@@ -41,9 +63,11 @@ const Scheduled = ({ appointment, calendar }: Props) => {
         className={`relative w-[331.03px] h-[127px] bg-[#89bad845] flex justify-between items-center px-4 rounded-[12.17px] date-${dateOpen}`}
       >
         <ul className="text-[11.68px] flex flex-col gap-[.5px]">
-          <li className="text-[15.58px] font-bold">{appointment.title}</li>
-          <li className="">{appointment.doctor}</li>
-          <li className="ocultar mb-4">Progamada a las {appointment.hour}hrs</li>
+          <li className="text-[15.58px] font-bold">Cita {appointment.doctor_data.speciality} </li>
+          <li className="">{ appointment.doctor_data.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_data.firstName} {appointment.doctor_data.lastName}</li>
+          <li className="ocultar mb-4">
+            Progamada a las {appointment.startTime}hrs
+          </li>
           <div className="ocultar flex gap-2 text-[11.68px]">
             <span className="flex items-center">
               Reprogramar
@@ -55,7 +79,9 @@ const Scheduled = ({ appointment, calendar }: Props) => {
                 className="w-[12px] h-[12px] "
               />
             </span>
-            <p>Cancelar <span className="text-red-500 font-semibold">X</span> </p>
+            <p>
+              Cancelar <span className="text-red-500 font-semibold">X</span>{" "}
+            </p>
           </div>
         </ul>
 
