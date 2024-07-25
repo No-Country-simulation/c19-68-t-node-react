@@ -31,7 +31,9 @@ class DoctorController {
         country,
         availability
       );
-      res.status(201).json(newDoctor);
+      res
+        .status(201)
+        .json({ message: "Doctor Created Successfully", doctor: newDoctor });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -39,15 +41,17 @@ class DoctorController {
 
   async logOutDoc(req, res) {
     try {
-      res.status(200).json({ message: "logout doctor" });
+      res.status(200).json({ message: "Doctor logged out successfully" });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   }
 
   async editProfileDoc(req, res) {
+    const { id } = req.params;
     try {
-      res.status(200).json({ message: "Edit doctor's profile" });
+      const updateDoctor = await doctorManager.update(id, req.body);
+      res.status(200).json({ message: "Doctor's profile edited successfully", updateDoctor });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -56,15 +60,21 @@ class DoctorController {
   async getDoc(req, res) {
     const { id } = req.params;
     try {
-      res.status(200).json({ message: "show doctor by id", id });
+      res
+        .status(200)
+        .json({ message: "Doctor retrieved successfully", doctor: id });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   }
 
   async profileDoc(req, res) {
+    const { id } = req.params;
     try {
-      res.status(200).json({ message: "doctor's profile" });
+      const doctor = await doctorManager.findById(id);
+      res
+        .status(200)
+        .json({ message: "Doctor's profile retrieved successfully", doctor });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -73,7 +83,9 @@ class DoctorController {
   async getAllDoc(req, res) {
     try {
       const doctors = await doctorManager.findAll();
-      res.status(200).json(doctors);
+      res
+        .status(200)
+        .json({ message: "All doctors retrieved successfully", doctors });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }

@@ -32,8 +32,10 @@ class PatientController {
   }
 
   async editProfilePat(req, res) {
+    const { id } = req.params;
     try {
-      res.status(200).json({ message: "Edit patient's profile" });
+      const updatePatient = await patientManager.update(id, req.body);
+      res.status(200).json({ message: "Doctor's profile edited successfully", updatePatient });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -42,15 +44,19 @@ class PatientController {
   async getPatId(req, res) {
     const { id } = req.params;
     try {
-      res.status(200).json({ message: "show patients by id", id });
+      res.status(200).json({ message: "show patients by id", patient: id });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   }
 
   async profilePat(req, res) {
+    const { id } = req.params;
     try {
-      res.status(200).json({ message: "patient's profile" });
+      const patient = await patientManager.findById(id);
+      res
+        .status(200)
+        .json({ message: "Doctor's profile retrieved successfully", patient });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -59,7 +65,7 @@ class PatientController {
   async getAllPat(req, res) {
     try {
       const patients = await patientManager.findAll();
-      res.status(200).json(patients);
+      res.status(200).json({message: "Get all patient successfully", patients});
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
