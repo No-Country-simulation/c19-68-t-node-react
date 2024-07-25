@@ -40,26 +40,6 @@ const controllerDoc = {
     }
   },
 
-  login: asyncHandler(async(req, res) => {
-    const {email, password} = req.body;
-    const loggedDoctor = await new doctorService().login(email, password);
-    if(!loggedDoctor) {
-      return res.status(403).json({msg: "Authentication Error"})
-    }
-    res.status(200).json(loggedDoctor);
-  }),
-
-  confirm: asyncHandler(async(req, res) => {
-    const {token} = req.params;
-    try {
-      await new doctorService().confirm(token);
-      
-      res.status(201).json({message: "Succesfully confirmed user"});
-  } catch (error) {
-      res.status(401).json({msg: "Token error ", error: error.message});
-  }
-  }),
-
   logOutDoc: async (req, res) => {
     res.status(200).json({ message: "logout doctor" });
   },

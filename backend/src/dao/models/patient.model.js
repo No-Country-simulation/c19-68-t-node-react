@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import generateID from "../../helpers/generateId.js";
 
 const patientSchema = new mongoose.Schema(
   {
@@ -91,6 +92,14 @@ const patientSchema = new mongoose.Schema(
         enum: ["Yes", "No", "Occasionally"],
         // Optional field
       },
+    },
+    confirmationString: {
+      type: String,
+      default: generateID(),
+    },
+    confirmed: {
+      type: Boolean,
+      default: false,
     },
   },
   {

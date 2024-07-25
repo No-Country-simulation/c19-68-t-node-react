@@ -4,7 +4,7 @@ import paymentGatewayRoutes from "./routes/paymentGateway.route.js";
 import appointmentsRoutes from "./routes/appointments.route.js";
 import patientsRoutes from "./routes/patients.route.js";
 import doctorsRoutes from "./routes/doctors.routes.js";
-
+import loginRoutes from "./routes/loginRoutes.js";
 //config app express
 const app = express();
 
@@ -25,8 +25,7 @@ app.use((req, res, next) => {
 app.use("/paymentGateway", paymentGatewayRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/patients", patientsRoutes);
-app.use("/api", doctorsRoutes);
-
-
+app.use("/doctors", doctorsRoutes);
+app.use("/login", loginRoutes);
 
 export default app;

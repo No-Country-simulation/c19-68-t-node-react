@@ -56,7 +56,7 @@ const doctorSchema = new mongoose.Schema(
       required: true,
     },
     availability: [availabilityBlockSchema],
-    token: {
+    confirmationString: {
       type: String,
       default: generateID(),
     },

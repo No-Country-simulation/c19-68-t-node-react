@@ -16,10 +16,6 @@ router.get("/profileDoc", controllerDoc.profileDoc);
 
 router.get("/getAllDoc", controllerDoc.getAllDoc);
 
-router.get("/confirm/:token", controllerDoc.confirm);
-
-router.post("/login", controllerDoc.login);
-
 //Private Endpoints
 router.get("/profile", checkAuth, controllerDoc.profileDoc);
 
