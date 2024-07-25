@@ -1,26 +1,26 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
-import { loginService } from "../services/login.service.js";
+import loginService from "../services/login.service.js";
 
-const loginController = {
-  confirm: asyncHandler(async(req,res) => {
-    const {confirmationString} = req.params;
-    const confirmedUser = await new loginService().confirm(confirmationString);
-    if(!confirmedUser) {
-      return res.status(401).json({msg: "Invalid Confirmation Code"})
+class LoginController {
+  confirm = asyncHandler(async (req, res) => {
+    const { confirmationString } = req.params;
+    try {
+      const confirmedUser = await loginService.confirm(confirmationString);
+      res.status(200).json({ msg: "Successfully Confirmed User" });
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ msg: error.message });
     }
-    res.status(200).json({msg: "Succesfully Confirmed User"});
-  }),
+  });
 
-  login: asyncHandler(async(req, res) => {
-    const {email, password} = req.body;
-    console.log(email, password);
-    const userLogged = await new loginService().login(email, password);
-    console.log(userLogged);
-    if(!userLogged) {
-      return res.status(403).json({msg: "Authentication Error"});
+  login = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const userLogged = await loginService.login(email, password);
+      res.status(200).json(userLogged);
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ msg: error.message });
     }
-    res.status(200).json(userLogged);
-  })
+  });
 }
 
-export default loginController;
+export default new  LoginController()

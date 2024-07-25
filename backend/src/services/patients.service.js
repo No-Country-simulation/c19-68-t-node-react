@@ -1,60 +1,52 @@
 import { patientManager } from "../dao/index.dao.js";
 import { hashPassword } from "../helpers/password.helper.js";
+import CustomError from "../middlewares/error.middleware.js";
 
+class PatientService {
+  async registerPat(photo, 
+                     firstName, 
+                     lastName, 
+                     gender, 
+                     email, 
+                     phone, 
+                     password, 
+                     country, 
+                     creditCard, 
+                     clinicalData) {
+    try {
+      if (!firstName || !lastName || !email || !password) {
+        throw new CustomError("All fields are required", 400);
+      }
 
-const servicePat = {
+      const existingPatient = await patientManager.findOne({ email });
+      if (existingPatient) {
+        throw new CustomError("Patient already exists", 409);
+      }
 
-    registerPat: async (photo, 
-                         firstName, 
-                         lastName, 
-                         gender, 
-                         email, 
-                         phone, 
-                         password, 
-                         country, 
-                         creditCard, 
-                         clinicalData) => {
+      const hashedPassword = await hashPassword(password);
 
-        try {
+      const newPatient = await patientManager.create({
+        photo,
+        firstName,
+        lastName,
+        gender,
+        email,
+        phone,
+        password: hashedPassword,
+        country,
+        creditCard,
+        clinicalData
+      });
 
-            //Validamos los datos obligatorios
-            if ( !firstName || !lastName || !email || !phone || !password ) {
-                console.log(firstName + lastName + email + phone + password);
-                console.error("ERROR: Datos requeridos no recibidos");
-                throw new Error("All fields are required");
-            }
-
-            // Verificar si el paciente ya existe
-            const patientExists = await patientManager.findOne({ email: email });
-            if (patientExists) {
-                console.error("ERROR: El paciente ya está registrado");
-                throw new Error("Patient already exists");
-            }
-
-            // Hash de la contraseña
-            const hashedPassword = await hashPassword(password);
-
-            //Grabamos el modelo Patient
-            const newPatient = await patientManager.create({
-                photo, 
-                firstName, 
-                lastName, 
-                gender, 
-                email, 
-                phone, 
-                password: hashedPassword,
-                country, 
-                creditCard, 
-                clinicalData
-            });
-
-            console.log("Registro exitoso del paciente");
-            return newPatient;
-
-        } catch (error) {
-            throw new Error("Error register Patient: " + error.message);
-        }
+      return newPatient;
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        throw new CustomError("Error registering patient: " + error.message, 500);
+      }
     }
+  }
 }
 
-export default servicePat;
+export default new PatientService();

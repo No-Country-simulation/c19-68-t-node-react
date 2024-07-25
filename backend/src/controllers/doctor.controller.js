@@ -1,10 +1,8 @@
-import { DoctorDao } from "../dao/doctor.dao.js";
 import { doctorManager } from "../dao/index.dao.js";
-import asyncHandler from "../middlewares/asyncHandler.js";
-import { doctorService } from "../services/doctor.service.js";
+import doctorService from "../services/doctor.service.js";
 
-const controllerDoc = {
-  registerDoc: async (req, res) => {
+class DoctorController {
+  async registerDoc(req, res) {
     const {
       photo,
       firstName,
@@ -20,7 +18,7 @@ const controllerDoc = {
     } = req.body;
 
     try {
-      await new doctorService().register(
+      const newDoctor = await doctorService.register(
         photo,
         firstName,
         lastName,
@@ -33,38 +31,53 @@ const controllerDoc = {
         country,
         availability
       );
-      res.status(201).json({message: "Successfully registered doctor"});
+      res.status(201).json(newDoctor);
     } catch (error) {
-      console.log(error.message);
-      res.status(500).json({message: "Error registering doctor", error: error.message});
+      res.status(error.statusCode || 500).json({ message: error.message });
     }
-  },
+  }
 
-  logOutDoc: async (req, res) => {
-    res.status(200).json({ message: "logout doctor" });
-  },
-
-  editProfileDoc: async (req, res) => {
-    res.status(200).json({ message: "Edit doctor's profile" });
-  },
-
-  getDoc: async (req, res) => {
-    const { id } = req.params;
-    res.status(200).json({ message: "show doctor by id", id });
-  },
-
-  profileDoc: async (req, res) => {
-    res.status(200).json({ message: "doctor's profile" });
-  },
-
-  getAllDoc: async (req, res) => {
+  async logOutDoc(req, res) {
     try {
-      const patients = await doctorManager.findAll();
-      res.status(200).json(patients);
+      res.status(200).json({ message: "logout doctor" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(error.statusCode || 500).json({ message: error.message });
     }
-  },
-};
+  }
 
-export default controllerDoc;
+  async editProfileDoc(req, res) {
+    try {
+      res.status(200).json({ message: "Edit doctor's profile" });
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
+
+  async getDoc(req, res) {
+    const { id } = req.params;
+    try {
+      res.status(200).json({ message: "show doctor by id", id });
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
+
+  async profileDoc(req, res) {
+    try {
+      res.status(200).json({ message: "doctor's profile" });
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
+
+  async getAllDoc(req, res) {
+    try {
+      const doctors = await doctorManager.findAll();
+      res.status(200).json(doctors);
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
+}
+
+export default new DoctorController();

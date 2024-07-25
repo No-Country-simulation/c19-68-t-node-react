@@ -1,45 +1,50 @@
 import { doctorManager, patientManager } from "../dao/index.dao.js";
 import { comparePassword, hashPassword } from "../helpers/password.helper.js";
+import CustomError from "../middlewares/error.middleware.js";
 
-export class loginService {
+class LoginService {
   async login(email, password) {
     try {
       if(!email || !password) {
-        throw new Error("Please, fill email and password inputs", 400);
+        throw new CustomError("Email and password are required", 400);
       }
 
       const existingDoctor = await doctorManager.findOne({email});
       const existingPatient = await patientManager.findOne({email});
 
       if(!existingDoctor && !existingPatient) {
-        throw new Error("User does not exist", 404);
+        throw new CustomError("User does not exist", 404);
       }
 
       const user = existingDoctor || existingPatient;
 
       if(!user.confirmed) {
-        throw new Error("Your account has not been confirmed", 403);
+        throw new CustomError("Your account has not been confirmed", 403);
       }
 
       const isPasswordCorrect = await comparePassword(password, user.password);
       if(!isPasswordCorrect) {
-        throw new Error("Invalid password", 401);
+        throw new CustomError("Invalid password", 401);
       }
       return user;
     } catch(error) {
-      throw new Error("Authentication Failed: " + error.message);
+      throw new CustomError("Authentication Failed: " + error.message, 500);
     }
   }
 
   async confirm(confirmationString) {
     try {
+      if (!confirmationString) {
+        throw new CustomError("Confirmation string is required", 400);
+      }
+
       const doctorToConfirm = await doctorManager.findOne({confirmationString});
       const pacientToConfirm = await patientManager.findOne({confirmationString});
 
       const userToConfirm = doctorToConfirm || pacientToConfirm;
 
       if(!userToConfirm) {
-        throw new Error("Invalid Confirmation Code");
+        throw new CustomError("Invalid Confirmation Code", 401);
       }
 
       userToConfirm.confirmationString = null;
@@ -47,7 +52,9 @@ export class loginService {
       const confirmedUser = await userToConfirm.save();
       return confirmedUser;      
     } catch (error) {
-      throw new Error("Token Error: " + error.message);
+      throw new CustomError("Token Error: " + error.message, 500);
     }
   }
 }
+
+export default new LoginService();

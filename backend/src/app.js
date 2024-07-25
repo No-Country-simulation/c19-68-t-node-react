@@ -1,10 +1,10 @@
 import express from "express";
 import morgan from "morgan";
-import paymentGatewayRoutes from "./routes/paymentGateway.route.js";
-import appointmentsRoutes from "./routes/appointments.route.js";
-import patientsRoutes from "./routes/patients.route.js";
+import paymentGatewayRoutes from "./routes/paymentGateway.routes.js";
+import appointmentsRoutes from "./routes/appointments.routes.js";
+import patientsRoutes from "./routes/patients.routes.js";
 import doctorsRoutes from "./routes/doctors.routes.js";
-import loginRoutes from "./routes/loginRoutes.js";
+import loginRoutes from "./routes/login.routes.js";
 //config app express
 const app = express();
 
