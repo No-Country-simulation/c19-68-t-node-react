@@ -1,8 +1,8 @@
 import { doctorManager, patientManager } from "../dao/index.dao.js";
-import { comparePassword, hashPassword } from "../helpers/password.helper.js";
+import { comparePassword} from "../helpers/password.helper.js";
 import CustomError from "../middlewares/error.middleware.js";
 
-class LoginService {
+class AuthService {
   async login(email, password) {
     try {
       if(!email || !password) {
@@ -57,4 +57,4 @@ class LoginService {
   }
 }
 
-export default new LoginService();
+export default new AuthService();

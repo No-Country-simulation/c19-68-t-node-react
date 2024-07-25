@@ -4,7 +4,7 @@ import paymentGatewayRoutes from "./routes/paymentGateway.routes.js";
 import appointmentsRoutes from "./routes/appointments.routes.js";
 import patientsRoutes from "./routes/patients.routes.js";
 import doctorsRoutes from "./routes/doctors.routes.js";
-import loginRoutes from "./routes/login.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
 //config app express
 const app = express();
@@ -28,6 +28,6 @@ app.use("/paymentGateway", paymentGatewayRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/patients", patientsRoutes);
 app.use("/doctors", doctorsRoutes);
-app.use("/login", loginRoutes);
+app.use("/auth", authRoutes);
 
 export default app;
