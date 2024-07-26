@@ -1,1 +1,6 @@
 {"level":"error","message":"POST /registerPat/ - Status: 409 (Conflict) - Conflict occurred while processing the request","timestamp":"2024-07-25T22:31:02.990Z"}
+{"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T20:47:03.710Z"}
+{"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T20:49:15.356Z"}
+{"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T20:49:43.008Z"}
+{"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T21:16:26.782Z"}
+{"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T21:19:40.732Z"}
