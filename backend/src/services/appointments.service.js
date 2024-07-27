@@ -112,8 +112,7 @@ const serviceAppo = {
         throw new Error(`There are not ${state} appointments for this patient`);
       }
       console.log(
-        `>>>> extrayendo información de las citas del paciente ${patient_id}`,
-        appointPatient.length
+        `>>>> extrayendo información de las citas del paciente con id "${patient_id}"`
       );
 
       return appointPatient;
