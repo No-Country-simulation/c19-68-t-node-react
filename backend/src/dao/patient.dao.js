@@ -5,8 +5,8 @@ export class PatientDao {
     return await Patient.create(patientsData);
   }
 
-  async findById(id) {
-    return await Patient.findById(id);
+  async findById(id, fieldsToExclude = "") {
+    return await Patient.findById(id).select(fieldsToExclude);
   }
 
   async update(id, updateData) {
