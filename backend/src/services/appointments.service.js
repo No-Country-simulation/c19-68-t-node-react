@@ -67,6 +67,39 @@ class AppointmentService {
     }
   }
 
+  // vista de las citas por id de paciente y estado de la cita
+  async getAppoById(state, patient_id) {
+    try {
+      const appointPatient = await appointmentsManager.find(
+        {
+          patient_id,
+          state,
+        },
+        "doctor_id", //coleccion doctors
+        "-password -token -availability -confirmed -availabilityStatus -confirmationString" //excluyendo parametros de la coleccion de doctors
+      );
+      //si no encuentra citas ya sea null o arreglo vacio
+      if (!appointPatient || appointPatient.length === 0) {
+        console.error(`ERROR: No tiene citas para el estado "${state}"`);
+        throw new CustomError(
+          `There are not ${state} appointments for this patient`,
+          404
+        );
+      }
+      console.log(
+        `>>>> extrayendo información de las citas del paciente ${patient_id}`
+      );
+
+      return appointPatient;
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        throw new CustomError(error.message, 500);
+      }
+    }
+  }
+
   async validatePatient(patient_id) {
     const isPatientValid = await patientManager.findById(patient_id);
     if (!isPatientValid) {
