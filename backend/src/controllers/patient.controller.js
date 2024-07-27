@@ -1,30 +1,45 @@
 import { patientManager } from "../dao/index.dao.js";
-import servicePat from '../services/patients.service.js';
+import servicePat from "../services/patients.service.js";
 
 const controllerPat = {
-  registerPat:  async (req, res) => {
+  registerPat: async (req, res) => {
     console.log("Se inicia el registro de un paciente");
-    const { photo, firstName, lastName, gender, email, phone, password, country, 
-            creditCard, clinicalData } = req.body;
+    const {
+      photo,
+      firstName,
+      lastName,
+      gender,
+      email,
+      phone,
+      password,
+      country,
+      creditCard,
+      clinicalData,
+    } = req.body;
 
     try {
-      
-      const patient = await servicePat.registerPat(photo, 
-                                                    firstName, 
-                                                    lastName, 
-                                                    gender, 
-                                                    email, 
-                                                    phone, 
-                                                    password, 
-                                                    country, 
-                                                    creditCard, 
-                                                    clinicalData
-                                                  );
+      const patient = await servicePat.registerPat(
+        photo,
+        firstName,
+        lastName,
+        gender,
+        email,
+        phone,
+        password,
+        country,
+        creditCard,
+        clinicalData
+      );
 
-      res.status(201).json({ message: "Successfully registered patient", paciente: patient });
+      res
+        .status(201)
+        .json({
+          message: "Successfully registered patient",
+          paciente: patient,
+        });
     } catch (error) {
       console.log("ERROR: " + error);
-      res.status(500).json({ message: error.message})
+      res.status(500).json({ message: error.message });
     }
   },
 
