@@ -11,12 +11,19 @@ class AuthService {
 
       const existingDoctor = await doctorManager.findOne({email});
       const existingPatient = await patientManager.findOne({email});
-
+     
       if(!existingDoctor && !existingPatient) {
         throw new CustomError("User does not exist", 404);
       }
-
-      const user = existingDoctor || existingPatient;
+      let user;
+      let role;
+      if(existingDoctor) {
+        user = existingDoctor;
+        role = "doctor";
+      } else {
+        user = existingPatient;
+        role = "patient"
+      }
 
       if(!user.confirmed) {
         throw new CustomError("Your account has not been confirmed", 403);
@@ -26,7 +33,8 @@ class AuthService {
       if(!isPasswordCorrect) {
         throw new CustomError("Invalid password", 401);
       }
-      return user;
+
+      return {...user._doc, role};
     } catch(error) {
       throw new CustomError("Authentication Failed: " + error.message, 500);
     }

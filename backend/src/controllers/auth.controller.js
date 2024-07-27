@@ -3,7 +3,7 @@ import authService from "../services/auth.service.js";
 
 const authController = {
   /**
-   * There is no need to surround functions in a try catch, 
+   * There is no need to surround code inside functions in a try catch, 
    * the asyncHandler method takes care of that.
    */
   confirm: asyncHandler(async(req,res) => {
@@ -21,16 +21,17 @@ const authController = {
     if(!userLogged) {
       return res.status(403).json({msg: "Authentication Error"});
     }
+    const {_id, role} = userLogged;
+    const id = _id.toString();
     //Sending id from user as a cookie
-    const id = userLogged._id.toString();
     res.cookie("sessionId", id), {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 30 * 24 * 60 * 60 * 1000
     }
-    //Sending ONLY the user ID, change the JSON response for development purposes
-    res.status(200).json(id);
+    //Sending ONLY the user ID and ROLE, change the JSON response for development purposes
+    res.status(200).json({id, role});
  }),
   logout: asyncHandler(async(req, res) => {
     res.cookie("sessionId", "", {

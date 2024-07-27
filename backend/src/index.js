@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 //config environment variables
 dotenv.config({
-    path: './src/config/.env'
+    //path: './src/config/.env'
 });
 
 //alternative port
