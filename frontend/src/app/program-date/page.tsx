@@ -1,15 +1,13 @@
 "use client";
 import { Manrope } from "next/font/google";
-import { format } from "@formkit/tempo";
 import Scheduled from "@/components/Scheduled";
-import Calendar from "@/components/Calendar";
 import Image from "next/image";
-import "./program-date.css";
 import { useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
 import PrincipalAppointment from "./PrincipalAppointment";
 import Doctor from "./Doctor";
 import PreviousAppointment from "./PreviousAppointment";
+import { useRouter } from "next/navigation";
 
 export const manrope = Manrope({
   subsets: ["latin"],
@@ -24,11 +22,17 @@ const page = () => {
   const principalAppointment = citas?.slice(0, 1);
   const limitDoctors = doctors?.slice(0, 3);
   const previousAppointments = doctors?.slice(0, 1);
-
+  
+  const router = useRouter()
+  
   useEffect(() => {
     getCitas("https://669e59d19a1bda36800656ad.mockapi.io/citas");
     getDoctors("https://669e59d19a1bda36800656ad.mockapi.io/doctor");
   }, []);
+
+  const handleClick = () => {
+    router.push('/agendar-turnos')
+  }
 
   return (
     <section className={`w-screen h-full bg-[#FAFAFA]`}>
@@ -52,7 +56,7 @@ const page = () => {
           ))}
         </div>
 
-        <div className="flex self-start justify-center rounded-[12.17px] items-center gap-2 w-[142px] h-[35px] bg-[#35799F] text-[#F2F2F2]">
+        <div onClick={handleClick} className="flex cursor-pointer self-start justify-center rounded-[12.17px] items-center gap-2 w-[142px] h-[35px] bg-[#35799F] text-[#F2F2F2]">
           <Image
             src={"/calendar-scheduled.png"}
             alt="arrow up"
@@ -61,7 +65,7 @@ const page = () => {
             className="w-[13px] h-[13px] "
           />
 
-          <p className="font-medium text-[15px]">Agendar Cita</p>
+          <p   className="font-medium text-[15px] ">Agendar Cita</p>
         </div>
 
         <h2 className="text-center font-bold text-[15.58px]">

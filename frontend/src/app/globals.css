@@ -11,7 +11,7 @@
 .gradient {
   border-bottom: 3px solid transparent;
   border-image: linear-gradient(
-      to left,
+      to right,
       #812b75 18.9%,
       #89bad8 57.9%,
       #35799f 100%
