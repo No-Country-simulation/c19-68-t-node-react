@@ -1,5 +1,6 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import authService from "../services/auth.service.js";
+import { serialize } from "cookie";
 
 const authController = {
   /**
@@ -23,13 +24,19 @@ const authController = {
     }
     const {_id, role} = userLogged;
     const id = _id.toString();
-    //Sending id from user as a cookie
-    res.cookie("sessionId", id), {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000
-    }
+    const userData = {id, role};
+    //Create an object with ID and ROLE properties  
+    const userDataJson = JSON.stringify(userData)
+
+    //Sending cookie
+   res.setHeader('Set-Cookie', serialize('sessionData', userDataJson, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development", // Only HTTPS on producction
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      path: '/',
+      encode: (val) => val //Avoid cookie encoding
+  }));
     //Sending ONLY the user ID and ROLE, change the JSON response for development purposes
     res.status(200).json({id, role});
  }),
