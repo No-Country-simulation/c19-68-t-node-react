@@ -37,7 +37,7 @@ export const login = async (
 
   // Create session
 
-  await createSession(result.token, result.role);
+  await createSession(result);
 
   return result;
 };
