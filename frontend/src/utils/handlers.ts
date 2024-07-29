@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const userLogin = async (data: Record<string, unknown>) => {
   try {
-    const response = await axios.post("http://localhost:4700/", data, {
+    const response = await axios.post("http://localhost:4700/auth", data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,16 +23,13 @@ export const userLogin = async (data: Record<string, unknown>) => {
 
 export const createPatient = async (data: Record<string, unknown>) => {
   try {
-    const response = await fetch(
-      "https://e-medicine-backend.vercel.app/patients/registerPat",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch("http://localhost:4700/doctors/registerDoc", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       const errorDetails = await response.json();
@@ -51,16 +48,13 @@ export const createDoctor = async (data: Record<string, unknown>) => {
   try {
     //"https://e-medicine-backend.vercel.app/doctors/registerDoc"
     //"https://jkqp4xfb-7898.brs.devtunnels.ms/doctors/registerDoc"
-    const response = await fetch(
-      "https://inmobiliariaasg.schasemback.com/doctors/registerDoc",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch("http://localhost:4700/doctors/registerDoc", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       const errorDetails = await response.json();

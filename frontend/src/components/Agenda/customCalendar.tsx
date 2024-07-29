@@ -4,33 +4,42 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addDays, setHours, setMinutes } from "date-fns";
 
 interface CalendarProps {
-  availableDates: Date[];
+  // availableDates?: Date[];
+  startDate: Date;
+  endDate: Date;
   onDateSelect: (date: Date) => void;
+  name: string;
 }
 
 const CustomCalendar: React.FC<CalendarProps> = ({
-  availableDates,
+  // availableDates,
   onDateSelect,
+  startDate,
+  endDate,
+  name,
 }) => {
-  const isDateAvailable = (date: Date) => {
-    return availableDates.some(
-      (availableDate) =>
-        availableDate.getFullYear() === date.getFullYear() &&
-        availableDate.getMonth() === date.getMonth() &&
-        availableDate.getDate() === date.getDate()
-    );
-  };
+  // const isDateAvailable = (date: Date) => {
+  //   return availableDates?.some(
+  //     (availableDate) =>
+  //       availableDate.getFullYear() === date.getFullYear() &&
+  //       availableDate.getMonth() === date.getMonth() &&
+  //       availableDate.getDate() === date.getDate()
+  //   );
+  // };
 
   return (
     <DatePicker
       selected={null}
       onChange={(date) => onDateSelect(date as Date)}
+      minDate={startDate}
+      maxDate={endDate}
       inline
-      highlightDates={availableDates}
-      dayClassName={(date) =>
-        isDateAvailable(date) ? "available-date" : "unavailable-date"
-      }
-      filterDate={isDateAvailable}
+      name={name}
+      // highlightDates={availableDates}
+      // dayClassName={(date) =>
+      //   isDateAvailable(date) ? "available-date" : "unavailable-date"
+      // }
+      // filterDate={isDateAvailable}
       className="bg-slate-600"
     />
   );

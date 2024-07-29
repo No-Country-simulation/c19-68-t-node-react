@@ -7,12 +7,14 @@ interface Option {
 
 interface CustomSelectProps {
   title: string;
+  name: string;
   options: Option[];
   onSelect: (value: string) => void;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   title,
+  name,
   options,
   onSelect,
 }) => {
@@ -21,6 +23,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       <h4 className="text-gray-700 mb-1">{title}</h4>
       <div className="relative">
         <select
+          name={name}
           aria-placeholder={`Seleccione ${title.toLowerCase()}`}
           className="w-full bg-transparent border-b-2 border-[#35799F] appearance-none focus:outline-none focus:border-teal-500 p-2"
           onChange={(e) => onSelect(e.target.value)}
