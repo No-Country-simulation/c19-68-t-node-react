@@ -1,4 +1,5 @@
 import Input from "@/components/Input";
+import "./page.css";
 
 const page = () => {
     return (
@@ -14,21 +15,38 @@ const page = () => {
                             <span>Nombres y apellidos del paciente</span>
                             <Input twClass="w-[100%]" type="string" />
                         </label>
-                        <label className="flex justify-between">
-                            <img src="/venus-marte.png" alt="sexo" />
+                        <label className="flex items-center gap-4">
+                            <img src="/venus-marte.png" alt="sexo" className="w-6 h-6" />
                             <span>Sexo</span>
-                            <article className="flex gap-x-1 items-center">
-                                <span>Masculino</span>
-                                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-                            </article>
-                            <article className="flex gap-x-1 items-center">
-                                <span>Femenino</span>
-                                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-                            </article>
-                            <article className="flex gap-x-1 items-center">
-                                <span>Otro</span>
-                                <Input type="radio" twClass="w-4 h-4" name="genre" id="genre" />
-                            </article>
+                            <div className="flex items-center gap-2">
+                                <label className="flex items-center cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value="male"
+                                        className="custom-radio"
+                                    />
+                                    <span className="custom-radio-span">Masculino</span>
+                                </label>
+                                <label className="flex items-center cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value="female"
+                                        className="custom-radio"
+                                    />
+                                    <span className="custom-radio-span">Femenino</span>
+                                </label>
+                                <label className="flex items-center cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value="other"
+                                        className="custom-radio"
+                                    />
+                                    <span className="custom-radio-span">Otro</span>
+                                </label>
+                            </div>
                         </label>
                         <label className="flex items-center gap-[23px]">
                             <div>
@@ -61,15 +79,15 @@ const page = () => {
                         <div className="flex flex-col justify-between">
                             <div className="flex gap-3">
                                 <img className="w-[27px] h-[27px]" src="/Vector.png" alt="Motivo" />
-                                <label form="motivo" className="mr-2 ">Motivo de la consulta</label>
+                                <label form="motivo" className="mr-2 mb-[14px]">Motivo de la consulta</label>
                             </div>
-                            <div className="bg-gray-200 rounded-lg p-10 flex items-center w-80 ">
+                            <div className="bg-gray-200 rounded-lg p-10 flex items-center w-100%">
                                 <input type="text" id="motivo" placeholder="Ingrese el motivo aquí..." className="bg-transparent outline-none w-full text-gray-700"></input>
                             </div>
                         </div>
                         <label>
                             <div className="w-[100%] flex items-center gap-3">
-                                <img className="w-[24px] h-[24px]" src="/Vector.png" alt="tratamiento" />
+                                <img className="w-[27px] h-[27px]" src="/Vector.png" alt="tratamiento" />
                                 <span>Diagnostico</span>
                                 <Input twClass="w-[100%]" type="string" />
                             </div>
@@ -77,9 +95,9 @@ const page = () => {
                         <div className="flex flex-col justify-between">
                             <div className="flex gap-3">
                                 <img className="w-[27px] h-[27px]" src="/fluent_document-signature-32-light.png" alt="Indicaciones" />
-                                <label form="indicaciones" className="mr-2 ">Indicaciones medicas y conclución</label>
+                                <label form="indicaciones" className="mr-2 mb-[14px]">Indicaciones medicas y conclución</label>
                             </div>
-                            <div className="bg-gray-200 rounded-lg p-10 flex items-center w-80 ">
+                            <div className="bg-gray-200 rounded-lg p-10 flex items-center w-100% ">
                                 <input type="text" id="motivo" placeholder="Ingrese el motivo aquí..." className="bg-transparent outline-none w-full text-gray-700"></input>
                             </div>
                         </div>

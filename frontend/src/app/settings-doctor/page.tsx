@@ -17,44 +17,46 @@ const SettingsPage = () => {
 
             {/* Settings List */}
             <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/computadora.png" alt="Clinic" />
-                        <span>Mi consultorio</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/usuarios-alt.png" alt="Patients" />
-                        <span>Mi lista de pacientes</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/calendario-reloj-azul.png" alt="Appointments" />
-                        <span>Citas</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/libro-atlas.png" alt="Language" />
-                        <span>Idioma</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/tarjeta-de-credito.png" alt="Payments" />
-                        <span>Mis pagos</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/llave.png" alt="Change Password" />
-                        <span>Cambiar contraseña</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/interrogatorio.png" alt="Support" />
-                        <span>Ayuda y soporte</span>
-                    </li>
-                    <li className="flex items-center">
-                        <img className="w-6 h-6 mr-4" src="/rectangulo-xmark.png" alt="Delete Account" />
-                        <span>Cerrar la cuenta</span>
-                    </li>
+                <li className="flex items-center">
+                    <img className="w-[27px] h-[27px] mr-4" src="/settings-doctor/guidance_computer-room.png" alt="Clinic" />
+                    <span>Mi consultorio</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[27px] h-[27px] mr-4" src="/settings-doctor/clarity_group-line.png" alt="Patients" />
+                    <span>Mi lista de pacientes</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[29px] h-[29px] mr-4" src="/settings-doctor/material-symbols-light_calendar-clock-outline.png" alt="Appointments" />
+                    <span>Citas</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[27px] h-[27px] mr-4" src="/settings-doctor/material-symbols-light_emoji-language-outline.png" alt="Language" />
+                    <span>Idioma</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[27px] h-[18.47px] mr-4" src="/settings-doctor/Vector.png" alt="Payments" />
+                    <span>Mis pagos</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[27px] h-[27px] mr-4" src="/settings-doctor/ph_key-thin.png" alt="Change Password" />
+                    <span>Cambiar contraseña</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[29px] h-[29px] mr-4" src="/settings-doctor/material-symbols-light_contact-support-outline.png" alt="Support" />
+                    <span>Ayuda y soporte</span>
+                </li>
+                <li className="flex items-center">
+                    <img className="w-[23px] h-[23px] mr-4" src="/settings/Vector-Salir.png" alt="Delete Account" />
+                    <span>Cerrar la cuenta</span>
+                </li>
             </div>
 
             {/* Logout Button */}
-            <button className="w-full bg-purple-500 text-white py-3 rounded-lg flex items-center justify-center">
-                <span>Cerrar sesión</span>
-            </button>
+            <div className="flex justify-center items-center ">
+                <button className="w-[205px] h-[43px] bg-[#812B75] align-bottom text-[#F2F2F2] py-3 rounded-lg flex items-center justify-center">
+                    <span className='font-bold '>Cerrar sesión</span>
+                </button>
+            </div>
         </div>
     );
 };
