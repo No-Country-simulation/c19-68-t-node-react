@@ -32,7 +32,7 @@ const Navbar = () => {
             <span className="hidden lg:block text-xs">Inicio</span>
           </Link>
           <Link
-            href={"/agendar-turnos"}
+            href={"/paciente/agendar-turnos"}
             className="link flex border-b-[.25px] pb-[20px] justify-center items-center gap-1  text-gray-300"
           >
             <Image
@@ -118,7 +118,7 @@ const Navbar = () => {
             <span className=" text-xs">Configuración</span>
           </Link>
           <Link
-            href={"/agendar-turnos"}
+            href={"/paciente/agendar-turnos"}
             className="link flex justify-center items-center gap-1  text-gray-300"
           >
             <Image
