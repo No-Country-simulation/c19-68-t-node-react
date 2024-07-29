@@ -44,10 +44,11 @@ export async function decrypt(session: any) {
 }
 
 // Función para crear la sesión
-export async function createSession(userId: string) {
+export async function createSession(user: { id: string; role: string }) {
   const expires = new Date(Date.now() + cookie.duration);
+
   const session = await encrypt({
-    userId,
+    user,
     exp: Math.floor(expires.getTime() / 1000),
   });
 
@@ -56,16 +57,15 @@ export async function createSession(userId: string) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/patient/${userId}`); // REdireccion para tests
+  redirect(`/${user.role}/${user.id}`); // REdireccion para tests
 }
 
 // Función para verificar la sesión
 export async function verifySession() {
   const sessionCookie = cookies().get(cookie.name);
   if (!sessionCookie) {
-    redirect("/auth/login");
+    return null;
   }
-
   const session = await decrypt(sessionCookie);
   if (!session) {
     console.log("Redireccionando porque no coincide el token");
