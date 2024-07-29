@@ -8,6 +8,7 @@ interface CalendarProps {
   startDate: Date;
   endDate: Date;
   onDateSelect: (date: Date) => void;
+  name: string;
 }
 
 const CustomCalendar: React.FC<CalendarProps> = ({
@@ -15,6 +16,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({
   onDateSelect,
   startDate,
   endDate,
+  name,
 }) => {
   // const isDateAvailable = (date: Date) => {
   //   return availableDates?.some(
@@ -32,6 +34,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({
       minDate={startDate}
       maxDate={endDate}
       inline
+      name={name}
       // highlightDates={availableDates}
       // dayClassName={(date) =>
       //   isDateAvailable(date) ? "available-date" : "unavailable-date"

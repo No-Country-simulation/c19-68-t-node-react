@@ -8,6 +8,8 @@ import CustomSelect from "@/components/ui/customSelect";
 import SectionTitle from "@/components/ui/sectionTitle";
 import { useState, useEffect } from "react";
 import { dateFormater } from "@/utils/lib/helpers";
+import { useFormState } from "react-dom";
+import { appointmentRegister } from "./actions";
 
 export interface Doctor {
   _id: string | number;
@@ -25,6 +27,12 @@ export interface Doctor {
 }
 
 const AgendarTurno = () => {
+  const [state, formAction] = useFormState<any, FormData>(
+    appointmentRegister,
+    undefined
+  );
+  console.log("Lo que trae state: ", state);
+
   const endpoint = "http://localhost:4700/doctors/getAllDoc";
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [professionals, setProfessionals] = useState<Doctor[]>([]);
@@ -93,27 +101,34 @@ const AgendarTurno = () => {
   return (
     <section className="w-full h-full bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
-      <div className="filtro-especialidad mb-4">
-        <CustomSelect
-          title="Especialidad"
-          options={specialityOptions}
-          onSelect={handleSpecialtyChange}
+      <form action={formAction}>
+        <div className="filtro-especialidad mb-4">
+          <CustomSelect
+            name="speciality"
+            title="Especialidad"
+            options={specialityOptions}
+            onSelect={handleSpecialtyChange}
+          />
+        </div>
+        <ProfRadioCard
+          professionals={professionals}
+          selectedProfessional={selectedProfessional?._id}
+          onProfessionalSelect={handleProfessionalSelect}
         />
-      </div>
-      <ProfRadioCard
-        professionals={professionals}
-        selectedProfessional={selectedProfessional?._id}
-        onProfessionalSelect={handleProfessionalSelect}
-      />
-      <CustomCalendar
-        startDate={availableDates[0]}
-        endDate={availableDates[1]}
-        onDateSelect={handleDateSelect}
-      />
-      <DoctorDisponibility />
-      <button className="w-full bg-[#812B75] text-white font-bold py-2 rounded-md shadow-md hover:bg-teal-600">
-        Continuar
-      </button>
+        <CustomCalendar
+          startDate={availableDates[0]}
+          endDate={availableDates[1]}
+          onDateSelect={handleDateSelect}
+          name="selectedDate"
+        />
+        <DoctorDisponibility />
+        <button
+          type="submit"
+          className="w-full bg-[#812B75] text-white font-bold py-2 rounded-md shadow-md hover:bg-teal-600"
+        >
+          Continuar
+        </button>
+      </form>
     </section>
   );
 };

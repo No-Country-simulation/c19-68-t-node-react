@@ -1,7 +1,5 @@
 "use client";
-import Input from "@/components/Input";
-import { LuUser2 } from "react-icons/lu";
-import { IoKeyOutline } from "react-icons/io5";
+
 import Link from "next/link";
 import { login } from "@/utils/actions";
 import { useFormState } from "react-dom";
