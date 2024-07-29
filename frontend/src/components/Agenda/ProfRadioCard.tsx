@@ -1,22 +1,8 @@
 import Image from "next/image";
-
-interface Professional {
-  _id: string | number;
-  photo: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  email: string;
-  password: string;
-  professionalCertificates: string[];
-  speciality: string;
-  phone: string;
-  country: string;
-  availability: [endDate: string, startDate: string];
-}
+import { Doctor } from "@/app/agendar-turnos/page";
 
 interface ProfRadioCardProps {
-  professionals: Professional[];
+  professionals: Doctor[];
   selectedProfessional: string | number | undefined;
   onProfessionalSelect: (value: string | number) => void;
 }

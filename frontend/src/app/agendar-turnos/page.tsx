@@ -9,7 +9,7 @@ import SectionTitle from "@/components/ui/sectionTitle";
 import { useState, useEffect } from "react";
 import { dateFormater } from "@/utils/lib/helpers";
 
-interface Doctor {
+export interface Doctor {
   _id: string | number;
   photo: string;
   firstName: string;
@@ -21,7 +21,7 @@ interface Doctor {
   speciality: string;
   phone: string;
   country: string;
-  availability: [endDate: string, startDate: string];
+  availability: { endDate: string; startDate: string }[];
 }
 
 const AgendarTurno = () => {
@@ -65,12 +65,12 @@ const AgendarTurno = () => {
   };
 
   const handleProfessionalSelect = (value: string | number) => {
-    const profSelect = data?.doctors.filter((doc) => doc._id === value);
-    const disponibilidad = profSelect[0].availability;
+    const profSelect = data?.doctors.filter((doc) => doc._id === value) || [];
+    const disponibilidad = profSelect?.[0]?.availability || [];
 
     const startEndDates = dateFormater(
-      disponibilidad[0].startDate,
-      disponibilidad[0].endDate
+      disponibilidad[0]?.startDate ?? "",
+      disponibilidad[0]?.endDate ?? ""
     );
 
     setAvailableDates(startEndDates);
@@ -91,7 +91,7 @@ const AgendarTurno = () => {
   if (!data) return <div>Cargando...</div>;
 
   return (
-    <section className="w-full h-screen bg-[#FFF] flex flex-col gap-3 p-12">
+    <section className="w-full h-full bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
       <div className="filtro-especialidad mb-4">
         <CustomSelect
