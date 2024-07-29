@@ -7,7 +7,7 @@ const SettingsPage = () => {
         <div className="w-[430px] h-[932px] setting bg-gray-100 flex flex-col items-center p-4">
             {/* Header */}
             <div className="fw-[140px] mt-6 mb-21 h-[40px] flex items-end">
-                <div className="flex items-center space-x-4 gap-1 gradient">
+                <div className="flex items-center space-x-3 gap-1 gradient">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center ">
                         <img className="w-6 h-6" src="/llave-inglesa.png" alt="Settings Icon" />
                     </div>

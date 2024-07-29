@@ -60,12 +60,14 @@ const DoctorDisponibility = () => {
         title="Horarios disponibles"
         options={hourExample}
         onSelect={handleTimeSelect}
+        name="timeschedule"
       />
       {/* Reminder */}
       <CustomSelect
         title="Crear recordatorio"
         options={reminderEx}
         onSelect={handleTimeSelect}
+        name="reminder"
       />
     </div>
   );
