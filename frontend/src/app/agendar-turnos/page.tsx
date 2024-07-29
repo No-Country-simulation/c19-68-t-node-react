@@ -42,6 +42,7 @@ const AgendarTurno = () => {
     // new Date(2024, 6, 15), // 15th July 2024
     // new Date(2024, 6, 20), // 20th July 2024
   ]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { data, error } = useSWR<{ doctors: Doctor[] }>(endpoint, fetcher);
 
@@ -93,6 +94,7 @@ const AgendarTurno = () => {
 
   const handleDateSelect = (date: Date) => {
     console.log("Fecha seleccionada: ", date);
+    setSelectedDate(date);
   };
 
   if (error) return <div>Error al cargar los datos.</div>;
@@ -120,6 +122,11 @@ const AgendarTurno = () => {
           endDate={availableDates[1]}
           onDateSelect={handleDateSelect}
           name="selectedDate"
+        />
+        <input
+          type="hidden"
+          name="selectedDate"
+          value={selectedDate ? selectedDate.toISOString() : ""}
         />
         <DoctorDisponibility />
         <button
