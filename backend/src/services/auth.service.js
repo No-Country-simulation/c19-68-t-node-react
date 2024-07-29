@@ -17,10 +17,12 @@ class AuthService {
       }
 
       const user = existingDoctor || existingPatient;
-
+      
       if(!user.confirmed) {
         throw new CustomError("Your account has not been confirmed", 403);
       }
+      // se guarda rol en user
+      user.rol = existingDoctor ? 'doctor' : 'paciente';
 
       const isPasswordCorrect = await comparePassword(password, user.password);
       if(!isPasswordCorrect) {

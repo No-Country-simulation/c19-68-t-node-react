@@ -23,6 +23,8 @@ const authController = {
     }
     //Sending id from user as a cookie
     const id = userLogged._id.toString();
+    const rol = userLogged.rol.toString()
+    
     res.cookie("sessionId", id), {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
@@ -30,7 +32,7 @@ const authController = {
       maxAge: 30 * 24 * 60 * 60 * 1000
     }
     //Sending ONLY the user ID, change the JSON response for development purposes
-    res.status(200).json(id);
+    res.status(200).json({id,rol});
  }),
   logout: asyncHandler(async(req, res) => {
     res.cookie("sessionId", "", {
