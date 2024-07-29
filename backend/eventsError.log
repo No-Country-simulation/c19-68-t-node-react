@@ -4,3 +4,8 @@
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T20:49:43.008Z"}
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T21:16:26.782Z"}
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-26T21:19:40.732Z"}
+{"level":"fatal","message":"GET /getAllAppo/pending/66a286e0c3714b7268649122 - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-27T18:58:17.273Z"}
+{"level":"error","message":"GET /getAllAppo/canceled/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:01:22.971Z"}
+{"level":"error","message":"GET /getAllAppo/canceled/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:25.775Z"}
+{"level":"error","message":"GET /getAllAppo/confirmed/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:35.042Z"}
+{"level":"error","message":"GET /getAllAppo/confirm/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:49.620Z"}
