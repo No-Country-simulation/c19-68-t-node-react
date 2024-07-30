@@ -8,7 +8,6 @@ import { useFormState } from "react-dom";
 import AuthField from "./ui/authField";
 import AuthGenderField from "./ui/authGenderField";
 import PhoneNumberInput from "./ui/authPhoneField";
-import { redirect } from "next/navigation";
 import CompleteDataModal from "./completeDataModal";
 
 const SignupForm = ({ role }: { role: string }) => {

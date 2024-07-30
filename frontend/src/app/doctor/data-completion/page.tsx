@@ -25,33 +25,6 @@ const DoctorDataCompletion = () => {
             className="ml-4"
           />
         </div>
-
-        <article className="hidden lg:block justify-self-center">
-          <h3 className="font-bold text-[20px]">Informacion personal</h3>
-          <ul className="grid grid-cols-3 text-[12px] grid-rows-3 gap-1">
-            <li className="flex flex-col ">
-              <span className="font-semibold">Nombre</span>Nombre
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Apellido</span>Apellido
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Telefono</span>Telefono
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Email</span>Email
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Pais</span>Pais
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Ciudad</span>Ciudad
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Cod Postal</span>Cod Postal
-            </li>
-          </ul>
-        </article>
       </div>
 
       {/* Form */}
