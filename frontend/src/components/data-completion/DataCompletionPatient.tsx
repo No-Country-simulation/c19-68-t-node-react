@@ -3,7 +3,7 @@ import Input from "@/components/Input";
 import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
 
-const PatientDataCompletion = () => {
+const DataCompletionPatient = () => {
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
       {/* Header */}
@@ -177,4 +177,4 @@ const PatientDataCompletion = () => {
   );
 };
 
-export default PatientDataCompletion;
+export default DataCompletionPatient

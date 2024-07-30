@@ -6,7 +6,7 @@ import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
 import { useState } from "react";
 
-const DoctorDataCompletion = () => {
+const DataCompletionDoctor = () => {
   const [phone, setPhone] = useState("");
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
@@ -260,4 +260,5 @@ const DoctorDataCompletion = () => {
   );
 };
 
-export default DoctorDataCompletion;
+
+export default DataCompletionDoctor

@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "./utils/session";
 
 export async function middleware(req: NextRequest) {
-  const session = await verifySession();
+  // const session = await verifySession();
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
-  }
+  // if (!session) {
+  //   return NextResponse.redirect(new URL("/auth/login", req.url));
+  // }
 
   return NextResponse.next();
 }

@@ -1,9 +1,16 @@
 import Input from "@/components/Input";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-const page = () => {
+const page = ({ params }: { rol: string; id: string; params: any }) => {
+ 
+  if (params.rol === 'doctor') {
+    redirect(`/doctor/${params.id}`)
+  }
+  
   return (
-    <section className="w-screen h-screen">
+
+      <section className="w-screen h-screen">
       <div className="w-[375.83px] m-auto h-[100%]">
         <header className="w-[200px] mt-6 mb-20  h-[50px] flex items-end gap-1 gradient">
           <Image src={"/logo.png"} width={23} height={19} alt="logo" />
@@ -20,34 +27,34 @@ const page = () => {
                   alt="logo"
                 />
                 <span>Nombre y Apellido</span>
-              </div>
-              <Input twClass="w-[100%]" type="string" />
-            </label>
-            <article className="flex justify-between z-10">
+                </div>
+                <Input twClass="w-[100%]" type="string" />
+                </label>
+                <article className="flex justify-between z-10">
               <div className="flex items-end gap-1">
                 <Image
                   src={"/venus-marte.png"}
                   width={23}
                   height={19}
                   alt="logo"
-                />
-                <span>Sexo</span>
-              </div>
+                  />
+                  <span>Sexo</span>
+                  </div>
               <label className="flex gap-x-1 items-center">
                 <span>Masculino</span>
                 <Input type="radio" twClass="radio" name="genre" id="genre" />
-              </label>
-              <label className="flex gap-x-1 items-center">
+                </label>
+                <label className="flex gap-x-1 items-center">
                 <span>Femenino</span>
                 <Input type="radio" twClass="radio" name="genre" id="genre" />
-              </label>
-              <label className="flex gap-x-1 items-center">
+                </label>
+                <label className="flex gap-x-1 items-center">
                 <span>Otro</span>
                 <Input type="radio" twClass="radio" name="genre" id="genre" />
-              </label>
-            </article>
-            {/* Identificación */}
-            <article className="flex justify-between z-10">
+                </label>
+                </article>
+                {/* Identificación */}
+                <article className="flex justify-between z-10">
               <label className="flex">
                 <div className="flex items-end gap-1">
                 <Image
@@ -55,44 +62,44 @@ const page = () => {
                   width={23}
                   height={19}
                   alt="logo"
-                />
-                <span>ID</span>
+                  />
+                  <span>ID</span>
                 </div>
                 <Input twClass="w-[96.78px]" type="string" />
-              </label>
-              <label className="">
+                </label>
+                <label className="">
                 <span># Nro</span>
                 <Input twClass="w-[150px]" type="string" />
-              </label>
-            </article>
-            {/* Ocupación */}
-            <label className="flex justify-between items-end">
+                </label>
+                </article>
+                {/* Ocupación */}
+                <label className="flex justify-between items-end">
               <div className="flex items-end gap-1">
               <Image
                   src={"/history-medical/ocupation-icon.png"}
                   width={23}
                   height={19}
                   alt="logo"
-                />
-                <span>Ocupación</span>
+                  />
+                  <span>Ocupación</span>
                 </div>
-              <Input twClass="w-[269.71px]" type="string" />
-            </label>
-            {/* Motivo de consulta */}
-            <label className="flex justify-between">
-              <div className="flex items-end gap-1">
+                <Input twClass="w-[269.71px]" type="string" />
+                </label>
+                {/* Motivo de consulta */}
+                <label className="flex justify-between">
+                <div className="flex items-end gap-1">
               <Image
                   src={"/history-medical/consult-icon.png"}
                   width={23}
                   height={19}
                   alt="logo"
                 />
-              <span>Motivo de consulta</span>
-              </div>
-              <Input twClass="w-[210px]" type="string" />
-            </label>
-            {/* Antecedentes personales */}
-            <label className="flex flex-col w-full">
+                <span>Motivo de consulta</span>
+                </div>
+                <Input twClass="w-[210px]" type="string" />
+                </label>
+                {/* Antecedentes personales */}
+                <label className="flex flex-col w-full">
               <div className="flex items-end gap-1">
               <Image
                   src={"/history-medical/radiograph-icon.png"}
@@ -111,44 +118,44 @@ const page = () => {
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </div>
-                </article>
-                <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
+                      />
+                      </div>
+                      </article>
+                      <article className="inline-block pr-3 pt-[11px]">
+                      <div className="flex items-center gap-1">
                     <span>Quirurgicos</span>
                     <Input
-                      type="radio"
-                      twClass="radio"
-                      name="genre"
-                      id="genre"
+                    type="radio"
+                    twClass="radio"
+                    name="genre"
+                    id="genre"
                     />
                   </div>
                 </article>
                 <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
-                    <span>Pulmonares</span>
+                <div className="flex items-center gap-1">
+                <span>Pulmonares</span>
                     <Input
                       type="radio"
                       twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
-                </article>
-                <article className="inline-block pr-3 pt-[11px]">
+                    </div>
+                    </article>
+                    <article className="inline-block pr-3 pt-[11px]">
                   <div className="flex items-center gap-1">
                     <span>Diabetes</span>
                     <Input
-                      type="radio"
+                    type="radio"
                       twClass="radio"
                       name="genre"
                       id="genre"
                     />
-                  </div>
-                </article>
-                <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
+                    </div>
+                    </article>
+                    <article className="inline-block pr-3 pt-[11px]">
+                    <div className="flex items-center gap-1">
                     <span>Digestivos</span>
                     <Input
                       type="radio"
@@ -166,12 +173,23 @@ const page = () => {
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </div>
+                      />
+                      </div>
+                      </article>
+                      <article className="inline-block pr-3 pt-[11px]">
+                      <div className="flex items-center gap-1">
+                      <span>Renales</span>
+                      <Input
+                      type="radio"
+                      twClass="radio"
+                      name="genre"
+                      id="genre"
+                      />
+                      </div>
                 </article>
                 <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
-                    <span>Renales</span>
+                <div className="flex items-center gap-1">
+                <span>Transfusiones</span>
                     <Input
                       type="radio"
                       twClass="radio"
@@ -179,10 +197,10 @@ const page = () => {
                       id="genre"
                     />
                   </div>
-                </article>
+                  </article>
                 <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
-                    <span>Transfusiones</span>
+                <div className="flex items-center gap-1">
+                <span>Inmunodeficiencias</span>
                     <Input
                       type="radio"
                       twClass="radio"
@@ -190,55 +208,44 @@ const page = () => {
                       id="genre"
                     />
                   </div>
-                </article>
-                <article className="inline-block pr-3 pt-[11px]">
-                  <div className="flex items-center gap-1">
-                    <span>Inmunodeficiencias</span>
-                    <Input
-                      type="radio"
-                      twClass="radio"
-                      name="genre"
-                      id="genre"
-                    />
-                  </div>
-                </article>
+                  </article>
               </div>
-            </label>
+              </label>
             {/* Medicamentos */}
             <label className="flex justify-between">
               <div className="flex items-center gap-1">
               <Image
-                  src={"/history-medical/medicine-icon.png"}
-                  width={23}
-                  height={19}
-                  alt="logo"
-                />
+              src={"/history-medical/medicine-icon.png"}
+              width={23}
+              height={19}
+              alt="logo"
+              />
               <span>Medicamentos</span>
               </div>
               <Input twClass="w-[240px]" type="string" />
-            </label>
-            <article className="flex flex-col gap-[5px]">
+              </label>
+              <article className="flex flex-col gap-[5px]">
               <div className="flex items-end gap-1">
               <Image
-                  src={"/history-medical/radiograph-icon.png"}
-                  width={23}
-                  height={19}
-                  alt="logo"
-                />
+              src={"/history-medical/radiograph-icon.png"}
+              width={23}
+              height={19}
+              alt="logo"
+              />
               <span>Antecedentes personales No patológicos</span>
               </div>
               <article className="inline-block">
-                <div className="flex items-center gap-4">
-                  <span>Fuma?</span>
-                  <label className="flex items-center gap-1">
+              <div className="flex items-center gap-4">
+              <span>Fuma?</span>
+              <label className="flex items-center gap-1">
                     <span>Sí</span>
                     <Input
                       type="radio"
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </label>
+                      />
+                      </label>
                   <label className="flex items-center gap-1">
                     <span>No</span>
                     <Input
@@ -246,12 +253,12 @@ const page = () => {
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
+                      />
                   </label>
-                </div>
+                  </div>
               </article>
               <article className="inline-block pr-3 pt-[11px]">
-                <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                   <span>Toma Alcohol?</span>
                   <label className="flex items-center gap-1">
                     <span>Sí</span>
@@ -260,12 +267,12 @@ const page = () => {
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <span>No</span>
+                      />
+                      </label>
+                      <label className="flex items-center gap-1">
+                      <span>No</span>
                     <Input
-                      type="radio"
+                    type="radio"
                       twClass="radio"
                       name="genre"
                       id="genre"
@@ -274,8 +281,8 @@ const page = () => {
                 </div>
               </article>
               <article className="inline-block pr-3 pt-[11px]">
-                <div className="flex items-center gap-4">
-                  <span>Usa sustancias psicoactivas?</span>
+              <div className="flex items-center gap-4">
+              <span>Usa sustancias psicoactivas?</span>
                   <label className="flex items-center gap-1">
                     <span>Sí</span>
                     <Input
@@ -283,20 +290,20 @@ const page = () => {
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </label>
-                  <label className="flex items-center gap-1">
-                    <span>No</span>
-                    <Input
+                      />
+                      </label>
+                      <label className="flex items-center gap-1">
+                      <span>No</span>
+                      <Input
                       type="radio"
                       twClass="radio"
                       name="genre"
                       id="genre"
-                    />
-                  </label>
-                </div>
-              </article>
-              <article className="flex pt-3">
+                      />
+                      </label>
+                      </div>
+                      </article>
+                      <article className="flex pt-3">
                 <span>Otro:</span>
                 <Input
                   type="text"
@@ -309,11 +316,11 @@ const page = () => {
             <article>
               <div className="flex items-center gap-1">
               <Image
-                  src={"/history-medical/family-icon.png"}
+              src={"/history-medical/family-icon.png"}
                   width={23}
                   height={19}
                   alt="logo"
-                />
+                  />
               <h3>Antecedentes Familiares</h3>
               </div>
 

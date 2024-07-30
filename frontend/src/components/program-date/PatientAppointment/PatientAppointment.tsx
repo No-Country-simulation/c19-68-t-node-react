@@ -4,17 +4,17 @@ import Scheduled from "@/components/Scheduled";
 import Image from "next/image";
 import { useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
+import { useRouter } from "next/navigation";
 import PrincipalAppointment from "./PrincipalAppointment";
 import Doctor from "./Doctor";
 import PreviousAppointment from "./PreviousAppointment";
-import { useRouter } from "next/navigation";
 
 export const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
 });
 
-const page = () => {
+const PatientAppointment = () => {
   const [citas, getCitas] = useFetch();
   const [doctors, getDoctors] = useFetch();
 
@@ -88,5 +88,4 @@ const page = () => {
     </section>
   );
 };
-
-export default page;
+export default PatientAppointment

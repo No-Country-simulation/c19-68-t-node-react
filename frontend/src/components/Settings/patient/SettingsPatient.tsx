@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import "./page.css";
 
-const SettingsPage = () => {
+const SettingsPatient = () => {
   return (
     <div className="w-[430px] h-[932px] setting bg-gray-100 flex flex-col items-center p-4">
       {/* Header */}
@@ -83,4 +83,4 @@ const SettingsPage = () => {
   );
 };
 
-export default SettingsPage;
+export default SettingsPatient;
