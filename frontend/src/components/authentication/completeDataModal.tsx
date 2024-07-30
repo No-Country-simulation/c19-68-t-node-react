@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  role: string;
 }
 
-const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, role, onClose }) => {
   if (!isOpen) return null;
 
   const router = useRouter();
@@ -18,7 +19,7 @@ const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const userChoise = formData.get("option");
     console.log("Campo seleccionado: ", formData.get("option"));
     userChoise === "yes"
-      ? router.push("/paciente/data-completion")
+      ? router.push(`/${role}/data-completion`)
       : router.push("/");
   };
 
