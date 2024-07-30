@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Doctor } from "@/app/paciente/agendar-turnos/page";
+import { Doctor } from "@/app/[rol]/[id]/agendar-turnos/page";
 
 interface ProfRadioCardProps {
   professionals: Doctor[];

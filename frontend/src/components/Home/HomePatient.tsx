@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const HomePage = () => {
+const HomePatient = () => {
   const currentDate = new Date().getDate();
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8">
@@ -97,4 +97,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePatient;
