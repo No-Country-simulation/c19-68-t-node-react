@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 
 const page = ({ params }: { rol: string; id: string; params: any }) => {
  
-  if (params.rol === 'doctor') {
-    redirect(`/doctor/${params.id}`)
+  if (params.rol === 'paciente') {
+    redirect(`/paciente/${params.id}`)
   }
   
   return (
