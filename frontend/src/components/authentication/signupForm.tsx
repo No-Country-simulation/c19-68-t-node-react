@@ -14,7 +14,7 @@ import CompleteDataModal from "./completeDataModal";
 const SignupForm = ({ role }: { role: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, formAction] = useFormState<any, FormData>(
-    role == "professional" ? signup : signupPatient,
+    role == "doctor" ? signup : signupPatient,
     undefined
   );
   const [phone, setPhone] = useState("");
@@ -94,7 +94,7 @@ const SignupForm = ({ role }: { role: string }) => {
             </div>
           </div>
 
-          {role === "professional" ? <Speciality /> : null}
+          {role === "doctor" ? <Speciality /> : null}
 
           <AuthField
             id="password"
@@ -139,15 +139,16 @@ const SignupForm = ({ role }: { role: string }) => {
           )}
 
           <button
-            type="submit"
+            // type="submit"
             className="bg-gray-800 text-white py-2 rounded-lg"
-            // onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsModalOpen(true)}
           >
             Continue
           </button>
         </form>
         <CompleteDataModal
           isOpen={isModalOpen}
+          role={role}
           onClose={() => setIsModalOpen(false)}
         />
       </div>

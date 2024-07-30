@@ -1,14 +1,27 @@
 // components/Modal.tsx
 
-import AuthHeader from "./ui/authHeader";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  role: string;
 }
 
-const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, role, onClose }) => {
   if (!isOpen) return null;
+
+  const router = useRouter();
+
+  const handleOption = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const userChoise = formData.get("option");
+    console.log("Campo seleccionado: ", formData.get("option"));
+    userChoise === "yes"
+      ? router.push(`/${role}/data-completion`)
+      : router.push("/");
+  };
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-30 transition-opacity duration-1000">
@@ -31,26 +44,34 @@ const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <h2 className="w-full h-full text-white text-center text-2xl p-10 text-balance">
             Desea llenar sus datos medicos
           </h2>
-          <div className="flex items-center space-x-4 pt-10">
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="option"
-                value="maybe"
-                className="form-radio h-4 w-4 text-blue-600"
-              />
-              <span className="text-white">Quizá después</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="option"
-                value="yes"
-                className="form-radio h-4 w-4 text-blue-600"
-              />
-              <span className="text-white">Sí</span>
-            </label>
-          </div>
+          <form onSubmit={handleOption}>
+            <div className="flex items-center space-x-4 pt-10">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="option"
+                  value="maybe"
+                  className="form-radio h-4 w-4 text-blue-600"
+                />
+                <span className="text-white">Quizá después</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="option"
+                  value="yes"
+                  className="form-radio h-4 w-4 text-blue-600"
+                />
+                <span className="text-white">Sí</span>
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="w-full text-white mt-20 p-4 rounded-2xl flex justify-center bg-blue-950"
+            >
+              Continuar
+            </button>
+          </form>
         </div>
       </div>
     </div>
