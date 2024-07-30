@@ -30,8 +30,8 @@ const patientController = {
         clinicalData
       );
       res.status(201).json({
-        message: "Successfully registered patient",
-        paciente: patient,
+        id: patient._id,
+        rol: "paciente"
       });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });

@@ -38,7 +38,11 @@ class PatientService {
         clinicalData
       });
 
-      return newPatient;
+      const credentials = await patientManager.findOne({
+        email: newPatient.email,
+      });
+
+      return credentials;
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;

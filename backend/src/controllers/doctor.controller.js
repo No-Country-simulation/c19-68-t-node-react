@@ -32,9 +32,7 @@ const doctorController = {
         availability
       );
 
-      res
-        .status(201)
-        .json({ id: newDoctor._id, rol: "doctor" });
+      res.status(201).json({ id: newDoctor._id, rol: "doctor" });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -52,7 +50,12 @@ const doctorController = {
     const { id } = req.params;
     try {
       const updateDoctor = await doctorManager.update(id, req.body);
-      res.status(200).json({ message: "Doctor's profile edited successfully", updateDoctor });
+      res
+        .status(200)
+        .json({
+          message: "Doctor's profile edited successfully",
+          updateDoctor,
+        });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
@@ -91,7 +94,7 @@ const doctorController = {
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
-  }
+  },
 };
 
 export default doctorController;
