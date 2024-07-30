@@ -1,18 +1,13 @@
-import React from "react";
-import VideoCall from "./VideoCall";
+import VideoCall from './VideoCall';
 
-const VideoCallPage = () => {
-  const roomId = "123456"; // Genera esto dinámicamente o recíbelo como prop
-
+export default function Home() {
   return (
     <div>
-      <h1>Video Call</h1>
-      <VideoCall roomId={roomId} />
+      <h1>Videollamada</h1>
+      <VideoCall />
     </div>
   );
-};
-
-export default VideoCallPage;
+}
 
 //dependencias para instalar
 

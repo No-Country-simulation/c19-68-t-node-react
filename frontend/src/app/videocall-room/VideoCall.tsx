@@ -1,78 +1,104 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
-import Peer from "peerjs";
+'use client';
 
-const VideoCall = ({ roomId }) => {
-  const [peers, setPeers] = useState({});
-  const socketRef = useRef();
-  const userVideoRef = useRef();
-  const peersRef = useRef({});
+import React, { useEffect, useRef, useState } from 'react';
+import io, { Socket } from 'socket.io-client';
+import Peer, { Instance } from 'simple-peer';
+
+const VideoCall: React.FC = () => {
+  const [myStream, setMyStream] = useState<MediaStream | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+  const [callId, setCallId] = useState<string>('');
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [peer, setPeer] = useState<Instance | null>(null);
+
+  const myVideo = useRef<HTMLVideoElement>(null);
+  const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    socketRef.current = io("http://localhost:3001/api/videocall/join");
-    const peer = new Peer(undefined, {
-      host: "/",
-      port: "3001",
-    });
+    const newSocket = io('http://localhost:3001/api/videocall/initiate');
+    setSocket(newSocket);
 
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        userVideoRef.current.srcObject = stream;
-
-        peer.on("open", (userId) => {
-          socketRef.current.emit("join-room", roomId, userId);
-        });
-
-        socketRef.current.on("user-connected", (userId) => {
-          connectToNewUser(userId, stream);
-        });
-
-        peer.on("call", (call) => {
-          call.answer(stream);
-          const video = document.createElement("video");
-          call.on("stream", (userVideoStream) => {
-            addVideoStream(video, userVideoStream);
-          });
-        });
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        setMyStream(stream);
+        if (myVideo.current) {
+          myVideo.current.srcObject = stream;
+        }
       });
-
-    const connectToNewUser = (userId, stream) => {
-      const call = peer.call(userId, stream);
-      const video = document.createElement("video");
-      call.on("stream", (userVideoStream) => {
-        addVideoStream(video, userVideoStream);
-      });
-      call.on("close", () => {
-        video.remove();
-      });
-
-      peersRef.current[userId] = call;
-      setPeers((prevPeers) => ({
-        ...prevPeers,
-        [userId]: call,
-      }));
-    };
-
-    const addVideoStream = (video, stream) => {
-      video.srcObject = stream;
-      video.addEventListener("loadedmetadata", () => {
-        video.play();
-      });
-      document.getElementById("video-grid").append(video);
-    };
 
     return () => {
-      socketRef.current.disconnect();
-      Object.values(peersRef.current).forEach((call) => call.close());
+      newSocket.close();
     };
-  }, [roomId]);
+  }, []);
+
+  const initiateCall = () => {
+    if (!myStream || !socket) return;
+
+    const newPeer = new Peer({ initiator: true, stream: myStream }) as Instance;
+    setPeer(newPeer);
+
+    newPeer.on('signal', (data: any) => {
+      socket.emit('initiate', { signal: data });
+    });
+
+    newPeer.on('stream', (stream: MediaStream) => {
+      setRemoteStream(stream);
+      if (remoteVideo.current) {
+        remoteVideo.current.srcObject = stream;
+      }
+    });
+
+    socket.on('call-initiated', ({ callId }: { callId: string }) => {
+      setCallId(callId);
+    });
+  };
+
+  const joinCall = () => {
+    if (!myStream || !socket) return;
+
+    const newPeer = new Peer({ initiator: false, stream: myStream }) as Instance;
+    setPeer(newPeer);
+
+    newPeer.on('signal', (data: any) => {
+      socket.emit('join', { callId, signal: data });
+    });
+
+    newPeer.on('stream', (stream: MediaStream) => {
+      setRemoteStream(stream);
+      if (remoteVideo.current) {
+        remoteVideo.current.srcObject = stream;
+      }
+    });
+
+    socket.on('call-joined', ({ signal }: { signal: any }) => {
+      newPeer.signal(signal);
+    });
+  };
+
+  const endCall = () => {
+    if (peer) {
+      peer.destroy();
+    }
+    if (socket) {
+      socket.emit('end', { callId });
+    }
+    setRemoteStream(null);
+    setCallId('');
+  };
 
   return (
     <div>
-      <video playsInline muted ref={userVideoRef} autoPlay />
-      <div id="video-grid"></div>
+      <video ref={myVideo} autoPlay muted playsInline />
+      <video ref={remoteVideo} autoPlay playsInline />
+      <button onClick={initiateCall}>Iniciar llamada</button>
+      <input
+        type="text"
+        value={callId}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCallId(e.target.value)}
+        placeholder="ID de la llamada"
+      />
+      <button onClick={joinCall}>Unirse a la llamada</button>
+      <button onClick={endCall}>Finalizar llamada</button>
     </div>
   );
 };
