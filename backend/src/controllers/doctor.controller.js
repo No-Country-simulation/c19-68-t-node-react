@@ -31,9 +31,10 @@ const doctorController = {
         country,
         availability
       );
+
       res
         .status(201)
-        .json({ message: "Doctor Created Successfully", doctor: newDoctor });
+        .json({ id: newDoctor._id, rol: "doctor" });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
