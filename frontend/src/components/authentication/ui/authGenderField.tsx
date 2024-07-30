@@ -25,9 +25,10 @@ const AuthGenderField = () => {
         <span>Sexo</span>
       </div>
       <div className="flex gap-3 ">
-        <label htmlFor="woman" className="flex gap-1">
+        <label htmlFor="woman" className="flex items-center gap-1">
           <span>Mujer</span>
           <input
+            className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}
@@ -35,9 +36,10 @@ const AuthGenderField = () => {
           />
         </label>
 
-        <label htmlFor="man" className="flex gap-1">
+        <label htmlFor="man" className="flex  items-center gap-1">
           <span>Hombre</span>
           <input
+          className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}
@@ -45,9 +47,10 @@ const AuthGenderField = () => {
           />
         </label>
 
-        <label htmlFor="other" className="flex gap-1">
+        <label htmlFor="other" className="flex items-center gap-1">
           <span>Otro</span>
           <input
+          className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}

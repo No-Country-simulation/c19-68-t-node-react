@@ -23,7 +23,7 @@ export const userLogin = async (data: Record<string, unknown>) => {
 
 export const createPatient = async (data: Record<string, unknown>) => {
   try {
-    const response = await fetch("http://localhost:4700/doctors/registerDoc", {
+    const response = await fetch("http://localhost:4700/patients/registerPat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

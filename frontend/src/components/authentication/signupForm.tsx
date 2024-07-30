@@ -138,9 +138,9 @@ const SignupForm = ({ role }: { role: string }) => {
           )}
 
           <button
-            // type="submit"
+            type="submit"
             className="bg-gray-800 text-white py-2 rounded-lg"
-            onClick={() => setIsModalOpen(true)}
+            // onClick={() => setIsModalOpen(true)}
           >
             Continue
           </button>
