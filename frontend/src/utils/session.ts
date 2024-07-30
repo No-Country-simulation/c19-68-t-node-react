@@ -26,7 +26,9 @@ export async function encrypt(payload: JWTPayload | undefined) {
 
 // Función para desencriptar la sesión
 export async function decrypt(session: any) {
-  console.log("La session que llega al decrypt: ", session);
+  if (!session) {
+    redirect("/auth/login");
+  }
   const jwt = session.value;
 
   try {
@@ -64,7 +66,7 @@ export async function createSession(user: { id: string; rol: string }) {
 export async function verifySession() {
   const sessionCookie = cookies().get(cookie.name);
   if (!sessionCookie) {
-    return null;
+    redirect("/auth/login");
   }
   const session = await decrypt(sessionCookie);
   if (!session) {

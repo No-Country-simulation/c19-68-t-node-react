@@ -2,9 +2,16 @@ import Link from "next/link";
 import "./Navbar.css";
 import Image from "next/image";
 
-const Navbar = () => {
+import { getSession } from "@/utils/getSession";
+
+interface Session {
+  rol: string;
+}
+
+const Navbar = async () => {
+  const session: Session = (await getSession()) as Session;
   return (
-    <nav className="navbar w-screen sticky bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
+    <nav className="navbar z-20 w-screen sticky bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
       {/* Navbar Desktop */}
 
       <div className=" container hidden lg:flex lg:flex-col justify-between w-full h-full py-12">
@@ -106,7 +113,7 @@ const Navbar = () => {
       <div className="container m-auto h-[77px] flex justify-between w-full p-4 lg:hidden">
         <main className="lg:h-[90%] flex lg:flex-col lg:justify-evenly justify-between w-full">
           <Link
-            href={"/settings"}
+            href={`/${session?.rol}/settings`}
             className="link flex justify-center items-center gap-1  text-gray-300"
           >
             <Image
@@ -118,7 +125,7 @@ const Navbar = () => {
             <span className=" text-xs">Configuración</span>
           </Link>
           <Link
-            href={"/paciente/agendar-turnos"}
+            href={`/${session?.rol}/agendar-turnos`}
             className="link flex justify-center items-center gap-1  text-gray-300"
           >
             <Image
@@ -130,7 +137,7 @@ const Navbar = () => {
             <span className="hidden lg:block text-xs">Agenda</span>
           </Link>
           <Link
-            href={"/"}
+            href={`/${session?.rol}`}
             className="link flex justify-center items-center gap-1  text-white"
           >
             <Image
@@ -142,7 +149,7 @@ const Navbar = () => {
             <span className="hidden lg:block text-xs">Inicio</span>
           </Link>
           <Link
-            href={"/editProfile"}
+            href={`/${session?.rol}/profile`}
             className="link flex items-center justify-center gap-1 text-gray-300"
           >
             <Image
@@ -154,7 +161,7 @@ const Navbar = () => {
             <span className="hidden lg:block text-xs">Mi perfil</span>
           </Link>
           <Link
-            href={"/program-date"}
+            href={`/${session?.rol}/actividad`}
             className="link flex  items-center justify-center gap-1 text-gray-300"
           >
             <Image
