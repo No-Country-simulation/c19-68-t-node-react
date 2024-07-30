@@ -25,9 +25,11 @@ export async function encrypt(payload: JWTPayload | undefined) {
 }
 
 // Función para desencriptar la sesión
-export async function decrypt(session: { values: string }) {
-  console.log("La session que llega al decrypt: ", session);
-  const jwt = session.values;
+export async function decrypt(session: any) {
+  if (!session) {
+    redirect("/auth/login");
+  }
+  const jwt = session.value;
 
   try {
     const { payload } = await jwtVerify(jwt, key, {
@@ -37,16 +39,18 @@ export async function decrypt(session: { values: string }) {
 
     return payload;
   } catch (error) {
+    console.log("El error al desencriptar: ", error);
+
     return null;
   }
 }
 
 // Función para crear la sesión
-export async function createSession(userId: string, role: string) {
+export async function createSession(user: { id: string; rol: string }) {
   const expires = new Date(Date.now() + cookie.duration);
+
   const session = await encrypt({
-    userId,
-    role, // Incluyendo para testear el role
+    user,
     exp: Math.floor(expires.getTime() / 1000),
   });
 
@@ -55,25 +59,24 @@ export async function createSession(userId: string, role: string) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/${role}/${userId}`); // REdireccion para tests
+  redirect(`/${user.rol}/${user.id}`); // REdireccion para tests
 }
 
 // Función para verificar la sesión
 export async function verifySession() {
-  const sessionCookie = cookies().get(cookie.name)?.value;
+  const sessionCookie = cookies().get(cookie.name);
   if (!sessionCookie) {
     redirect("/auth/login");
   }
-
   const session = await decrypt(sessionCookie);
-  if (!session?.userId) {
+  if (!session) {
     console.log("Redireccionando porque no coincide el token");
 
     redirect("/auth/login");
   }
   console.log("La session: ", session);
 
-  return { userId: session.token };
+  return { userId: session };
 }
 
 // Función para eliminar la sesión

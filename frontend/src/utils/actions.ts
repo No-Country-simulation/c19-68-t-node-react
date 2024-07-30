@@ -37,7 +37,7 @@ export const login = async (
 
   // Create session
 
-  await createSession(result.token, result.role);
+  await createSession(result);
 
   return result;
 };
@@ -76,7 +76,7 @@ export const signup = async (
       return { error: result.message };
     }
 
-    await createSession(result.token, result.role);
+    await createSession(result);
     return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
@@ -115,22 +115,9 @@ export const signupPatient = async (
     }
     console.log("result del registro: ", result);
 
-    // Create session
-    // await createSession(result.user.id);
-
-    await createSession(result.token, result.role);
+    // await createSession(result);
     return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
   }
-
-  // Create user
-  // Encrypt password with bcrypt
-  // try catch
-  // const data = await createUserPost()
-
-  // const user = { id: "1", fullName: "User complete name" }; //para pruebas
-
-  // Create session
-  // await createSession(user.id);
 };
