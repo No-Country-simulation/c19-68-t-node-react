@@ -1,0 +1,49 @@
+/* Estilos globales para el contenedor */
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Ajusta el color de fondo según sea necesario */
+}
+
+/* Estilos para el contenedor interno */
+.innerContainer {
+  width: 100%;
+  max-width: 375.83px; /* Ancho máximo basado en el ancho del iPhone 14 Pro Max */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Estilos para el encabezado */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Ajusta el gradiente según sea necesario */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Estilos para el contenido principal */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+/* Estilos para el componente JitsiMeet */
+.main > :global(div) {
+  width: 100%;
+  height: 100%;
+}
