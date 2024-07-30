@@ -1,0 +1,5 @@
+.gradient {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(to left, #812B75 18.9%, #89BAD8 57.9%, #35799F 100%
+  ) 1; 
+}
