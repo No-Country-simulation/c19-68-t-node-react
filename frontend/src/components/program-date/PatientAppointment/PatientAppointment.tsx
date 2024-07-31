@@ -39,7 +39,7 @@ const PatientAppointment = ({ id }:Props) => {
 
   return (
     <section className={`w-screen h-full bg-[#FAFAFA]`}>
-      <div className="w-full h-full max-w-[331px] items-center m-auto my-5 flex flex-col gap-[25px]">
+      <div className="w-full h-full max-w-[331px] items-center m-auto py-5 flex flex-col gap-[25px]">
         <header className="gradient self-start w-[230px] h-[50px] flex items-end ">
           <div className="flex items-center gap-2 mx-auto">
             <Image src={"/logo.png"} alt="arrow up" width={23} height={19} />
@@ -82,8 +82,7 @@ const PatientAppointment = ({ id }:Props) => {
           Ultimas consultas
         </h2>
 
-        <div>
-          {previousAppointments?.map((doctor: any) => (
+        <div>{previousAppointments?.map((doctor: any) => (
             <PreviousAppointment key={doctor.id} doctor={doctor} />
           ))}
         </div>

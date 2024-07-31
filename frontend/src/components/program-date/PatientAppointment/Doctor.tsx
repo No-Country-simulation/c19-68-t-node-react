@@ -27,7 +27,6 @@ interface AttentionSchedule {
 
 const Doctor = ({ doctor }: Props) => {
   
-  console.log(doctor)
     return (
     <article className=" flex justify-between w-[331.03px] h-[45px]">
       <div className="flex gap-1">
