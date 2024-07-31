@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { startOfDay, endOfDay, parseISO } from "date-fns";
-import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import {
   appointmentsManager,
   patientManager,
@@ -43,25 +41,37 @@ class AppointmentService {
 
   async getAppoByIdDoc(doctor_id, date) {
     try {
-      if (date !== ":date") {
+      // Validar que la fecha tenga el formato "YYYY-MM-DD" y sea una fecha válida.
+      if (date !== ":date" && /^\d{4}-\d{2}-\d{2}$/.test(date) === false) {
+        console.error("Formato de fecha no valido");
+        throw new CustomError("La fecha debe tener el formato YYYY-MM-DD", 400);
+      }
+
+      if (
+        typeof date === "string" &&
+        /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+        !isNaN(new Date(date).getTime())
+      ) {
         const searchDate = new Date(date);
+
         const appointDocDate = await appointmentsManager.find({
           doctor_id,
           date: searchDate,
         });
-        if (!appointDocDate || appointDocDate.length === 0) {
-          console.error(`ERROR: No tiene citas el doctor para la fecha "${date}"`);
+        if (appointDocDate.length === 0) {
+          console.error(
+            `ERROR: No tiene citas el doctor para la fecha "${date}"`
+          );
           throw new CustomError(`No doctor's appointment for the date`, 404);
         }
         return appointDocDate;
       }
 
-      console.log(date !== ":date");
       const appointDoctor = await appointmentsManager.find({
         doctor_id,
       });
 
-      if (!appointDoctor || appointDoctor.length === 0) {
+      if (appointDoctor.length === 0) {
         console.error(`ERROR: No tiene citas asignadas`);
         throw new CustomError(
           `There are not appointments for this doctor`,
