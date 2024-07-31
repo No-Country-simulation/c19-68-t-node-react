@@ -25,7 +25,7 @@ const HomePage = () => {
 
     return (
         <section className="w-screen h-screen z-20">
-            <div className="min-h-screen h-full bg-gray-100 flex flex-col p-4">
+            <div className="w-[375.83px] m-auto h-[100%] p-4">
                 <header className="flex items-center justify-between mb-5 relative w-full mt-10">
                     <div className="flex items-center space-x-4 w-[180px] h-[44px] ml-[42px] -mt-2 gradient">
                         <div className="w-10 h-10 -mt-2 bg-[#89BAD8] rounded-full flex items-center justify-center">
@@ -39,7 +39,7 @@ const HomePage = () => {
                 </header>
                 <main>
                     {/* Image Slider */}
-                    <div className="relative w-full h-40 md:h-60 lg:h-80 mb-15 bg-gray-300">
+                    <div className="relative w-full h-40 mb-15 bg-gray-300">
                         <Image src="/home/Frame 2388.png" alt="" layout="fill" objectFit="cover" className="absolute inset-0 z-10" />
                         <div className="absolute inset-0 bg-white z-0"></div>
                     </div>
@@ -98,15 +98,15 @@ const HomePage = () => {
                     <div className="w-full p-4 mb-4 ">
                         <div className="grid grid-cols-3 gap-4 relative p-4 ">
                             <div className="relative">
-                                <Image className="rounded-[11px,11px,0,0]object-cover" src="/home/jesse-orrico-rmWtVQN5RzU-unsplash 1.png" alt="Notification 1" width={97} height={250} />
+                                <Image className="rounded-[11px,11px,0,0]object-cover" src="/home/jesse-orrico-rmWtVQN5RzU-unsplash 1.png" alt="Notification 1" width={97} height={100} />
                                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-white opacity-100"></div>
                             </div>
                             <div className="relative">
-                                <Image className="rounded-[11px,11px,0,0] object-cover" src="/home/alison-marras-LI368L2RZno-unsplash 1.png" alt="Notification 2" width={97} height={150} />
+                                <Image className="rounded-[11px,11px,0,0] object-cover" src="/home/alison-marras-LI368L2RZno-unsplash 1.png" alt="Notification 2" width={97} height={100} />
                                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-white opacity-100"></div>
                             </div>
                             <div className="relative">
-                                <Image className="rounded-[11px,11px,0,0] object-cover" src="/home/nguy-n-hi-p-2rNHliX6XHk-unsplash 1.png" alt="Notification 3" width={97} height={150} />
+                                <Image className="rounded-[11px,11px,0,0] object-cover" src="/home/nguy-n-hi-p-2rNHliX6XHk-unsplash 1.png" alt="Notification 3" width={97} height={100} />
                                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-white opacity-100"></div>
                             </div>
                         </div>
