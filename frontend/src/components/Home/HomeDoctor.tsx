@@ -7,7 +7,7 @@ const HomeDoctor = ({ doctorId }: { doctorId: string }) => {
     <div>
       <h3>Home doctor</h3>
       <p>{doctorId}</p>
-      <Image width={20} height={} alt="" src={} />
+      {/* <Image width={20} height={} alt="" src={} /> */}
     </div>
   );
 };
