@@ -11,8 +11,8 @@ const key = new TextEncoder().encode(process.env.SECRET_KEY);
 const cookie = {
   name: "session",
   options: { httpOnly: true, secure: true, sameSite: "lax", path: "/" },
-  // duration: 24 * 60 * 60 * 1000, // 1 día en milisegundos
-  duration: 10 * 60 * 1000, // 10 minutos en milisegundos
+  duration: 24 * 60 * 60 * 1000, // 1 día en milisegundos
+  //duration: 10 * 60 * 1000, // 10 minutos en milisegundos
 };
 
 // Función para encriptar el payload
@@ -26,7 +26,9 @@ export async function encrypt(payload: JWTPayload | undefined) {
 
 // Función para desencriptar la sesión
 export async function decrypt(session: any) {
-  console.log("La session que llega al decrypt: ", session);
+  if (!session) {
+    redirect("/auth/login");
+  }
   const jwt = session.value;
 
   try {
@@ -44,7 +46,7 @@ export async function decrypt(session: any) {
 }
 
 // Función para crear la sesión
-export async function createSession(user: { id: string; role: string }) {
+export async function createSession(user: { id: string; rol: string }) {
   const expires = new Date(Date.now() + cookie.duration);
 
   const session = await encrypt({
@@ -57,14 +59,14 @@ export async function createSession(user: { id: string; role: string }) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/${user.role}/${user.id}`); // REdireccion para tests
+  redirect(`/${user.rol}/${user.id}`); // REdireccion para tests
 }
 
 // Función para verificar la sesión
 export async function verifySession() {
   const sessionCookie = cookies().get(cookie.name);
   if (!sessionCookie) {
-    return null;
+    redirect("/auth/login");
   }
   const session = await decrypt(sessionCookie);
   if (!session) {

@@ -115,7 +115,7 @@ export const signupPatient = async (
     }
     console.log("result del registro: ", result);
 
-    await createSession(result);
+    // await createSession(result);
     return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
