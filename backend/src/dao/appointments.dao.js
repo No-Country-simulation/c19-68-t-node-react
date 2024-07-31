@@ -13,11 +13,8 @@ export class AppointmentsDao {
     return await Appointments.findOne(criteria);
   }
 
-  async find(data, otherModels = "", populateExclude = "") {
-    return await Appointments.find(data).populate({
-      path: otherModels,
-      select: populateExclude,
-    });
+  async find(info) {
+    return await Appointments.find(info);
   }
 
   async update(id, updateData) {
@@ -30,11 +27,18 @@ export class AppointmentsDao {
     return await Appointments.findByIdAndDelete(id);
   }
 
-  async findAll() {
-    return await Appointments.find();
+  async findAll(info) {
+    return await Appointments.find(info);
   }
 
   async createWithSession(appointmentsData, session) {
     return await Appointments.create([appointmentsData], { session });
+  }
+
+  async findPopulate(data, otherModels = "", populateExclude = "") {
+    return await Appointments.find(data).populate({
+      path: otherModels,
+      select: populateExclude,
+    });
   }
 }

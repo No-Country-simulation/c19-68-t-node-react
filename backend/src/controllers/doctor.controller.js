@@ -33,7 +33,11 @@ const doctorController = {
       );
       res
         .status(201)
-        .json({ message: "Doctor Created Successfully", doctor: newDoctor });
+        .json({
+          message: "Doctor Created Successfully",
+          role: "doctor",
+          doctor: newDoctor,
+        });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }

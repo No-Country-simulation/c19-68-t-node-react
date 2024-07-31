@@ -44,6 +44,18 @@ const appointmentsController = {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   },
+  getAppoDoc: async (req, res) =>{
+    const { id, date } = req.params;
+    console.log("Se ha inicia la vista de citas del doctor");
+    try {
+      const appoByIdDoc = await AppointmentService.getAppoByIdDoc(id, date);
+
+      res.status(200).json({ doctorInfoDate: appoByIdDoc });
+
+    } catch (error) {
+      res.status(error.statusCode || 500).json({ message: error.message });
+    }
+  }
 };
 
 export default appointmentsController;

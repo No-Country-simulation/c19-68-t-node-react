@@ -16,12 +16,12 @@ const appointmentsSchema = new mongoose.Schema(
     startTime: {
       type: String,
       trim: true,
-      required: true
+      required: true,
     },
     endTime: {
       type: String,
       trim: true,
-      required: true
+      required: true,
     },
     state: {
       type: String,
@@ -29,8 +29,8 @@ const appointmentsSchema = new mongoose.Schema(
       enum: ["pending", "confirmed", "completed", "canceled"],
     },
     video_call_link: { type: String, required: true },
-    reasons: { type: String, required: true },
-    notes: { type: String, required: true },
+    reasons: { type: String, default: "No se comento la razón" },
+    notes: { type: String, default: "No hay notas del paciente" },
   },
   {
     versionKey: false,
