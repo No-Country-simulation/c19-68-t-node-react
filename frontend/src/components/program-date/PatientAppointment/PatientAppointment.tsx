@@ -14,24 +14,27 @@ export const manrope = Manrope({
   display: "swap",
 });
 
-const PatientAppointment = () => {
+interface Props{
+  id: string
+}
+
+const PatientAppointment = ({ id }:Props) => {
   const [citas, getCitas] = useFetch();
   const [doctors, getDoctors] = useFetch();
 
-  const limitCitas = citas?.slice(0, 3);
-  const principalAppointment = citas?.slice(0, 1);
+  const principalAppointment = citas?.patientDate.slice(0, 1);
   const limitDoctors = doctors?.slice(0, 3);
   const previousAppointments = doctors?.slice(0, 1);
   
   const router = useRouter()
   
   useEffect(() => {
-    getCitas("https://669e59d19a1bda36800656ad.mockapi.io/citas");
+    getCitas(`http://localhost:4700/appointments/getAllAppo/pending/${id}`);
     getDoctors("https://669e59d19a1bda36800656ad.mockapi.io/doctor");
   }, []);
 
   const handleClick = () => {
-    router.push('/agendar-turnos')
+    router.push(`/paciente/${id}/agendar-turnos`)
   }
 
   return (
@@ -51,7 +54,7 @@ const PatientAppointment = () => {
         </>
 
         <div className="flex flex-col gap-[29px]">
-          {limitCitas?.map((citas: any) => (
+          {citas?.patientDate.map((citas: any) => (
             <Scheduled key={citas.id} appointment={citas} />
           ))}
         </div>

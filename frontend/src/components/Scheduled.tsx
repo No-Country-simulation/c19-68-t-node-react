@@ -11,31 +11,31 @@ interface Props {
 }
 
 interface Appointment {
-  id: string;
-  patient_id: string;
-  doctor_data: Doctor;
   date: string;
-  startTime: string;
+  doctor_id: Doctor;
   endTime: string;
-  video_call_link: string;
-  state: string;
-  reasons: string;
   notes: string;
+  patient_id: Doctor;
+  reasons: string;
+  startTime: string;
+  state: string;
+  video_call_link: string;
+  _id: string
 }
 
 interface Doctor {
-  id: string;
-  photo: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
+  country: string;
   email: string;
-  password: string;
+  firstName: string;
+  gender: string;
+  lastName: string;
+  phone: string;
+  photo: string;
   professionalCertificates: [string, string];
   speciality: string;
-  phone: string;
-  country: string;
+  _id: string;
 }
+
 
 
 const Scheduled = ({ appointment }: Props) => {
@@ -63,8 +63,8 @@ const Scheduled = ({ appointment }: Props) => {
         className={`relative w-[331.03px] h-[127px] bg-[#89bad845] flex justify-between items-center px-4 rounded-[12.17px] date-${dateOpen}`}
       >
         <ul className="text-[11.68px] flex flex-col gap-[.5px]">
-          <li className="text-[15.58px] font-bold">Cita {appointment.doctor_data.speciality} </li>
-          <li className="">{ appointment.doctor_data.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_data.firstName} {appointment.doctor_data.lastName}</li>
+          <li className="text-[15.58px] font-bold">Cita {appointment.doctor_id.speciality} </li>
+          <li className="">{ appointment.doctor_id.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_id.firstName} {appointment.doctor_id.lastName}</li>
           <li className="ocultar mb-4">
             Progamada a las {appointment.startTime}hrs
           </li>
