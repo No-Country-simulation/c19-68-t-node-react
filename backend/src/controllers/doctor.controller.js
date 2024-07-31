@@ -72,7 +72,9 @@ const doctorController = {
   async profileDoc(req, res) {
     const { id } = req.params;
     try {
+      console.log("id", id);
       const doctor = await doctorManager.findById(id);
+      console.log(doctor);
       res
         .status(200)
         .json({ message: "Doctor's profile retrieved successfully", doctor });

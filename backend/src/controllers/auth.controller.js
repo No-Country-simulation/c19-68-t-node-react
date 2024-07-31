@@ -30,7 +30,7 @@ const authController = {
 
     //Sending cookie
    res.setHeader('Set-Cookie', serialize('sessionData', userDataJson, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV !== "development", // Only HTTPS on producction
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -42,7 +42,7 @@ const authController = {
  }),
   logout: asyncHandler(async(req, res) => {
     res.cookie("sessionId", "", {
-      httpOnly: true,
+      httpOnly: false,
       expires: new Date(0)
     });
     res.status(200).json({msg: "Successful logout"});

@@ -6,7 +6,8 @@ export class DoctorDao {
   }
 
   async findById(id) {
-    return await Doctor.findById(id)
+    const doctor = await Doctor.findById(id);
+    console.log(doctor);
   }
 
   async update(id, updateData) {

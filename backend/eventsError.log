@@ -42,3 +42,6 @@
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-27T19:48:25.508Z"}
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-27T19:48:33.000Z"}
 {"level":"fatal","message":"POST / - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-27T19:48:50.198Z"}
+{"level":"fatal","message":"GET /getDoc/66a1e475f06637afd626d326 - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-30T01:18:53.715Z"}
+{"level":"fatal","message":"GET /getDoc/66a1e475f06637afd626d326 - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-30T01:25:36.302Z"}
+{"level":"fatal","message":"GET /getDoc/66a1e475f06637afd626d326 - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-07-30T01:26:03.606Z"}
