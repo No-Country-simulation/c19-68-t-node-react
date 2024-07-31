@@ -20,12 +20,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} relative flex flex-col-reverse lg:flex lg:flex-row`}
       >
-<<<<<<< HEAD
         {<BallBackground />}
-        {<Navbar />}
-=======
-        <BallBackground />
->>>>>>> e48fee99b803055fe7fbac677607b30a2bf89ac7
         {children}
       </body>
     </html>

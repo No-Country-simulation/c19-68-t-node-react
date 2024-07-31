@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import "./page.module.css";
 
@@ -19,7 +18,7 @@ export default function Home() {
                         <img className="w-6 h-6" src="/logo.png" alt="Logo" />
                     </div>
                 </header>
-        <main className="w-[360px] m-auto">
+        <main className="w-[360px] m-auto flex">
           <JitsiMeet />
         </main>
       </div>

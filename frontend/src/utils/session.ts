@@ -11,8 +11,8 @@ const key = new TextEncoder().encode(process.env.SECRET_KEY);
 const cookie = {
   name: "session",
   options: { httpOnly: true, secure: true, sameSite: "lax", path: "/" },
-  // duration: 24 * 60 * 60 * 1000, // 1 día en milisegundos
-  duration: 10 * 60 * 1000, // 10 minutos en milisegundos
+  duration: 24 * 60 * 60 * 1000, // 1 día en milisegundos
+  //duration: 10 * 60 * 1000, // 10 minutos en milisegundos
 };
 
 // Función para encriptar el payload
