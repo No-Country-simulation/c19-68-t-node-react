@@ -11,7 +11,6 @@ interface Session {
 
 const Navbar = async () => {
   const session: Session = (await getSession()) as Session;
-  console.log(session)
   return (
     <nav className="navbar z-20 w-screen sticky bottom-0 left-0 right-0 bg-[#1E435B] text-white shadow-lg lg:top-0 lg:right-0 lg:flex-col lg:w-[100px] lg:h-screen lg:sticky">
       {/* Navbar Desktop */}
