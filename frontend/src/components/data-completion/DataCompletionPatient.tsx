@@ -1,3 +1,5 @@
+"use client";
+
 import CustomField from "@/components/data-completion/CustomField";
 import Input from "@/components/Input";
 import SectionTitle from "@/components/ui/sectionTitle";
@@ -5,13 +7,30 @@ import Image from "next/image";
 import { useFormState } from "react-dom";
 import { patientCompleteData } from "./actions";
 
-const DataCompletionPatient = () => {
+const DataCompletionPatient = (id: any) => {
   const [state, formAction] = useFormState<any, FormData>(
     patientCompleteData,
     undefined
   );
 
   return (
+    //   "availability": {
+    //     "daysOfWeek": ["Monday", "Wednesday", "Friday"],
+    //     "timeSlots": {
+    //       "morningSlot": {
+    //         "start": "08:00",
+    //         "end": "12:00"
+    //       },
+    //       "afternoonSlot": {
+    //         "start": "13:00",
+    //         "end": "17:00"
+    //       }
+    //     }
+    //   },
+    //   "confirmationString": "abc123xyz",
+    //   "confirmed": true,
+    //   "availabilityStatus": "available"
+    // }
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
       {/* Header */}
 

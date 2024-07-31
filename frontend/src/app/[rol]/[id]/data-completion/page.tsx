@@ -2,11 +2,13 @@ import DataCompletionDoctor from "@/components/data-completion/DataCompletionDoc
 import DataCompletionPatient from "@/components/data-completion/DataCompletionPatient";
 import React from "react";
 
-const page = ({ params }: { rol: string; id: string; params: any }) => {
+const page = ({ params }: { params: { id: string; rol: string } }) => {
+  console.log("El dato del params: ", params.rol);
+  const userId = params.id;
   return (
     <section>
       {params.rol === "paciente" ? (
-        <DataCompletionPatient />
+        <DataCompletionPatient id={userId} />
       ) : (
         <DataCompletionDoctor />
       )}
