@@ -28,9 +28,9 @@ const appointmentsSchema = new mongoose.Schema(
       required: false,
       enum: ["pending", "confirmed", "completed", "canceled"],
     },
-    video_call_link: { type: String, required: true },
+    video_call_link: { type: String, required: false },
     reasons: { type: String, required: true },
-    notes: { type: String, required: true },
+    notes: { type: String, required: false },
   },
   {
     versionKey: false,
