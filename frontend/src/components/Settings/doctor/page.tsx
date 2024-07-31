@@ -18,7 +18,6 @@ const SettingsDoctor = () => {
           <span className="font-semibold">Configuración</span>
         </div>
       </div>
-
       {/* Settings List */}
       <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
         <li className="flex items-center">
@@ -78,7 +77,6 @@ const SettingsDoctor = () => {
           <span>Cerrar la cuenta</span>
         </li>
       </div>
-
       {/* Logout Button */}
       <button className="w-full bg-purple-500 text-white py-3 rounded-lg flex items-center justify-center">
         <span>Cerrar sesión</span>

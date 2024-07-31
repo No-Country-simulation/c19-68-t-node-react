@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { dateFormater } from "@/utils/lib/helpers";
 import { useFormState } from "react-dom";
 import { appointmentRegister } from "@/app/[rol]/[id]/agendar-turnos/actions";
+import { set } from "date-fns";
 
 export interface Doctor {
   _id: string | number;
@@ -18,12 +19,26 @@ export interface Doctor {
   lastName: string;
   gender: string;
   email: string;
-  password: string;
   professionalCertificates: string[];
   speciality: string;
   phone: string;
   country: string;
-  availability: { endDate: string; startDate: string }[];
+  availability: {
+    daysOfWeek: string[];
+    timeSlots: {
+      morningSlot: {
+        start: string;
+        end: string;
+      };
+      afternoonSlot: {
+        start: string;
+        end: string;
+      };
+    };
+  };
+  confirmationString: string;
+  confirmed: boolean;
+  availabilityStatus: string;
 }
 
 const AgendarTurno = () => {
@@ -33,27 +48,22 @@ const AgendarTurno = () => {
   );
   console.log("Lo que trae state: ", state);
 
-  const endpoint = "http://localhost:4700/doctors/getAllDoc";
+  const endpoint = "https://669e59d19a1bda36800656ad.mockapi.io/doctor";
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [professionals, setProfessionals] = useState<Doctor[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState<Doctor>();
-  const [availableDates, setAvailableDates] = useState<Date[]>([
-    // new Date(2024, 6, 10), // 10th July 2024
-    // new Date(2024, 6, 15), // 15th July 2024
-    // new Date(2024, 6, 20), // 20th July 2024
-  ]);
+  const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const { data, error } = useSWR<{ doctors: Doctor[] }>(endpoint, fetcher);
-
   const [specialityOptions, setSpecialityOptions] = useState<
     { label: string; value: string }[]
   >([]);
 
+  const { data, error } = useSWR(endpoint, fetcher);
+
   useEffect(() => {
     if (data) {
       const uniqueSpecialties = Array.from(
-        new Set(data?.doctors.map((doctor) => doctor.speciality))
+        new Set(data?.map((doctor: { speciality: any }) => doctor.speciality))
       );
       const options = uniqueSpecialties.map((speciality) => ({
         label: speciality.charAt(0).toUpperCase() + speciality.slice(1),
@@ -66,23 +76,23 @@ const AgendarTurno = () => {
   const handleSpecialtyChange = (value: string) => {
     setSelectedSpecialty(value);
     const filteredProfessionals =
-      data?.doctors.filter(
-        (doctor) =>
+      data?.filter(
+        (doctor: { speciality: string }) =>
           doctor.speciality.toLowerCase().replace(/\s+/g, "") === value
       ) || [];
     setProfessionals(filteredProfessionals);
   };
 
   const handleProfessionalSelect = (value: string | number) => {
-    const profSelect = data?.doctors.filter((doc) => doc._id === value) || [];
+    const profSelect =
+      data?.filter((doc: { _id: string | number }) => doc._id === value) || [];
+
+    // Convendria hacer un fetch a la API para hacer funciones de disponibilidad de dias y horarios
     const disponibilidad = profSelect?.[0]?.availability || [];
 
-    const startEndDates = dateFormater(
-      disponibilidad[0]?.startDate ?? "",
-      disponibilidad[0]?.endDate ?? ""
-    );
+    console.log("Disponibilidad del profesional: ", disponibilidad.daysOfWeek);
 
-    setAvailableDates(startEndDates);
+    setAvailableDates(disponibilidad.daysOfWeek);
 
     setSelectedProfessional(profSelect[0]);
   };
@@ -94,7 +104,7 @@ const AgendarTurno = () => {
 
   const handleDateSelect = (date: Date) => {
     console.log("Fecha seleccionada: ", date);
-    setSelectedDate(date);
+    // setSelectedDate(date);
   };
 
   if (error) return <div>Error al cargar los datos.</div>;
@@ -103,6 +113,13 @@ const AgendarTurno = () => {
   return (
     <section className="w-full h-screen bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
+
+      {/* <div className="flex-1 overflow-auto">
+        <pre className="bg-gray-100 p-4 rounded-lg">
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      </div> */}
+
       <form action={formAction}>
         <div className="filtro-especialidad mb-4">
           <CustomSelect
@@ -118,17 +135,17 @@ const AgendarTurno = () => {
           onProfessionalSelect={handleProfessionalSelect}
         />
         <CustomCalendar
-          startDate={availableDates[0]}
-          endDate={availableDates[1]}
+          // startDate={new Date()}
           onDateSelect={handleDateSelect}
           name="selectedDate"
+          availableDays={availableDates}
         />
         <input
           type="hidden"
           name="selectedDate"
           value={selectedDate ? selectedDate.toISOString() : ""}
         />
-        <DoctorDisponibility />
+        {/* <DoctorDisponibility /> */}
         <button
           type="submit"
           className="w-full bg-[#812B75] text-white font-bold py-2 rounded-md shadow-md hover:bg-teal-600"

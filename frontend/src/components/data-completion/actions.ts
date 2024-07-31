@@ -1,9 +1,9 @@
 "use server";
 
-export const patientCompleteData = async (data: any) => {
+export const patientCompleteData = async (data: any, id: string) => {
   try {
     const response = await fetch(
-      "http://localhost:4700/doctors/editProfileDoc",
+      `http://localhost:4700/doctors/editProfileDoc/${id}`,
       {
         method: "POST",
         headers: {
@@ -14,11 +14,13 @@ export const patientCompleteData = async (data: any) => {
     );
 
     if (response.ok) {
-      console.log("Datos enviados correctamente");
+      return { success: true };
     } else {
-      console.log("Error al enviar los datos");
+      console.error("Error al enviar los datos");
+      return { success: false };
     }
   } catch (error) {
-    console.log("Error al enviar los datos", error);
+    console.error("Error al enviar los datos", error);
+    return { success: false };
   }
 };

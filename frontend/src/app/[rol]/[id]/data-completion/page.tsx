@@ -10,7 +10,7 @@ const page = ({ params }: { params: { id: string; rol: string } }) => {
       {params.rol === "paciente" ? (
         <DataCompletionPatient id={userId} />
       ) : (
-        <DataCompletionDoctor />
+        <DataCompletionDoctor doctorId={userId} />
       )}
     </section>
   );

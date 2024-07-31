@@ -5,7 +5,11 @@ import Image from "next/image";
 const HomePage = ({ params }: { params: { rol: string; id: string } }) => {
   return (
     <section>
-      {params.rol === "paciente" ? <HomePatient /> : <HomeDoctor />}
+      {params.rol === "paciente" ? (
+        <HomePatient />
+      ) : (
+        <HomeDoctor doctorId={params.id} />
+      )}
     </section>
   );
 };

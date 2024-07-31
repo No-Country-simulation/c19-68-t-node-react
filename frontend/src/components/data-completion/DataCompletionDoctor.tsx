@@ -1,4 +1,5 @@
 "use client";
+
 import PhoneNumberInput from "@/components/authentication/ui/authPhoneField";
 import DayCheckbox from "@/components/data-completion/DayCheckbox";
 import Input from "@/components/Input";
@@ -7,8 +8,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import TimeSelect from "./TimeSelect";
 import ConsultationValue from "./ConsultationValue";
+import { patientCompleteData } from "./actions";
 
-const DataCompletionDoctor = () => {
+const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
   const [phone, setPhone] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -54,16 +56,11 @@ const DataCompletionDoctor = () => {
 
     console.log("Datos a enviar:", formData);
 
-    // try {
-    //   await fetch("/api/update-user-data", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-    // } catch (error) {
-    //   console.error("Error al actualizar los datos del usuario:", error);
+    // const result = await patientCompleteData(formData, doctorId);
+    // if (result.success) {
+    //   console.log("Datos enviados correctamente");
+    // } else {
+    //   console.error("Error al enviar los datos");
     // }
   };
 

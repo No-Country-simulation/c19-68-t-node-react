@@ -29,7 +29,6 @@ export const login = async (
 
   const result = await userLogin(data);
 
-  //Crea session o localstorage
   if (result.message) {
     return { error: result.message };
   }
@@ -69,18 +68,13 @@ export const signup = async (
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  try {
-    const result = await createDoctor(data);
+  const result = await createDoctor(data);
 
-    if (result.message) {
-      return { error: result.message };
-    }
-
-    await createSession(result);
-    return result;
-  } catch (error: unknown) {
-    return { error: (error as Error).message };
+  if (result.message) {
+    return { error: result.message };
   }
+
+  await createSession(result);
 };
 
 export const signupPatient = async (
@@ -115,7 +109,7 @@ export const signupPatient = async (
     }
     console.log("result del registro: ", result);
 
-    // await createSession(result);
+    await createSession(result);
     return result;
   } catch (error: unknown) {
     return { error: (error as Error).message };
