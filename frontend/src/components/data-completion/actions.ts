@@ -1,31 +1,24 @@
 "use server";
 
-export const patientCompleteData = async (
-  prevState: {
-    error: undefined | string;
-  },
-  formData: FormData
-) => {
-  const data = {
-    dateOfBirth: formData.get("dateOfBirth"),
-    age: formData.get("age"),
-    height: formData.get("height"),
-    weight: formData.get("weight"),
-    allergies: formData.get("allergies"),
-    medications: formData.get("medications"),
-    medicationName: formData.get("medicationName"),
-    disability: formData.get("disability"),
-    // Disability type falta
-    smoking: formData.get("smoking"),
-    // Falta frecuencia de fumador
-    alcoholConsumption: formData.get("alcoholConsumption"),
-    // drinkFrecuency
-    psychoactiveSubstances: formData.get("psychoactiveSubstances"),
-  };
+export const patientCompleteData = async (data: any) => {
+  try {
+    const response = await fetch(
+      "http://localhost:4700/doctors/editProfileDoc",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
-  console.log("La data que llega al action patientCompleteData: ", data);
-
-  // Validacionems aca - Manejar tipo de datos en otro archivo.
-
-  // try catch para el UPDATE aca
+    if (response.ok) {
+      console.log("Datos enviados correctamente");
+    } else {
+      console.log("Error al enviar los datos");
+    }
+  } catch (error) {
+    console.log("Error al enviar los datos", error);
+  }
 };

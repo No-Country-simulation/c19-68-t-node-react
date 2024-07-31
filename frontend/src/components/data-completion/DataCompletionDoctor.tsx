@@ -49,6 +49,7 @@ const DataCompletionDoctor = () => {
           afternoonSlot: timeSlots.afternoonSlot,
         },
       },
+      // consultValue
     };
 
     console.log("Datos a enviar:", formData);
