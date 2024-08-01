@@ -45,6 +45,7 @@ class VideoCallController {
     const { roomId } = req.body;
     try {
       const call = await VideoCallService.initiateCall(roomId);
+      console.log(roomId)
       res.status(201).json(call);
     } catch (error) {
       res.status(500).json({ error: error.message });

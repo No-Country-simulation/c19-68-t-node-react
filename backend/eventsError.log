@@ -9,3 +9,26 @@
 {"level":"error","message":"GET /getAllAppo/canceled/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:25.775Z"}
 {"level":"error","message":"GET /getAllAppo/confirmed/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:35.042Z"}
 {"level":"error","message":"GET /getAllAppo/confirm/66a286e0c3714b7268649122 - Status: 404 (Not Found) - The requested resource was not found","timestamp":"2024-07-27T19:04:49.620Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:35:03.650Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:38:18.091Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:41:17.031Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:45:35.931Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:47:44.626Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:50:50.578Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:52:19.077Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T17:52:29.898Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:03:25.220Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:03:29.533Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:04:40.395Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:07:07.475Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:12:12.859Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:13:58.644Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:27:04.826Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:27:34.244Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:29:50.449Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:31:48.775Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:32:03.435Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:33:20.437Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:35:10.521Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:37:19.063Z"}
+{"level":"fatal","message":"POST /initiate - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-01T18:38:28.539Z"}
