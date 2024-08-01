@@ -8,10 +8,10 @@ import CustomError from "../middlewares/error.middleware.js";
 
 class AppointmentService {
   async getFreeSlotDoc(doctorId, targetDate) {
-    //la fecha se convierte en dia del mes ("Monday" "Tuesday" "Wednesday" etc).
-    const weekdayName = this.getDayOfWeek(targetDate);
-
     try {
+      //la fecha se convierte en dia de la semana ("Monday" "Tuesday" "Wednesday" etc).
+      const weekdayName = this.getDayOfWeek(targetDate);
+
       //Se busca que la fecha coincida con el dia de la semana.
       const doctor = await doctorManager.findOne({
         _id: doctorId,
@@ -21,6 +21,7 @@ class AppointmentService {
       if (!doctor) {
         throw new CustomError("Doctor is not available on this day", 404);
       }
+
       //Se crea un arreglo de los horarios del doctor (mañana y tarde).
       const timeRangesDoc = [
         doctor.availability.timeSlots.morningSlot.start,
@@ -45,9 +46,10 @@ class AppointmentService {
       ]);
 
       //con los slots del doctor y las horas ocupadas se saca la disponibilidad de ese dia.
-      const availabilityDoc = this.removeTimeSlots(slotsDoctor, busyHoursDoc);
+      const slotAvailDoc = this.removeTimeSlots(slotsDoctor, busyHoursDoc);
 
-      return availabilityDoc;
+      return slotAvailDoc;
+
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
@@ -56,7 +58,7 @@ class AppointmentService {
       }
     }
   }
-  // funcion para identificar dia de la semana segun la fecha.
+
   getDayOfWeek(targetDate) {
     const daysOfweek = [
       "Monday",
