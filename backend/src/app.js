@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import morgan from "morgan";
 import paymentGatewayRoutes from "./routes/paymentGateway.routes.js";
 import appointmentsRoutes from "./routes/appointments.routes.js";
