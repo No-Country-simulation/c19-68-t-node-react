@@ -2,12 +2,17 @@ import React from "react";
 import Link from "next/link";
 import "./page.css";
 
-const SettingsDoctor = () => {
+interface Props {
+  rol: string;
+  id: string;
+}
+
+const SettingsDoctor = ({rol, id}:Props) => {
   return (
     <div className="w-[430px] h-[932px] settingDoctor bg-gray-100 flex flex-col items-center p-4">
       {/* Header */}
       <div className="flex items-center w-full justify-between mb-4">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-1 gradient">
           <div className="w-10 h-10 rounded-full flex items-center justify-center">
             <img
               className="w-6 h-6"
@@ -21,22 +26,21 @@ const SettingsDoctor = () => {
 
       {/* Settings List */}
       <div className="w-full h-[500px] justify-between flex flex-col max-w-[350px] mx-auto">
-        <li className="flex items-center">
-          <img
-            className="w-[27px] h-[27px] mr-4"
+        <Link href={""} className="flex items-center">
+        <img className="w-[27px] h-[27px] mr-4"
             src="/settings-doctor/guidance_computer-room.png"
             alt="Clinic"
           />
           <span>Mi consultorio</span>
-        </li>
-        <li className="flex items-center">
+        </Link>
+        <Link href={""} className="flex items-center">
           <img
             className="w-[27px] h-[27px] mr-4"
             src="/settings-doctor/clarity_group-line.png"
             alt="Patients"
           />
           <span>Mi lista de pacientes</span>
-        </li>
+        </Link>
         <li className="flex items-center">
           <img
             className="w-[29px] h-[29px] mr-4"

@@ -10,7 +10,7 @@ const page = ({ params }: { rol: string; id: string; params: any }) => {
   
   return (
 
-      <section className="w-screen h-screen">
+      <section className="w-screen h-full h-min-[100vh]">
       <div className="w-[375.83px] m-auto h-[100%]">
         <header className="w-[200px] mt-6 mb-20  h-[50px] flex items-end gap-1 gradient">
           <Image src={"/logo.png"} width={23} height={19} alt="logo" />

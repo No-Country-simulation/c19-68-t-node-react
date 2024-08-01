@@ -10,7 +10,7 @@ interface Props {
   onChange?: void;
 }
 
-const Input = ({ type, id, name, twClass, value }: Props) => {
+const InputReadOnly = ({ type, id, name, twClass, value }: Props) => {
   return (
     <input
       className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 ${twClass}`}
@@ -18,8 +18,9 @@ const Input = ({ type, id, name, twClass, value }: Props) => {
       type={type}
       id={id}
       name={name}
+      readOnly
     />
   );
 };
 
-export default Input;
+export default InputReadOnly;
