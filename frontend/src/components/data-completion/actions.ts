@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 export const doctorCompleteData = async (data: any, id: string) => {
   try {
     const response = await fetch(
@@ -28,6 +30,8 @@ export const doctorCompleteData = async (data: any, id: string) => {
 export const patientCompleteData = async (data: any, id: string) => {
   console.log("La data que llega: ", data);
   console.log("ID?: ", id);
+
+  redirect(`/paciente/${id}`);
 
   // try {
   //   const response = await fetch(
