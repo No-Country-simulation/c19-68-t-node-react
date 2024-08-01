@@ -59,7 +59,7 @@ export async function createSession(user: { id: string; rol: string }) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/${user.rol}/${user.id}`); // REdireccion para tests
+  redirect(`/${user.rol}/${user.id}/data-completion`); // REdireccion para tests
 }
 
 // Función para verificar la sesión

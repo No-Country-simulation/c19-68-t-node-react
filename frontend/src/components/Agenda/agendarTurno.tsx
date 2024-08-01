@@ -115,7 +115,7 @@ const AgendarTurno = () => {
   if (!data) return <div>Cargando...</div>;
 
   return (
-    <section className="w-full h-screen bg-[#FFF] flex flex-col gap-3 p-12">
+    <section className="w-full h-full bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
 
       {/* <div className="flex-1 overflow-auto">

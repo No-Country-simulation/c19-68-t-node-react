@@ -28,9 +28,9 @@ const Speciality = () => {
             id="speciality"
           >
             <option disabled value=""></option>
-            <option value="cardiology">Cardiología</option>
-            <option value="dermatology">Dermatología</option>
-            <option value="endocrinology">Endocrinología</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Dermatology">Dermatology</option>
+            <option value="Endocrinology">Endocrinology</option>
           </select>
         </div>
         <div className="w-1/2">
