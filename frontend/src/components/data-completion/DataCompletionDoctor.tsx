@@ -5,13 +5,18 @@ import DayCheckbox from "@/components/data-completion/DayCheckbox";
 import Input from "@/components/Input";
 import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import TimeSelect from "./TimeSelect";
 import ConsultationValue from "./ConsultationValue";
 import { patientCompleteData } from "./actions";
+import useSWR from "swr";
+import { fetcher } from "@/utils/lib/fetcher";
 
 const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
+  const URL = `http://localhost:4700/doctors/getDoc/${doctorId}/`;
+
   const [phone, setPhone] = useState<string>("");
+
   const [country, setCountry] = useState<string>("");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [timeSlots, setTimeSlots] = useState({
@@ -53,16 +58,27 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
       },
       // consultValue
     };
+    console.log("La data a enviar: ", formData);
 
-    console.log("Datos a enviar:", formData);
-
-    // const result = await patientCompleteData(formData, doctorId);
-    // if (result.success) {
-    //   console.log("Datos enviados correctamente");
-    // } else {
-    //   console.error("Error al enviar los datos");
-    // }
+    const result = await patientCompleteData(formData, doctorId);
+    if (result.success) {
+      console.log("Datos enviados correctamente");
+    } else {
+      console.error("Error al enviar los datos");
+    }
   };
+
+  const { data, error, isLoading } = useSWR(URL, fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setPhone(data.doctor.phone);
+      setCountry(data.doctor.country);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">

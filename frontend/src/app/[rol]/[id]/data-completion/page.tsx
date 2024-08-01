@@ -6,7 +6,7 @@ const page = ({ params }: { params: { id: string; rol: string } }) => {
   console.log("El dato del params: ", params.rol);
   const userId = params.id;
   return (
-    <section>
+    <section className="w-full">
       {params.rol === "paciente" ? (
         <DataCompletionPatient id={userId} />
       ) : (
