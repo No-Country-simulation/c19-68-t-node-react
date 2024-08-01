@@ -48,7 +48,7 @@ const AgendarTurno = () => {
   );
   console.log("Lo que trae state: ", state);
 
-  const endpoint = "https://669e59d19a1bda36800656ad.mockapi.io/doctor";
+  const endpoint = `http://localhost:4700/doctors/getAllDoc`;
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [professionals, setProfessionals] = useState<Doctor[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState<Doctor>();
@@ -63,7 +63,9 @@ const AgendarTurno = () => {
   useEffect(() => {
     if (data) {
       const uniqueSpecialties = Array.from(
-        new Set(data?.map((doctor: { speciality: any }) => doctor.speciality))
+        new Set(
+          data?.doctors.map((doctor: { speciality: any }) => doctor.speciality)
+        )
       );
       const options = uniqueSpecialties.map((speciality) => ({
         label: speciality.charAt(0).toUpperCase() + speciality.slice(1),
@@ -76,7 +78,7 @@ const AgendarTurno = () => {
   const handleSpecialtyChange = (value: string) => {
     setSelectedSpecialty(value);
     const filteredProfessionals =
-      data?.filter(
+      data?.doctors.filter(
         (doctor: { speciality: string }) =>
           doctor.speciality.toLowerCase().replace(/\s+/g, "") === value
       ) || [];
@@ -85,7 +87,9 @@ const AgendarTurno = () => {
 
   const handleProfessionalSelect = (value: string | number) => {
     const profSelect =
-      data?.filter((doc: { _id: string | number }) => doc._id === value) || [];
+      data?.doctors.filter(
+        (doc: { _id: string | number }) => doc._id === value
+      ) || [];
 
     // Convendria hacer un fetch a la API para hacer funciones de disponibilidad de dias y horarios
     const disponibilidad = profSelect?.[0]?.availability || [];

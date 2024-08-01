@@ -24,10 +24,23 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
     afternoonSlot: { start: "13:00", end: "17:00" },
   });
 
+  const dayMap: { [key: string]: string } = {
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+    Sun: "Sunday",
+  };
+
   const handleDayChange = (day: string, checked: boolean) => {
-    setSelectedDays((prev) =>
-      checked ? [...prev, day] : prev.filter((d) => d !== day)
-    );
+    const fullDay = dayMap[day];
+    if (checked) {
+      setSelectedDays((prev) => [...prev, fullDay]);
+    } else {
+      setSelectedDays((prev) => prev.filter((d) => d !== fullDay));
+    }
   };
 
   const handleTimeChange = (
