@@ -8,9 +8,9 @@ import Image from "next/image";
 import { useState, useEffect, use } from "react";
 import TimeSelect from "./TimeSelect";
 import ConsultationValue from "./ConsultationValue";
-import { patientCompleteData } from "./actions";
 import useSWR from "swr";
 import { fetcher } from "@/utils/lib/fetcher";
+import { doctorCompleteData } from "./actions";
 
 const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
   const URL = `http://localhost:4700/doctors/getDoc/${doctorId}/`;
@@ -73,7 +73,7 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
     };
     console.log("La data a enviar: ", formData);
 
-    const result = await patientCompleteData(formData, doctorId);
+    const result = await doctorCompleteData(formData, doctorId);
     if (result.success) {
       console.log("Datos enviados correctamente");
     } else {

@@ -1,36 +1,56 @@
 "use client";
 
-import CustomField from "@/components/data-completion/CustomField";
 import Input from "@/components/Input";
 import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
 import { useFormState } from "react-dom";
 import { patientCompleteData } from "./actions";
+import React from "react";
 
 const DataCompletionPatient = (id: any) => {
-  const [state, formAction] = useFormState<any, FormData>(
-    patientCompleteData,
-    undefined
-  );
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    const formData = {
+      dateOfBirth: (
+        target.elements.namedItem("dateOfBirth") as HTMLInputElement
+      )?.value,
+      age: (target.elements.namedItem("age") as HTMLInputElement)?.value,
+      height: (target.elements.namedItem("height") as HTMLInputElement)?.value,
+      weight: (target.elements.namedItem("weight") as HTMLInputElement)?.value,
+      allergies: (target.elements.namedItem("allergies") as HTMLInputElement)
+        ?.value,
+      medications: (
+        target.elements.namedItem("medications") as HTMLInputElement
+      )?.value,
+      medicationName: (
+        target.elements.namedItem("medicationName") as HTMLInputElement
+      )?.value,
+      disability: (target.elements.namedItem("disability") as HTMLInputElement)
+        ?.value,
+      disabilityType: (
+        target.elements.namedItem("disability-type") as HTMLInputElement
+      )?.value,
+      smoking: (target.elements.namedItem("smoking") as HTMLInputElement)
+        ?.value,
+      smokingFrecuency: (
+        target.elements.namedItem("smokingFrecuency") as HTMLInputElement
+      )?.value,
+      alcoholConsumption: (
+        target.elements.namedItem("alcoholConsumption") as HTMLInputElement
+      )?.value,
+      drinkFrecuency: (
+        target.elements.namedItem("drinkFrecuency") as HTMLInputElement
+      )?.value,
+      psychoactiveSubstances: (
+        target.elements.namedItem("psychoactiveSubstances") as HTMLInputElement
+      )?.value,
+    };
+
+    console.log("La data a enviar: ", formData);
+  };
 
   return (
-    //   "availability": {
-    //     "daysOfWeek": ["Monday", "Wednesday", "Friday"],
-    //     "timeSlots": {
-    //       "morningSlot": {
-    //         "start": "08:00",
-    //         "end": "12:00"
-    //       },
-    //       "afternoonSlot": {
-    //         "start": "13:00",
-    //         "end": "17:00"
-    //       }
-    //     }
-    //   },
-    //   "confirmationString": "abc123xyz",
-    //   "confirmed": true,
-    //   "availabilityStatus": "available"
-    // }
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
       {/* Header */}
 
@@ -51,7 +71,7 @@ const DataCompletionPatient = (id: any) => {
 
       {/* Form */}
       <form
-        action={formAction}
+        onSubmit={handleSubmit}
         className="flex flex-col gap-[26px] text-[12px] max-w-[325px]"
       >
         {/* Fecha de nacimiento y Edad */}
