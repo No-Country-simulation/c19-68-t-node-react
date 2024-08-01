@@ -65,7 +65,7 @@ export const initializeServer = (app) => {
 
     socket.on('initiate', async ({ signal }) => {
       try {
-        const roomId = socket.id; // Usando el ID del socket como roomId
+        const roomId = socket.id; // Usando el ID del socket como roomId*/
         const call = await VideoCallService.initiateCall(roomId);
         socket.emit('call-initiated', { callId: call.roomId });
       } catch (error) {
@@ -98,7 +98,10 @@ export const initializeServer = (app) => {
   });
 
   return server;
-}; //esta funcionaba 
+}; 
+
+
+//esta funcionaba la de arriba
 
 /*
 import express from 'express';
