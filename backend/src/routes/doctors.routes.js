@@ -8,7 +8,7 @@ router.post("/registerDoc", controllerDoc.registerDoc);
 
 router.post("/logOutDoc", controllerDoc.logOutDoc);
 
-router.post("/editProfileDoc/:id", controllerDoc.editProfileDoc);
+router.patch("/editProfileDoc/:id", controllerDoc.editProfileDoc);
 
 router.get("/getDoc/:id", controllerDoc.getDoc);
 
