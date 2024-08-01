@@ -35,7 +35,6 @@ export async function decrypt(session: any) {
     const { payload } = await jwtVerify(jwt, key, {
       algorithms: ["HS256"],
     });
-    console.log("El payload: ", payload);
 
     return payload;
   } catch (error) {

@@ -19,8 +19,6 @@ export const login = async (
 
   // 1. Validate fields
 
-  console.log("La data que llega al login: ", formData);
-
   const validationResult = loginSchema.safeParse(data);
 
   if (!validationResult.success) {
@@ -45,8 +43,6 @@ export const signup = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  console.log("Lo que trae el signup para doctor: ", formData);
-
   const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
@@ -59,8 +55,6 @@ export const signup = async (
     repassword: formData.get("repassword"),
     professionalCertificates: formData.get("professionalCertificates"),
   };
-
-  console.log("Lo de la data: ", data);
 
   const validationResult = signUpFormSchema.safeParse(data);
 
@@ -81,8 +75,6 @@ export const signupPatient = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  console.log("Lo que trae el signup para paciente: ", formData);
-
   const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
