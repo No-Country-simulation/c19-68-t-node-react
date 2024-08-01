@@ -169,7 +169,7 @@ const VideoCall: React.FC = () => {
   const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('https://e-medicine-backend.vercel.app');
     setSocket(newSocket);
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -235,7 +235,7 @@ const VideoCall: React.FC = () => {
 
     try {
       const randomRoomId = Math.random().toString(36).substring(2, 15);
-      const response = await fetch('http://localhost:3001/api/videocall/initiate', {
+      const response = await fetch('https://e-medicine-backend.vercel.app/api/videocall/initiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId:randomRoomId})
@@ -252,6 +252,39 @@ const VideoCall: React.FC = () => {
     }
   };
 
+  const joinCall = async () => {
+    if (!myStream || !socket || !callId) return;
+    try {
+      const randomParticipantId = Math.random().toString(36).substring(2, 15);
+      console.log(`Attempting to join call with participantId: ${randomParticipantId}`);
+      
+      const response = await fetch('https://e-medicine-backend.vercel.app/api/videocall/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: callId, participant: randomParticipantId })
+      });
+      
+      const result = await response.json();
+      console.log('Join call response:', result);
+      
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to join the call');
+      }
+      
+      // Verificar si el participante fue añadido correctamente
+      if (result.videoCall && result.videoCall.participants) {
+        console.log('Current participants:', result.videoCall.participants);
+      }
+      
+      const newPeer = createPeer(false);
+      if (newPeer) {
+        setPeer(newPeer);
+      }
+    } catch (error) {
+      console.error('Error joining call:', error);
+    }
+  };
+/*
   const joinCall = async () => {
     if (!myStream || !socket || !callId) return;
 
@@ -272,7 +305,7 @@ const VideoCall: React.FC = () => {
       console.error('Error joining call:', error);
     }
   };
-
+*/
   const endCall = async () => {
     if (peer) {
       peer.destroy();
@@ -289,7 +322,7 @@ const VideoCall: React.FC = () => {
     setPeer(null);
 
     try {
-      await fetch('http://localhost:3001/api/videocall/end', {
+      await fetch('https://e-medicine-backend.vercel.app/api/videocall/end', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId: callId })
