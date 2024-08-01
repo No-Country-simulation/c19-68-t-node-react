@@ -100,18 +100,10 @@ export const signupPatient = async (
   }
 
   // User Registration
+  const result = await createPatient(data);
 
-  try {
-    const result = await createPatient(data);
-
-    if (result.message) {
-      return { error: result.message };
-    }
-    console.log("result del registro: ", result);
-
-    await createSession(result);
-    return result;
-  } catch (error: unknown) {
-    return { error: (error as Error).message };
+  if (result.message) {
+    return { error: result.message };
   }
+  await createSession(result);
 };
