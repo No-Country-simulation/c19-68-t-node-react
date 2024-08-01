@@ -53,7 +53,7 @@ const doctorController = {
     try {
       const updateDoctor = await doctorManager.update(id, update);
 
-      if (!updatedIdentification) {
+      if (!updateDoctor) {
         return res.status(404).send({ message: "ID not found" });
       }
 

@@ -71,11 +71,11 @@ const doctorSchema = new mongoose.Schema(
     age: {
       type: Number,
       min: 0,
-      max: 3,
+      max: 110,
       // Optional field
     },
     postalCode: {
-      type: Number,
+      type: String,
       trim: true,
       // Optional field
     },
@@ -85,7 +85,7 @@ const doctorSchema = new mongoose.Schema(
     idNumber: {
       type: String,
     },
-    adress:{
+    address:{
       type:String,
     },
     availability: {
