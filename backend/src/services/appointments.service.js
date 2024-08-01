@@ -49,7 +49,6 @@ class AppointmentService {
       const slotAvailDoc = this.removeTimeSlots(slotsDoctor, busyHoursDoc);
 
       return slotAvailDoc;
-
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
@@ -128,9 +127,11 @@ class AppointmentService {
   }
 
   async getAppoById(patient_id, state) {
-    const validStates = ["pending", "confirmed", "completed", "canceled"];
     try {
-      if (!validStates.includes(state)) {
+
+      const validStates = ["pending", "confirmed", "completed", "canceled"];
+
+      if (state !== ":state" && !validStates.includes(state)) {
         console.error("ERROR: Se ingreso parametro no valido");
         throw new CustomError("invalid parameter in the route", 400);
       }
