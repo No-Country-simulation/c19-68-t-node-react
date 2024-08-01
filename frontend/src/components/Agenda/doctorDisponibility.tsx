@@ -2,7 +2,7 @@
 import { useState } from "react";
 import CustomSelect from "../ui/customSelect";
 
-const DoctorDisponibility = () => {
+const  DoctorDisponibility = () => {
   const [time, setTime] = useState("");
   const [reminder, setReminder] = useState("");
 

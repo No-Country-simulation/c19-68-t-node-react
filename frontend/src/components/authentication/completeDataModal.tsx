@@ -1,14 +1,18 @@
-// components/Modal.tsx
-
 import { useRouter } from "next/navigation";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   role: string;
+  userId: string;
 }
 
-const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, role, onClose }) => {
+const CompleteDataModal: React.FC<ModalProps> = ({
+  isOpen,
+  role,
+  onClose,
+  userId,
+}) => {
   if (!isOpen) return null;
 
   const router = useRouter();
@@ -18,13 +22,11 @@ const CompleteDataModal: React.FC<ModalProps> = ({ isOpen, role, onClose }) => {
     const formData = new FormData(event.currentTarget);
     const userChoise = formData.get("option");
     console.log("Campo seleccionado: ", formData.get("option"));
-    userChoise === "yes"
-      ? router.push(`/${role}/data-completion`)
-      : router.push("/");
+    userChoise === "yes" ? onClose() : router.push(`/${role}/${userId}/`);
   };
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-30 transition-opacity duration-1000">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-30 transition-opacity duration-1000">
       <div className="w-[100%] h-full bg-[#35799F] flex flex-col justify-center p-10">
         <div className="header-container text-center">
           <div className="text-center text-[#F2F2F2]">

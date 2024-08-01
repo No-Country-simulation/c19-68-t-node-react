@@ -1,18 +1,102 @@
 "use client";
+
 import PhoneNumberInput from "@/components/authentication/ui/authPhoneField";
 import DayCheckbox from "@/components/data-completion/DayCheckbox";
 import Input from "@/components/Input";
 import SectionTitle from "@/components/ui/sectionTitle";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
+import TimeSelect from "./TimeSelect";
+import ConsultationValue from "./ConsultationValue";
+import useSWR from "swr";
+import { fetcher } from "@/utils/lib/fetcher";
+import { doctorCompleteData } from "./actions";
 
-const DataCompletionDoctor = () => {
-  const [phone, setPhone] = useState("");
+const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
+  const URL = `http://localhost:4700/doctors/getDoc/${doctorId}/`;
+
+  const [phone, setPhone] = useState<string>("");
+
+  const [country, setCountry] = useState<string>("");
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [timeSlots, setTimeSlots] = useState({
+    morningSlot: { start: "08:00", end: "12:00" },
+    afternoonSlot: { start: "13:00", end: "17:00" },
+  });
+
+  const dayMap: { [key: string]: string } = {
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+    Sun: "Sunday",
+  };
+
+  const handleDayChange = (day: string, checked: boolean) => {
+    const fullDay = dayMap[day];
+    if (checked) {
+      setSelectedDays((prev) => [...prev, fullDay]);
+    } else {
+      setSelectedDays((prev) => prev.filter((d) => d !== fullDay));
+    }
+  };
+
+  const handleTimeChange = (
+    slot: "morningSlot" | "afternoonSlot",
+    timeType: "start" | "end",
+    time: string
+  ) => {
+    setTimeSlots((prev) => ({
+      ...prev,
+      [slot]: {
+        ...prev[slot],
+        [timeType]: time,
+      },
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = {
+      phone,
+      country,
+      availability: {
+        daysOfWeek: selectedDays,
+        timeSlots: {
+          morningSlot: timeSlots.morningSlot,
+          afternoonSlot: timeSlots.afternoonSlot,
+        },
+      },
+      // consultValue
+    };
+    console.log("La data a enviar: ", formData);
+
+    const result = await doctorCompleteData(formData, doctorId);
+    if (result.success) {
+      console.log("Datos enviados correctamente");
+    } else {
+      console.error("Error al enviar los datos");
+    }
+  };
+
+  const { data, error, isLoading } = useSWR(URL, fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setPhone(data.doctor.phone);
+      setCountry(data.doctor.country);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
       {/* Header */}
-
-      <SectionTitle title="Configurar datos de atencion" />
+      <SectionTitle title="Configurar datos de atención" />
 
       {/* Profile Picture */}
       <div className="w-full py-10 z-10 flex flex-col items-center lg:grid grid__profile">
@@ -25,38 +109,14 @@ const DataCompletionDoctor = () => {
             className="ml-4"
           />
         </div>
-
-        <article className="hidden lg:block justify-self-center">
-          <h3 className="font-bold text-[20px]">Informacion personal</h3>
-          <ul className="grid grid-cols-3 text-[12px] grid-rows-3 gap-1">
-            <li className="flex flex-col ">
-              <span className="font-semibold">Nombre</span>Nombre
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Apellido</span>Apellido
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Telefono</span>Telefono
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Email</span>Email
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Pais</span>Pais
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Ciudad</span>Ciudad
-            </li>
-            <li className="flex flex-col ">
-              <span className="font-semibold">Cod Postal</span>Cod Postal
-            </li>
-          </ul>
-        </article>
       </div>
 
       {/* Form */}
-      <form className="flex flex-col gap-[26px] text-[12px] max-w-[325px]">
-        {/* ID y Numero */}
+      <form
+        className="flex flex-col gap-[26px] text-[12px] max-w-[325px]"
+        onSubmit={handleSubmit}
+      >
+        {/* ID y Número */}
         <div className="id-number-container flex w-full justify-between">
           {/* ID */}
           <div className="flex flex-col w-screen">
@@ -78,20 +138,20 @@ const DataCompletionDoctor = () => {
               </select>
             </div>
           </div>
-          {/* Numero */}
+          {/* Número */}
           <div className="flex flex-col w-[100%]">
             <div className="flex items-center gap-1">
               <span className="text-xl">#</span>
-              <label htmlFor="">Numero</label>
+              <label htmlFor="">Número</label>
             </div>
             <div>
               <Input type="input" name="numero" />
             </div>
           </div>
         </div>
-        {/* PAIS Y TELEFONO */}
+        {/* PAÍS Y TELÉFONO */}
         <div className="flex items-center gap-2">
-          {/* PAIS */}
+          {/* PAÍS */}
           <div>
             <div className="flex items-center gap-1">
               <Image
@@ -100,15 +160,21 @@ const DataCompletionDoctor = () => {
                 height={24}
                 alt="world icon"
               />
-              <label htmlFor="">Pais</label>
+              <label htmlFor="">País</label>
             </div>
-            <Input type="text" name="country" />
+            <input
+              className="border-b border-solid pt-1 bg-transparent border-[#35799F] px-2"
+              type="text"
+              name="country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
           </div>
-          {/* TELEFONO */}
+          {/* TELÉFONO */}
           <PhoneNumberInput value={phone} onChange={setPhone} name="phone" />
         </div>
 
-        {/* Horario de atencion */}
+        {/* Horario de atención */}
         <div>
           <div className="flex items-center gap-2">
             <Image
@@ -117,100 +183,64 @@ const DataCompletionDoctor = () => {
               height={21}
               alt="reloj-icon"
             />
-            <label htmlFor="">Horario de atencion</label>
+            <label htmlFor="">Horario de atención</label>
           </div>
-          {/* Time slot cointainer */}
-          <div className="time-slots-container flex flex-col">
-            {/* First time slot */}
-            <div className="first-time-slot flex">
-              <div className="flex items-center space-x-2">
-                <span>Desde</span>
-                <div className="flex items-center space-x-1 border-b border-gray-300">
-                  <input
-                    type="number"
-                    value="8"
-                    className="w-10 text-center outline-none"
-                  />
-                  <span>:</span>
-                  <input
-                    type="number"
-                    value="00"
-                    className="w-10 text-center outline-none"
-                  />
-                  <select className="outline-none">
-                    <option>AM</option>
-                    <option>PM</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span>Desde</span>
-                <div className="flex items-center space-x-1 border-b border-gray-300">
-                  <input
-                    type="number"
-                    value="8"
-                    className="w-10 text-center outline-none"
-                  />
-                  <span>:</span>
-                  <input
-                    type="number"
-                    value="00"
-                    className="w-10 text-center outline-none"
-                  />
-                  <select className="outline-none">
-                    <option>AM</option>
-                    <option>PM</option>
-                  </select>
-                </div>
-              </div>
+          {/* Contenedor de franja horaria */}
+          <div className="flex flex-col gap-2">
+            {/* Primera franja horaria */}
+            <div className="flex">
+              <TimeSelect
+                title="Desde"
+                timeType="start"
+                onChange={(timeType, value) =>
+                  handleTimeChange(
+                    "morningSlot",
+                    timeType as "start" | "end",
+                    value
+                  )
+                }
+              />
+              <TimeSelect
+                title="Hasta"
+                timeType="end"
+                onChange={(timeType, value) =>
+                  handleTimeChange(
+                    "morningSlot",
+                    timeType as "start" | "end",
+                    value
+                  )
+                }
+              />
             </div>
-            {/* Second time slot */}
-            <div className="second-time-slot flex">
-              <div className="flex items-center space-x-2">
-                <span>Desde</span>
-                <div className="flex items-center space-x-1 border-b border-gray-300">
-                  <input
-                    type="number"
-                    value="8"
-                    className="w-10 text-center outline-none"
-                  />
-                  <span>:</span>
-                  <input
-                    type="number"
-                    value="00"
-                    className="w-10 text-center outline-none"
-                  />
-                  <select className="outline-none">
-                    <option>AM</option>
-                    <option>PM</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span>Desde</span>
-                <div className="flex items-center space-x-1 border-b border-gray-300">
-                  <input
-                    type="number"
-                    value="8"
-                    className="w-10 text-center outline-none"
-                  />
-                  <span>:</span>
-                  <input
-                    type="number"
-                    value="00"
-                    className="w-10 text-center outline-none"
-                  />
-                  <select className="outline-none">
-                    <option>AM</option>
-                    <option>PM</option>
-                  </select>
-                </div>
-              </div>
+            {/* Segunda franja horaria */}
+            <div className="flex">
+              <TimeSelect
+                title="Desde"
+                timeType="start"
+                onChange={(timeType, value) =>
+                  handleTimeChange(
+                    "afternoonSlot",
+                    timeType as "start" | "end",
+                    value
+                  )
+                }
+              />
+              <TimeSelect
+                title="Hasta"
+                timeType="end"
+                onChange={(timeType, value) =>
+                  handleTimeChange(
+                    "afternoonSlot",
+                    timeType as "start" | "end",
+                    value
+                  )
+                }
+              />
             </div>
           </div>
         </div>
 
-        {/* Dias habiles */}
+        {/* Días hábiles */}
         <div>
           <div className="flex items-center gap-1">
             <Image
@@ -219,40 +249,30 @@ const DataCompletionDoctor = () => {
               height={22}
               alt="reloj-icon"
             />
-            <label htmlFor=""> Dias Habiles</label>
+            <label htmlFor="">Días Hábiles</label>
           </div>
-
-          {/* Day select section */}
+          {/* Sección de selección de días */}
           <div className="w-full flex gap-2">
-            <DayCheckbox day="Lun" />
-            <DayCheckbox day="Mar" />
-            <DayCheckbox day="Mie" />
-            <DayCheckbox day="Jue" />
-            <DayCheckbox day="Vie" />
-            <DayCheckbox day="Sab" />
-            <DayCheckbox day="Dom" />
+            {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+              <DayCheckbox key={day} day={day} onChange={handleDayChange} />
+            ))}
           </div>
         </div>
 
         {/* Valor de la consulta */}
-
         <div className="flex gap-3">
-          <Image
-            src="/assets/data-completion/billete.png"
-            width={22}
-            height={22}
-            alt="reloj-icon"
+          <ConsultationValue
+            imageSrc="/assets/data-completion/billete.png"
+            altText="reloj-icon"
+            label="Valor de la consulta"
+            options={["28 USD", "29 USD", "30 USD", "31 USD"]}
           />
-          <label htmlFor="">Valor de la consulta</label>
-          <select name="" id="">
-            <option value="">28 USD</option>
-            <option value="">29 USD</option>
-            <option value="">30 USD</option>
-            <option value="">31 USD</option>
-          </select>
         </div>
 
-        <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
+        <button
+          className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4"
+          type="submit"
+        >
           Guardar
         </button>
       </form>
@@ -260,5 +280,4 @@ const DataCompletionDoctor = () => {
   );
 };
 
-
-export default DataCompletionDoctor
+export default DataCompletionDoctor;

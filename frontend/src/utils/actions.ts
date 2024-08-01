@@ -19,8 +19,6 @@ export const login = async (
 
   // 1. Validate fields
 
-  console.log("La data que llega al login: ", formData);
-
   const validationResult = loginSchema.safeParse(data);
 
   if (!validationResult.success) {
@@ -29,7 +27,6 @@ export const login = async (
 
   const result = await userLogin(data);
 
-  //Crea session o localstorage
   if (result.message) {
     return { error: result.message };
   }
@@ -46,8 +43,6 @@ export const signup = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  console.log("Lo que trae el signup para doctor: ", formData);
-
   const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
@@ -61,34 +56,25 @@ export const signup = async (
     professionalCertificates: formData.get("professionalCertificates"),
   };
 
-  console.log("Lo de la data: ", data);
-
   const validationResult = signUpFormSchema.safeParse(data);
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  try {
-    const result = await createDoctor(data);
+  const result = await createDoctor(data);
 
-    if (result.message) {
-      return { error: result.message };
-    }
-
-    await createSession(result);
-    return result;
-  } catch (error: unknown) {
-    return { error: (error as Error).message };
+  if (result.message) {
+    return { error: result.message };
   }
+
+  await createSession(result);
 };
 
 export const signupPatient = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  console.log("Lo que trae el signup para paciente: ", formData);
-
   const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
@@ -106,18 +92,10 @@ export const signupPatient = async (
   }
 
   // User Registration
+  const result = await createPatient(data);
 
-  try {
-    const result = await createPatient(data);
-
-    if (result.message) {
-      return { error: result.message };
-    }
-    console.log("result del registro: ", result);
-
-    // await createSession(result);
-    return result;
-  } catch (error: unknown) {
-    return { error: (error as Error).message };
+  if (result.message) {
+    return { error: result.message };
   }
+  await createSession(result);
 };

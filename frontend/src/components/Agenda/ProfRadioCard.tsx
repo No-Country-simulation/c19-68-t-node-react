@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Doctor } from "@/app/[rol]/[id]/agendar-turnos/page";
+import { Doctor } from "./agendarTurno";
 
 interface ProfRadioCardProps {
   professionals: Doctor[];
@@ -12,7 +12,7 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
   selectedProfessional,
   onProfessionalSelect,
 }) => {
-  console.log("El profesional: ", professionals);
+  console.log("Profesional seleccionado: ", selectedProfessional);
 
   return (
     <div className="profesionales-disponibles mb-4">
@@ -54,6 +54,7 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
               checked={selectedProfessional === professional._id}
               onChange={() => onProfessionalSelect(professional._id)}
               className="form-radio w-full"
+              key={professional._id}
             />
           </label>
         ))}

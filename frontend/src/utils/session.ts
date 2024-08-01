@@ -35,7 +35,6 @@ export async function decrypt(session: any) {
     const { payload } = await jwtVerify(jwt, key, {
       algorithms: ["HS256"],
     });
-    console.log("El payload: ", payload);
 
     return payload;
   } catch (error) {
@@ -59,7 +58,7 @@ export async function createSession(user: { id: string; rol: string }) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/${user.rol}/${user.id}`); // REdireccion para tests
+  redirect(`/${user.rol}/${user.id}/data-completion`); // REdireccion para tests
 }
 
 // Función para verificar la sesión
