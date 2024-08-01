@@ -7,29 +7,67 @@ import {
 import CustomError from "../middlewares/error.middleware.js";
 
 class AppointmentService {
-  async getAppoById(state, patient_id) {
+  async getAppoById(patient_id, state) {
     try {
-      const appointPatient = await appointmentsManager.findPopulate(
+      if (
+        (!state === false && state !== "pending") ||
+        state !== "confirmed" ||
+        state !== "completed" ||
+        state !== "canceled"
+      ) {
+        console.error("ERROR: Se ingreso parametro no valido");
+        throw new CustomError("invalid parameter in the route", 400);
+      }
+
+      if (state !== ":state" &&
+        state === "pending" ||
+        state === "confirmed" ||
+        state === "completed" ||
+        state === "canceled"
+      ) {
+        const appointPatient = await appointmentsManager.findPopulate(
+          {
+            patient_id,
+            state,
+          },
+          "doctor_id", //coleccion doctors
+          "-password -token -availability -confirmed -availabilityStatus -confirmationString" //excluyendo parametros de la coleccion de doctors
+        );
+        //si no encuentra citas ya sea null o arreglo vacio
+        if (!appointPatient || appointPatient.length === 0) {
+          console.error(`ERROR: No tiene citas para el estado "${state}"`);
+          throw new CustomError(
+            `There are not ${state} appointments for this patient`,
+            404
+          );
+        }
+        console.log(
+          `>>>>> extrayendo información de citas del paciente id:${patient_id} con el estado "${state}"`
+        );
+        return appointPatient;
+      }
+
+      const appointPatientState = await appointmentsManager.findPopulate(
         {
           patient_id,
-          state,
         },
         "doctor_id", //coleccion doctors
         "-password -token -availability -confirmed -availabilityStatus -confirmationString" //excluyendo parametros de la coleccion de doctors
       );
       //si no encuentra citas ya sea null o arreglo vacio
-      if (!appointPatient || appointPatient.length === 0) {
+      if (!appointPatientState || appointPatientState.length === 0) {
         console.error(`ERROR: No tiene citas para el estado "${state}"`);
         throw new CustomError(
-          `There are not ${state} appointments for this patient`,
+          `There are not appointments for this patient`,
           404
         );
       }
       console.log(
-        `>>>>> extrayendo información de las citas del paciente ${patient_id}`
+        `>>>>> extrayendo información de citas del paciente id:${patient_id}`
       );
 
-      return appointPatient;
+      return appointPatientState;
+
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
@@ -215,6 +253,7 @@ class AppointmentService {
     const day = date.getDay();
     return daysOfweek[day];
   }
+
   convertToDate(targetDate, timeString) {
     const date = new Date(targetDate);
     const [hours, minutes] = timeString.split(":").map(Number);

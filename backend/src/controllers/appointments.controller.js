@@ -32,11 +32,12 @@ const appointmentsController = {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   },
+
   getAppoById: async (req, res) => {
-    const { state, id } = req.params;
+    const { id, state } = req.params;
     console.log("Se ha inicia la vista de citas");
     try {
-      const AppoById = await AppointmentService.getAppoById(state, id);
+      const AppoById = await AppointmentService.getAppoById(id, state);
 
       res.status(200).json({ patientDate: AppoById });
 
@@ -44,6 +45,7 @@ const appointmentsController = {
       res.status(error.statusCode || 500).json({ message: error.message });
     }
   },
+
   getAppoDoc: async (req, res) =>{
     const { id, date } = req.params;
     console.log("Se ha inicia la vista de citas del doctor");
