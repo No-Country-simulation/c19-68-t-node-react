@@ -7,19 +7,133 @@ import {
 import CustomError from "../middlewares/error.middleware.js";
 
 class AppointmentService {
-  async getAppoById(patient_id, state) {
+  async getFreeSlotDoc(doctorId, targetDate) {
+    //la fecha se convierte en dia del mes ("Monday" "Tuesday" "Wednesday" etc).
+    const weekdayName = this.getDayOfWeek(targetDate);
+
     try {
-      if (
-        (!state === false && state !== "pending") ||
-        state !== "confirmed" ||
-        state !== "completed" ||
-        state !== "canceled"
-      ) {
+      //Se busca que la fecha coincida con el dia de la semana.
+      const doctor = await doctorManager.findOne({
+        _id: doctorId,
+        "availability.daysOfWeek": weekdayName,
+      });
+
+      if (!doctor) {
+        throw new CustomError("Doctor is not available on this day", 404);
+      }
+      //Se crea un arreglo de los horarios del doctor (mañana y tarde).
+      const timeRangesDoc = [
+        doctor.availability.timeSlots.morningSlot.start,
+        doctor.availability.timeSlots.morningSlot.end,
+        doctor.availability.timeSlots.afternoonSlot.start,
+        doctor.availability.timeSlots.afternoonSlot.end,
+      ];
+
+      //Con los horarios del doctor se genera el slot de todas las horas para ese doctor.
+      const slotsDoctor = this.generateTimeSlots(timeRangesDoc);
+
+      //Buscamos en las citas el doctor y la fecha consultada.
+      const appointment = await appointmentsManager.find({
+        doctor_id: doctorId,
+        date: targetDate,
+      });
+
+      //se saca las horas ocupadas de esas citas y se crea un arreglo.
+      const busyHoursDoc = appointment.map(({ startTime, endTime }) => [
+        startTime,
+        endTime,
+      ]);
+
+      //con los slots del doctor y las horas ocupadas se saca la disponibilidad de ese dia.
+      const availabilityDoc = this.removeTimeSlots(slotsDoctor, busyHoursDoc);
+
+      return availabilityDoc;
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        throw new CustomError(error.message, 500);
+      }
+    }
+  }
+  // funcion para identificar dia de la semana segun la fecha.
+  getDayOfWeek(targetDate) {
+    const daysOfweek = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    const date = new Date(targetDate);
+    const day = date.getDay();
+    return daysOfweek[day];
+  }
+
+  generateTimeSlots(timeRanges) {
+    function parseTime(time) {
+      const [hours, minutes] = time.split(":").map(Number);
+      return new Date(0, 0, 0, hours, minutes);
+    }
+
+    function formatTime(date) {
+      return date.toTimeString().slice(0, 5);
+    }
+
+    function getIntervals(start, end, intervalMinutes) {
+      let current = parseTime(start);
+      const endTime = parseTime(end);
+      const intervals = [];
+
+      while (current < endTime) {
+        const next = new Date(current);
+        next.setMinutes(current.getMinutes() + intervalMinutes);
+        intervals.push([formatTime(current), formatTime(next)]);
+        current = next;
+      }
+
+      return intervals;
+    }
+
+    const morningIntervals = getIntervals(timeRanges[0], timeRanges[1], 60);
+    const afternoonIntervals = getIntervals(timeRanges[2], timeRanges[3], 60);
+
+    return morningIntervals.concat(afternoonIntervals);
+  }
+
+  removeTimeSlots(slots, toRemove) {
+    function parseTime(time) {
+      return time.split(":").map(Number);
+    }
+
+    function isInRange(slot, range) {
+      const [slotStart, slotEnd] = slot.map(parseTime);
+      const [rangeStart, rangeEnd] = range.map(parseTime);
+
+      return (
+        (slotStart[0] > rangeStart[0] ||
+          (slotStart[0] === rangeStart[0] && slotStart[1] >= rangeStart[1])) &&
+        (slotEnd[0] < rangeEnd[0] ||
+          (slotEnd[0] === rangeEnd[0] && slotEnd[1] <= rangeEnd[1]))
+      );
+    }
+
+    return slots.filter(
+      (slot) => !toRemove.some((range) => isInRange(slot, range))
+    );
+  }
+
+  async getAppoById(patient_id, state) {
+    const validStates = ["pending", "confirmed", "completed", "canceled"];
+    try {
+      if (!validStates.includes(state)) {
         console.error("ERROR: Se ingreso parametro no valido");
         throw new CustomError("invalid parameter in the route", 400);
       }
 
-      if (state !== ":state" &&
+      if (
         state === "pending" ||
         state === "confirmed" ||
         state === "completed" ||
@@ -67,7 +181,6 @@ class AppointmentService {
       );
 
       return appointPatientState;
-
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
@@ -236,22 +349,6 @@ class AppointmentService {
       console.error("ERROR: El doctor no existe");
       throw new CustomError("Doctor does not exist", 404);
     }
-  }
-
-  // funcion para identificar dia de la semana segun la fecha.
-  getDayOfWeek(targetDate) {
-    const daysOfweek = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-    const date = new Date(targetDate);
-    const day = date.getDay();
-    return daysOfweek[day];
   }
 
   convertToDate(targetDate, timeString) {
