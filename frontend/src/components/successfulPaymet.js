@@ -19,7 +19,7 @@ const SuccessfulPaymentForm = () => {
               <table className="min-w-full">
                 <tbody>
                   <tr>
-                    <td className="font-bold p-2">Número de pedido:</td>
+                    <td className="font-bold p-2">Nro de pedido:</td>
                     <td className="p-2">#12345</td>
                   </tr>
                   <tr>
@@ -28,7 +28,7 @@ const SuccessfulPaymentForm = () => {
                   </tr>
                   <tr>
                     <td className="font-bold p-2">Producto:</td>
-                    <td className="p-2">Suscripción mensual</td>
+                    <td className="p-2">Consulta médica</td>
                   </tr>
                 </tbody>
               </table>
