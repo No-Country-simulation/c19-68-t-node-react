@@ -314,7 +314,7 @@ const VideoCall: React.FC = () => {
   const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('http://192.168.1.2');
     setSocket(newSocket);
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -379,10 +379,10 @@ const VideoCall: React.FC = () => {
     if (!myStream || !socket) return;
 
     try {
-      const response = await fetch('http://localhost:3001/api/videocall/initiate', {
+      const response = await fetch('http://192.168.1.2/api/videocall/initiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roomId: 'someUniqueRoomId' })
+        body: JSON.stringify({ roomId: '' })
       });
       const data = await response.json();
       setCallId(data.roomId);
@@ -400,7 +400,7 @@ const VideoCall: React.FC = () => {
     if (!myStream || !socket || !callId) return;
 
     try {
-      const response = await fetch('http://localhost:3001/api/videocall/join', {
+      const response = await fetch('http://192.168.1.2/api/videocall/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId: callId, participant: 'someParticipantId' })
@@ -432,7 +432,7 @@ const VideoCall: React.FC = () => {
     setPeer(null);
 
     try {
-      await fetch('http://localhost:3001/api/videocall/end', {
+      await fetch('http://192.168.1.2/api/videocall/end', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId: callId })
