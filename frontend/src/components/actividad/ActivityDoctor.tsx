@@ -6,7 +6,7 @@ export const manrope = Manrope({
     display: "swap",
 });
 
-const myconsultation = () => {
+const ActivityDoctor = () => {
     const appointments = [
         {
             title: "Citas por Confirmar",
@@ -108,4 +108,4 @@ const myconsultation = () => {
     );
 };
 
-export default myconsultation;
+export default ActivityDoctor;
