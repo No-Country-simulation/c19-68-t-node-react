@@ -5,7 +5,6 @@ import Image from "next/image";
 const EditProfilePage = () => {
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
-      
         {/* Header */}
         <header className="self-start m-4 pb-[5px] w-[197px] lg:hidden gradient">
           <div className="flex w-[197px] items-center justify-center space-x-4">

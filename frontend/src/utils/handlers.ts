@@ -3,12 +3,12 @@ import axios from "axios";
 
 export const userLogin = async (data: Record<string, unknown>) => {
   try {
-    const response = await axios.post("http://localhost:4700/auth", data, {
+    const response = await axios.post("http://localhost:8080/auth", data, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+    console.log(response);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
