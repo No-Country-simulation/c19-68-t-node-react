@@ -12,7 +12,13 @@ const useFetch = () => {
         .catch(err => console.log(err))
     } 
 
-    return [response, getAll]
+    const update = (url: string, data: any) => {
+        axios.post(url, data)
+        .then(res => setResponse(res.data))
+        .catch(err => console.log(err))
+    }
+
+    return [response, getAll, update]
 
 }
 

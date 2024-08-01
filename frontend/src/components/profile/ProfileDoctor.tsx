@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import Input from "@/components/Input";
 import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
+import InputReadOnly from "../InputReadOnly";
 
 interface Props {
     id: string
@@ -12,10 +13,25 @@ interface Props {
 
 const ProfileDoctor = ({id}:Props) => {
   
-  const [doctor, getDoctor] = useFetch()
+  const [doctor, getDoctor, updateDoctor] = useFetch()
   useEffect(() => {
     getDoctor(`http://localhost:4700/doctors/profileDoc/${id}`)
   }, [])
+
+  /* Format Dates */
+
+  /* const date = doctor?.doctor.clinicalData.dateOfBirth;
+  const formatDate = format(date, "YYYY-MM-DD", "es");
+  const formatMinusDate = format(date, "YYYY-MM-DD", "es")
+    .replaceAll("-", " ")
+    .split(" ")
+    .reverse();
+  const today = new Date();
+  const formatToday = format(today, "YYYY-MM-DD", "es")
+    .replaceAll("-", " ")
+    .split(" ")
+    .reverse();
+  const userDate = +formatToday[2] - +formatMinusDate[2]; */
   
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
@@ -30,12 +46,13 @@ const ProfileDoctor = ({id}:Props) => {
            height={30}
            alt="perfil"
            className="rounded-full"
+           
            />
             <span className="font-bold text-[20px]">Editar Perfil</span>
           </div>
 
         </header>
-{/*   */}
+
         {/* Profile Picture */}
         <div className="w-full py-10 z-10 flex flex-col items-center lg:grid grid__profile">
           <h2 className="hidden lg:block font-bold text-[24px] self-start justify-self-center pr-40">
@@ -87,17 +104,17 @@ const ProfileDoctor = ({id}:Props) => {
             <label className="flex gap-1 items-center justify-between">
               <div className="flex items-end">
                 <span> Fecha de Nacimiento</span>
-              <Input twClass="w-[105px]" type="date" />
+                <input type="date" className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[105px]`} />
                 </div>
               
               <div  className="flex items-end">
 
               <span>Edad</span>
-              <Input twClass="w-[53px]" type="string" />
+              <InputReadOnly twClass="w-[53px]" type="string" />
               </div>
             </label>
             {/* Género */}
-            <label className="flex flex-col">
+            <article className="flex flex-col">
               <div className="flex justify-between">
 
               <article className="flex items-center gap-2">
@@ -110,32 +127,62 @@ const ProfileDoctor = ({id}:Props) => {
               <span>Sexo</span>
               </article>
               <label className="flex gap-x-1 items-center">
-                <span>Masculino</span>
-                <input className="radio" type="radio"  name="genre" id="genre"  />
-              </label>
-              <article className="flex gap-x-1 items-center">
-                <span>Femenino</span>
-                <input className="radio" type="radio"  name="genre" id="genre"  />
-              </article>
-              <article className="flex gap-x-1 items-center">
-                <span>Otro</span>
-                <input className="radio" type="radio"  name="genre" id="genre"  />
-              </article>
+              <span>Masculino</span>
+              {doctor?.doctor.gender === "male" ? (
+                <input
+                  className="radio"
+                  type="radio"
+                  checked
+                  name="genre"
+                  id="genre"
+                />
+              ) : (
+                <input className="radio" type="radio" name="genre" id="genre" />
+              )}
+            </label>
+            <label className="flex gap-x-1 items-center">
+              <span>Femenino</span>
+              {doctor?.doctor.gender === "female" ? (
+                <input
+                  className="radio"
+                  type="radio"
+                  checked
+                  name="genre"
+                  id="genre"
+                />
+              ) : (
+                <input className="radio" type="radio" name="genre" id="genre" />
+              )}
+            </label>
+            <label className="flex gap-x-1 items-center">
+              <span>Otro</span>
+              {doctor?.doctor.gender === "other" ? (
+                <input
+                  className="radio"
+                  type="radio"
+                  checked
+                  name="genre"
+                  id="genre"
+                />
+              ) : (
+                <input className="radio" type="radio" name="genre" id="genre" />
+              )}
+            </label>
               </div>
               <p className="text-[8px]">El sexo solo se puede editar una vez recuerda que si necesitas modificarlo una vez más debes contactarte con soporte de la app</p>
-            </label>
+            </article>
             {/* Identificación */}
             <label className="flex justify-between">
               <div  className="flex items-end">
 
               <span>ID</span>
-              <Input twClass="w-[89px]" type="string" />
+              <InputReadOnly twClass="w-[89px]" type="string" />
               </div>
               
               <div  className="flex items-end">
 
               <span>Número</span>
-              <Input twClass="w-[145px]" type="string" />
+              <InputReadOnly twClass="w-[145px]" type="string" />
               </div>
             </label>
             {/* Teléfono */}
@@ -143,36 +190,36 @@ const ProfileDoctor = ({id}:Props) => {
               <div  className="flex items-end justify-between ">
 
               <span>Telefono</span>
-              <Input twClass="w-[90px]" type="string" />
+              <InputReadOnly twClass="w-[110px]" type="string" value={doctor?.doctor.phone} />
               </div>
               <div  className="flex items-end justify-between ">
 
               <span>Cod Postal</span>
-              <Input twClass="w-[90px]" type="string" />
+              <InputReadOnly twClass="w-[90px]" type="string" />
               </div>
             </label>
             {/* Dirección */}
             <label className="flex items-end justify-between ">
               <span>Direccion</span>
-              <Input twClass="w-[260px]" type="string" />
+              <InputReadOnly twClass="w-[260px]" type="string" />
             </label>
             {/* País */}
             <label className="flex justify-between">
               <div  className="flex items-end">
 
               <span>Pais</span>
-              <Input twClass="w-[119px]" type="string" />
+              <InputReadOnly twClass="w-[119px]" value={doctor?.doctor.country} type="string" />
               </div>
               <div  className="flex items-end justify-between ">
 
               <span>Ciudad</span>
-              <Input twClass="w-[120px]" type="string" />
+              <InputReadOnly twClass="w-[120px]" type="string" />
               </div>
             </label>
             {/* Email */}
             <label className="justify-between flex items-end ">
               <span>Email</span>
-              <Input twClass="w-[285px]" type="string" />
+              <InputReadOnly twClass="w-[285px]" value={doctor?.doctor.email} type="string" />
             </label>
 
             <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
