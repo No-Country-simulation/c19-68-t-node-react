@@ -8,6 +8,11 @@ import authRoutes from "./routes/auth.routes.js";
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
 //config app express
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
