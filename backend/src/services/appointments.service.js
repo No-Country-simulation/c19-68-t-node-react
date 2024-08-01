@@ -128,9 +128,7 @@ class AppointmentService {
 
   async getAppoById(patient_id, state) {
     try {
-
       const validStates = ["pending", "confirmed", "completed", "canceled"];
-
       if (state !== ":state" && !validStates.includes(state)) {
         console.error("ERROR: Se ingreso parametro no valido");
         throw new CustomError("invalid parameter in the route", 400);
@@ -284,7 +282,8 @@ class AppointmentService {
 
       // Buscamos las citas del doctor para el dia de la cita que se quiere registrar
       const doctorAppo = await this.getAppoinmentsForDate(doctor_id, date);
-      // Obtenemos las horas disponibles del doctor para el dia de la cita
+
+      // Obtenemos las horas disponibles del doctor para el dia de la cita.
       const availableTimeSlots = await this.getAvailableTimeSlots(
         doctorTimeSlots,
         doctorAppo
@@ -391,31 +390,22 @@ class AppointmentService {
       });
 
       if (!doctor) {
-        console.log(">>>>> No hay horario disponible para esa fecha");
-        throw new CustomError("There is no time available for that day", 404);
+        console.log(">>>>> La fecha no concuerda con los horarios del doctor");
+        throw new CustomError(
+          "Date does not agree with doctor's schedule",
+          404
+        );
       }
 
       const timeSlots = [
-        {
-          start: this.convertToDate(
-            targetDate,
-            doctor.availability.timeSlots.morningSlot.start
-          ),
-          end: this.convertToDate(
-            targetDate,
-            doctor.availability.timeSlots.morningSlot.end
-          ),
-        },
-        {
-          start: this.convertToDate(
-            targetDate,
-            doctor.availability.timeSlots.afternoonSlot.start
-          ),
-          end: this.convertToDate(
-            targetDate,
-            doctor.availability.timeSlots.afternoonSlot.end
-          ),
-        },
+        [
+          doctor.availability.timeSlots.morningSlot.start,
+          doctor.availability.timeSlots.morningSlot.end,
+        ],
+        [
+          doctor.availability.timeSlots.afternoonSlot.start,
+          doctor.availability.timeSlots.afternoonSlot.end,
+        ],
       ];
 
       console.log(`>>>>> timeSlots --> ${timeSlots}`);

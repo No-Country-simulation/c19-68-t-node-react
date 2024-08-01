@@ -23,6 +23,8 @@ const doctorSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["female", "male", "other"],
+      immutable: true,
+      required: true,
       // Optional field
     },
     email: {
@@ -58,6 +60,34 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    city: {
+      type: String,
+      trim: true,
+    },
+    dateOfBirth: {
+      type: Date,
+      // Optional field
+    },
+    age: {
+      type: Number,
+      min: 0,
+      max: 3,
+      // Optional field
+    },
+    postalCode: {
+      type: Number,
+      trim: true,
+      // Optional field
+    },
+    idType: {
+      type: String,
+    },
+    idNumber: {
+      type: String,
+    },
+    adress:{
+      type:String,
+    },
     availability: {
       daysOfWeek: [
         {
@@ -75,6 +105,9 @@ const doctorSchema = new mongoose.Schema(
         },
       ],
       timeSlots: dailyAvailabilitySchema,
+    },
+    consultationValue: {
+      type: Number,
     },
     confirmationString: {
       type: String,

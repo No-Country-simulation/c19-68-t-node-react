@@ -12,6 +12,7 @@ export class DoctorDao {
   async update(id, updateData) {
     return await Doctor.findByIdAndUpdate(id, updateData, {
       new: true,
+      runValidators:true
     })
   }
 
