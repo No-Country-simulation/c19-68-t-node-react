@@ -108,7 +108,9 @@ const AgendarTurno = () => {
 
   const handleDateSelect = (date: Date) => {
     console.log("Fecha seleccionada: ", date);
-    // setSelectedDate(date);
+    console.log(typeof date);
+
+    setSelectedDate(date);
   };
 
   if (error) return <div>Error al cargar los datos.</div>;
@@ -149,7 +151,10 @@ const AgendarTurno = () => {
           name="selectedDate"
           value={selectedDate ? selectedDate.toISOString() : ""}
         />
-        {/* <DoctorDisponibility /> */}
+        <DoctorDisponibility
+          day={selectedDate}
+          doctorId={selectedProfessional?._id}
+        />
         <button
           type="submit"
           className="w-full bg-[#812B75] text-white font-bold py-2 rounded-md shadow-md hover:bg-teal-600"

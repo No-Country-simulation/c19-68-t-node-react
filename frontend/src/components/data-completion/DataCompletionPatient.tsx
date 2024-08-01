@@ -12,39 +12,46 @@ const DataCompletionPatient = (id: any) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
     const formData = {
-      dateOfBirth: (
-        target.elements.namedItem("dateOfBirth") as HTMLInputElement
-      )?.value,
-      age: (target.elements.namedItem("age") as HTMLInputElement)?.value,
-      height: (target.elements.namedItem("height") as HTMLInputElement)?.value,
-      weight: (target.elements.namedItem("weight") as HTMLInputElement)?.value,
-      allergies: (target.elements.namedItem("allergies") as HTMLInputElement)
-        ?.value,
-      medications: (
-        target.elements.namedItem("medications") as HTMLInputElement
-      )?.value,
-      medicationName: (
-        target.elements.namedItem("medicationName") as HTMLInputElement
-      )?.value,
-      disability: (target.elements.namedItem("disability") as HTMLInputElement)
-        ?.value,
-      disabilityType: (
-        target.elements.namedItem("disability-type") as HTMLInputElement
-      )?.value,
-      smoking: (target.elements.namedItem("smoking") as HTMLInputElement)
-        ?.value,
-      smokingFrecuency: (
-        target.elements.namedItem("smokingFrecuency") as HTMLInputElement
-      )?.value,
-      alcoholConsumption: (
-        target.elements.namedItem("alcoholConsumption") as HTMLInputElement
-      )?.value,
-      drinkFrecuency: (
-        target.elements.namedItem("drinkFrecuency") as HTMLInputElement
-      )?.value,
-      psychoactiveSubstances: (
-        target.elements.namedItem("psychoactiveSubstances") as HTMLInputElement
-      )?.value,
+      clinicalData: {
+        dateOfBirth: (
+          target.elements.namedItem("dateOfBirth") as HTMLInputElement
+        )?.value,
+        age: (target.elements.namedItem("age") as HTMLInputElement)?.value,
+        height: (target.elements.namedItem("height") as HTMLInputElement)
+          ?.value,
+        weight: (target.elements.namedItem("weight") as HTMLInputElement)
+          ?.value,
+        allergies: (target.elements.namedItem("allergies") as HTMLInputElement)
+          ?.value,
+        medications: (
+          target.elements.namedItem("medications") as HTMLInputElement
+        )?.value,
+        medicationName: (
+          target.elements.namedItem("medicationName") as HTMLInputElement
+        )?.value,
+        disability: (
+          target.elements.namedItem("disability") as HTMLInputElement
+        )?.value,
+        disabilityType: (
+          target.elements.namedItem("disability-type") as HTMLInputElement
+        )?.value,
+        smoking: (target.elements.namedItem("smoking") as HTMLInputElement)
+          ?.value,
+        smokingFrecuency: (
+          target.elements.namedItem("smokingFrecuency") as HTMLInputElement
+        )?.value,
+        alcoholConsumption: (
+          target.elements.namedItem("alcoholConsumption") as HTMLInputElement
+        )?.value,
+        drinkFrecuency: (
+          target.elements.namedItem("drinkFrecuency") as HTMLInputElement
+        )?.value,
+        psychoactiveSubstances: (
+          target.elements.namedItem(
+            "psychoactiveSubstances"
+          ) as HTMLInputElement
+        )?.value,
+      },
     };
 
     console.log("La data a enviar: ", formData);
