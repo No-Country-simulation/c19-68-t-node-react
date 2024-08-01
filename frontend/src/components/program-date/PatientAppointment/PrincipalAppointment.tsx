@@ -1,5 +1,6 @@
 import Calendar from "@/components/Calendar";
 import { format } from "@formkit/tempo";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -7,30 +8,29 @@ interface Props {
 }
 
 interface Appointment {
-  id: string;
-  patient_id: string;
-  doctor_data: Doctor;
   date: string;
-  startTime: string;
+  doctor_id: Doctor;
   endTime: string;
-  video_call_link: string;
-  state: string;
-  reasons: string;
   notes: string;
+  patient_id: Doctor;
+  reasons: string;
+  startTime: string;
+  state: string;
+  video_call_link: string;
+  _id: string
 }
 
 interface Doctor {
-  id: string;
-  photo: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
+  country: string;
   email: string;
-  password: string;
+  firstName: string;
+  gender: string;
+  lastName: string;
+  phone: string;
+  photo: string;
   professionalCertificates: [string, string];
   speciality: string;
-  phone: string;
-  country: string;
+  _id: string;
 }
 
 
@@ -47,15 +47,15 @@ const PrincipalAppointment = ({ appointment }: Props) => {
         <ul className="">
           <li>
             <span className="text-[15.58px] font-bold">
-              Cita {appointment.doctor_data.speciality}
+              Cita {appointment.doctor_id.speciality}
             </span>
           </li>
-          <li>{ appointment.doctor_data.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_data.firstName} {appointment.doctor_data.lastName}</li>
+          <li>{ appointment.doctor_id.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_id.firstName} {appointment.doctor_id.lastName}</li>
           <li>La cita el día de hoy es a las {appointment.startTime}hr</li>
         </ul>
-        <button className="my-auto w-[141px] h-[34px] bg-[#35799F] text-[#F2F2F2] rounded-[12.17px] font-medium">
+        <Link href={appointment.video_call_link} className="my-auto w-[141px] h-[34px] bg-[#35799F] text-[#F2F2F2] rounded-[12.17px] font-medium flex justify-center items-center">
           Ingresar
-        </button>
+        </Link>
       </div>
 
       <Calendar
