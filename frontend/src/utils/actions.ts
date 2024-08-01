@@ -34,7 +34,7 @@ export const login = async (
 
   // Create session
 
-  await createSession(result);
+  await createSession(result, false);
 
   return result;
 };
@@ -68,7 +68,7 @@ export const signup = async (
     return { error: result.message };
   }
 
-  await createSession(result);
+  await createSession(result, true);
 };
 
 export const signupPatient = async (
@@ -97,5 +97,5 @@ export const signupPatient = async (
   if (result.message) {
     return { error: result.message };
   }
-  await createSession(result);
+  await createSession(result, true);
 };

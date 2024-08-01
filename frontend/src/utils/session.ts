@@ -45,7 +45,10 @@ export async function decrypt(session: any) {
 }
 
 // Función para crear la sesión
-export async function createSession(user: { id: string; rol: string }) {
+export async function createSession(
+  user: { id: string; rol: string },
+  register: boolean
+) {
   const expires = new Date(Date.now() + cookie.duration);
 
   const session = await encrypt({
@@ -58,7 +61,10 @@ export async function createSession(user: { id: string; rol: string }) {
     expires,
     sameSite: "lax",
   });
-  redirect(`/${user.rol}/${user.id}/data-completion`); // REdireccion para tests
+  register
+    ? redirect(`/${user.rol}/${user.id}/data-completion`)
+    : redirect(`/${user.rol}/${user.id}/`);
+  // REdireccion para tests
 }
 
 // Función para verificar la sesión
