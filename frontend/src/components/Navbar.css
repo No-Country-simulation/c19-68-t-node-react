@@ -1,20 +1,117 @@
-.link {
-  span {
+/* Estilos para móvil */
+@media (max-width: 1023px) {
+  .navbar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .navbar-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #1E435B;
+    z-index: 1;
+  }
+
+  .navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    z-index: 2;
+  }
+
+  .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    flex-direction: column;
+  }
+
+  .link.active {
+    transform: translateY(-20px);
+  }
+
+  .link.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: #8e44ad;
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .navbar-background::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    transform: translateX(3%);
+    width: 80px;
+    height: 80px;
+    background-color: #f3f4f6;
+    border-radius: 50px;
+    transition: left 0.3s ease;
+    left: calc((100% / 5)* var(--active-index, 2));
+  }
+
+  .navbar-background::before {
+    left: calc((100% / 5) * var(--active-index, 2));
+  }
+  
+  /* .navbar-background2::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    transform: translateX(20%);
+    width: 60px;
+    height: 60px;
+    background-color: #8e44ad;
+    border-radius: 50px;
+    transition: left 0.3s ease;
+    left: calc((100% / 5)* var(--active-index, 2));
+    z-index: 1;
+  }
+
+  .navbar-background2::before {
+    left: calc((100% / 5) * var(--active-index, 2));
+  } */
+}
+
+/* Estilos para desktop */
+@media (min-width: 1024px) {
+  .link {
+    span {
+      display: none;
+    }
+  }
+
+  h1 {
     display: none;
   }
-}
 
-h1 {
-  display: none;
-}
+  .text__doctor {
+    display: none;
+  }
 
-.text__doctor {
-  display: none;
-}
-
-@media (min-width: 1024px) {
   .navbar {
-    transition: all .5s ;
+    transition: all .5s;
     &:hover {
       width: 325px;
       div {
@@ -22,7 +119,7 @@ h1 {
           .link {
             justify-content: start;
             border-bottom: .25px solid white;
-            padding: 0 0 20px 40px ;
+            padding: 0 0 20px 40px;
             align-items: center;
             span {
               display: block;
