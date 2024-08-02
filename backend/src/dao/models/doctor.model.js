@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
 import generateID from "../../helpers/generateId.js";
 
-
-const availabilityBlockSchema = new mongoose.Schema({
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
-  timeSlots: [{ type: String, required: true }] // Arreglo de franjas horarias disponibles
+const dailyAvailabilitySchema = new mongoose.Schema({
+  morningSlot: {
+    start: { type: String, required: true }, // Hora de inicio (formato HH:mm)
+    end: { type: String, required: true }, // Hora de fin antes del almuerzo (formato HH:mm)
+  },
+  afternoonSlot: {
+    start: { type: String, required: true }, // Hora de inicio después del almuerzo (formato HH:mm)
+    end: { type: String, required: true }, // Hora de fin (formato HH:mm)
+  },
 });
-
 
 const doctorSchema = new mongoose.Schema(
   {
@@ -20,6 +23,8 @@ const doctorSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["female", "male", "other"],
+      immutable: true,
+      required: true,
       // Optional field
     },
     email: {
@@ -55,7 +60,55 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    availability: [availabilityBlockSchema],
+    city: {
+      type: String,
+      trim: true,
+    },
+    dateOfBirth: {
+      type: Date,
+      // Optional field
+    },
+    age: {
+      type: Number,
+      min: 0,
+      max: 110,
+      // Optional field
+    },
+    postalCode: {
+      type: String,
+      trim: true,
+      // Optional field
+    },
+    idType: {
+      type: String,
+    },
+    idNumber: {
+      type: String,
+    },
+    address:{
+      type:String,
+    },
+    availability: {
+      daysOfWeek: [
+        {
+          type: String,
+          enum: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          required: true,
+        },
+      ],
+      timeSlots: dailyAvailabilitySchema,
+    },
+    consultationValue: {
+      type: Number,
+    },
     confirmationString: {
       type: String,
       default: generateID(),
@@ -66,9 +119,9 @@ const doctorSchema = new mongoose.Schema(
     },
     availabilityStatus: {
       type: String,
-      enum: ['available', 'not_available'],
-      default: 'available'
-    }
+      enum: ["available", "not_available"],
+      default: "available",
+    },
   },
   {
     versionKey: false,

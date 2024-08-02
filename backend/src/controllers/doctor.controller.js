@@ -48,14 +48,16 @@ const doctorController = {
 
   async editProfileDoc(req, res) {
     const { id } = req.params;
+    const update = req.body
+  
     try {
-      const updateDoctor = await doctorManager.update(id, req.body);
-      res
-        .status(200)
-        .json({
-          message: "Doctor's profile edited successfully",
-          updateDoctor,
-        });
+      const updateDoctor = await doctorManager.update(id, update);
+
+      if (!updateDoctor) {
+        return res.status(404).send({ message: "ID not found" });
+      }
+
+      res.status(200).json({ message: "Doctor's profile edited successfully", updateDoctor });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
     }

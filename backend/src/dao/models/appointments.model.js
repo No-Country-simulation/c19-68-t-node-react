@@ -16,12 +16,12 @@ const appointmentsSchema = new mongoose.Schema(
     startTime: {
       type: String,
       trim: true,
-      required: true
+      required: true,
     },
     endTime: {
       type: String,
       trim: true,
-      required: true
+      required: true,
     },
     state: {
       type: String,

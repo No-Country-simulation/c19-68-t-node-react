@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import morgan from "morgan";
 import paymentGatewayRoutes from "./routes/paymentGateway.routes.js";
 import appointmentsRoutes from "./routes/appointments.routes.js";
@@ -9,6 +10,11 @@ import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
 import videoCallRoutes from "./routes/videoCallRoutes.js";
 //config app express
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

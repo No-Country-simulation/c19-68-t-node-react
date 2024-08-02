@@ -5,7 +5,10 @@ const router = Router();
 
 router.post("/registerAppo", controllerAppo.registerAppo);
 
-router.get("/getAllAppo/:state/:id", controllerAppo.getAppoById);
+router.get("/getAllAppo/:id/:state?", controllerAppo.getAppoById);
 
+router.get("/getAppoDoc/:id/:date?", controllerAppo.getAppoDoc);
+
+router.get("/getFreeSlotDoc/:id/:date", controllerAppo.getFreeSlotDoc);
 
 export default router;

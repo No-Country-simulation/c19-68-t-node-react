@@ -29,6 +29,7 @@ class doctorService {
       }
 
       const existingUser = await doctorManager.findOne({ email });
+
       if (existingUser) throw new CustomError("Doctor already exists", 409);
 
       const hashedPassword = await hashPassword(password);
