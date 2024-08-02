@@ -172,41 +172,79 @@ const VideoCall: React.FC = () => {
         {!peer && <button onClick={joinCall}>Unirse a la llamada</button>}
         {peer && <button onClick={endCall}>Finalizar llamada</button>}
       </div>
-
       <style jsx>{`
-        .video-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
 
-        .split-screen {
-          flex-direction: row;
-          justify-content: space-around;
-        }
+  .split-screen {
+    flex-direction: row;
+    justify-content: space-around;
+  }
 
-        .video-wrapper {
-          text-align: center;
-          margin: 10px;
-        }
+  .video-wrapper {
+    text-align: center;
+    margin: 10px;
+  }
 
-        .video {
-          width: 100%;
-          max-width: 400px;
-          height: auto;
-          border: 2px solid #333;
-          border-radius: 8px;
-        }
+  .video {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border: 2px solid #333;
+    border-radius: 8px;
+  }
 
-        .controls {
-          margin-top: 20px;
-        }
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-        button, input {
-          margin: 5px;
-          padding: 10px;
-        }
-      `}</style>
+  button, input {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  @media only screen and (max-width: 820px) {
+    .video-container {
+      padding: 5px;
+    }
+    
+    .split-screen {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .video-wrapper {
+      margin: 5px;
+    }
+
+    .video {
+      width: 100%;
+      max-width: none;
+      border: 2px solid #333;
+      border-radius: 8px;
+    }
+
+    .controls {
+      margin-top: 10px;
+    }
+
+    button, input {
+      font-size: 14px;
+      max-width: 180px;
+      padding: 8px;
+    }
+  }
+`}</style>
     </div>
   );
 };
