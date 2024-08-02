@@ -48,7 +48,7 @@ export const appointmentRegister = async (
 
   console.log("La data del action", data);
 
-  // await registerAppo(data);
+  await registerAppo(data);
   let urlREDI = "";
   try {
     console.log("Se inicia el proceso de pago");

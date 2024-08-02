@@ -35,7 +35,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           {options.map((option) => (
             <option
               key={option.endTime}
-              value={horarios ? [option.value, option.endTime] : option.value}
+              value={
+                horarios
+                  ? [option.value, option.endTime].toString()
+                  : option.value.toString()
+              }
             >
               {option.label} {option.endTime ? `- ${option.endTime}` : ""}
             </option>

@@ -59,16 +59,17 @@ const AgendarTurno = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("Datos de doctores: ", data.doctors);
-
       const uniqueSpecialties = Array.from(
         new Set(
-          data?.doctors.map((doctor: { speciality: any }) => doctor.speciality)
+          data?.doctors.map(
+            (doctor: { speciality: { label: string; value: string } }) =>
+              doctor.speciality
+          )
         )
       );
-      const options = uniqueSpecialties.map((speciality) => ({
-        label: speciality.charAt(0).toUpperCase() + speciality.slice(1),
-        value: speciality.toLowerCase().replace(/\s+/g, ""),
+      const options = uniqueSpecialties.map((speciality?) => ({
+        label: speciality?.charAt(0).toUpperCase() + speciality?.slice(1),
+        value: speciality?.toLowerCase().replace(/\s+/g, ""),
       }));
 
       console.log("Opciones de especialidades: ", options);
@@ -149,7 +150,7 @@ const AgendarTurno = () => {
         />
         <DoctorDisponibility
           day={selectedDate}
-          doctorId={selectedProfessional?._id}
+          doctorId={selectedProfessional?._id?.toString() ?? ""}
         />
         <button
           type="submit"

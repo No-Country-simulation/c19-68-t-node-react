@@ -80,7 +80,7 @@ const DoctorDisponibility = ({ day, doctorId }: DoctorDisponibilityProps) => {
       <CustomSelect
         title="Horarios disponibles"
         options={hourExample}
-        onSelect={(value: string, key: string) => handleTimeSelect(value, key)}
+        onSelect={(value: string) => handleTimeSelect(value, "")}
         name="timeschedule"
         horarios={true}
       />

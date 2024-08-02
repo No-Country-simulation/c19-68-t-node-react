@@ -17,7 +17,7 @@ interface Appointment {
   startTime: string;
   state: string;
   video_call_link: string;
-  _id: string
+  _id: string;
 }
 
 interface Doctor {
@@ -33,10 +33,7 @@ interface Doctor {
   _id: string;
 }
 
-
-
 const PrincipalAppointment = ({ appointment }: Props) => {
-  
   const date = new Date(appointment?.date);
   const day = format(date, "dddd, MMMM D, YYYY", "es");
   const calendar = day.replaceAll(",", " ").split(" ");
@@ -50,10 +47,16 @@ const PrincipalAppointment = ({ appointment }: Props) => {
               Cita {appointment.doctor_id.speciality}
             </span>
           </li>
-          <li>{ appointment.doctor_id.gender == 'male' ? 'Dr.' : 'Dra.'} {appointment.doctor_id.firstName} {appointment.doctor_id.lastName}</li>
+          <li>
+            {appointment.doctor_id.gender == "male" ? "Dr." : "Dra."}{" "}
+            {appointment.doctor_id.firstName} {appointment.doctor_id.lastName}
+          </li>
           <li>La cita el día de hoy es a las {appointment.startTime}hr</li>
         </ul>
-        <Link href={appointment.video_call_link} className="my-auto w-[141px] h-[34px] bg-[#35799F] text-[#F2F2F2] rounded-[12.17px] font-medium flex justify-center items-center">
+        <Link
+          href={appointment.video_call_link}
+          className="my-auto w-[141px] h-[34px] bg-[#35799F] text-[#F2F2F2] rounded-[12.17px] font-medium flex justify-center items-center"
+        >
           Ingresar
         </Link>
       </div>
@@ -65,6 +68,7 @@ const PrincipalAppointment = ({ appointment }: Props) => {
         sizeDate="text-[13px]"
         sizeDay="text-[35px]"
         sizeMonthAndYear=" text-[13px]"
+        key={appointment._id}
       />
     </article>
   );
