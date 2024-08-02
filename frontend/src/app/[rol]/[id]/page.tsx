@@ -8,7 +8,7 @@ const HomePage = ({ params }: { params: { rol: string; id: string } }) => {
       {params.rol === "paciente" ? (
         <HomePatient patientId={params.id}/>
       ) : (
-        <HomeDoctor doctorId={params.id} />
+        <HomeDoctor id={params.id} rol={params.rol} />
       )}
     </section>
   );
