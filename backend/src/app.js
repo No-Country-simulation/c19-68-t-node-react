@@ -6,6 +6,7 @@ import patientsRoutes from "./routes/patients.routes.js";
 import doctorsRoutes from "./routes/doctors.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
+import videoCallRoutes from "./routes/videoCallRoutes.js";
 //config app express
 const app = express();
 
@@ -29,5 +30,14 @@ app.use("/appointments", appointmentsRoutes);
 app.use("/patients", patientsRoutes);
 app.use("/doctors", doctorsRoutes);
 app.use("/auth", authRoutes);
+app.use("/api/videocall", videoCallRoutes);
+
+// Inicializar servidor y socket.io
+const server = initializeServer(app);
+
+const SocketPORT = process.env.SocketPORT || 3001;
+server.listen(SocketPORT, () => {
+  console.log(`Server Socket running on port ${SocketPORT}`);
+});
 
 export default app;
