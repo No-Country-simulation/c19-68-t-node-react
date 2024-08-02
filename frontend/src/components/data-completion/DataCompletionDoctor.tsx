@@ -11,6 +11,7 @@ import ConsultationValue from "./ConsultationValue";
 import useSWR from "swr";
 import { fetcher } from "@/utils/lib/fetcher";
 import { doctorCompleteData } from "./actions";
+import './page.css'
 
 const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
   const URL = `https://e-medicine-backend.vercel.app/doctors/getDoc/${doctorId}/`;
@@ -120,34 +121,35 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
         <div className="id-number-container flex w-full justify-between">
           {/* ID */}
           <div className="flex flex-col w-screen">
-            <div className="flex">
-              <Image
-                src="/assets/data-completion/identificaiton-icon.png"
-                width={28}
-                height={28}
-                alt="identification-icon"
-              />
-              <label htmlFor="" className="text-base">
-                ID
-              </label>
-            </div>
-            <div className="w-full">
-              <select name="" id="" className="w-full">
-                <option value=""></option>
-                <option value="">DNI</option>
+            <div className="flex"></div>
+            <label htmlFor="" className="text-base">
+              <div className="flex items-center">
+                <Image
+                  src="/assets/data-completion/identificaiton-icon.png"
+                  width={28}
+                  height={28}
+                  alt="identification-icon"
+                />
+                <span>ID</span>
+              </div>
+
+              <select className="border-b border-solid pt-1 bg-transparent w-[126px] border-[#35799F] px-2">
+                <option value="Pasaporte">Pasaporte</option>
+                <option selected value="DNI">
+                  DNI
+                </option>
               </select>
-            </div>
+            </label>
           </div>
           {/* Número */}
-          <div className="flex flex-col w-[100%]">
+          <label className="flex flex-col justify-between w-[100%]">
             <div className="flex items-center gap-1">
               <span className="text-xl">#</span>
-              <label htmlFor="">Número</label>
+              <span>Número</span>
             </div>
-            <div>
-              <Input type="input" name="numero" />
-            </div>
-          </div>
+
+            <Input type="input" name="numero" />
+          </label>
         </div>
         {/* PAÍS Y TELÉFONO */}
         <div className="flex items-center gap-2">
@@ -160,7 +162,7 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
                 height={24}
                 alt="world icon"
               />
-              <label htmlFor="">País</label>
+              <label>País</label>
             </div>
             <input
               className="border-b border-solid pt-1 bg-transparent border-[#35799F] px-2"
@@ -188,7 +190,7 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
           {/* Contenedor de franja horaria */}
           <div className="flex flex-col gap-2">
             {/* Primera franja horaria */}
-            <div className="flex">
+            <div className="flex justify-between">
               <TimeSelect
                 title="Desde"
                 timeType="start"
@@ -213,7 +215,7 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
               />
             </div>
             {/* Segunda franja horaria */}
-            <div className="flex">
+            <div className="flex justify-between">
               <TimeSelect
                 title="Desde"
                 timeType="start"

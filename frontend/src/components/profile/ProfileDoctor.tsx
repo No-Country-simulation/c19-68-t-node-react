@@ -6,20 +6,37 @@ import Input from "@/components/Input";
 import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import InputReadOnly from "../InputReadOnly";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { format } from "@formkit/tempo";
 
 interface Props {
   id: string;
 }
 
+type FormValues = {
+  dateOfBirth: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  idType: string;
+  idNumber: string;
+};
+
 const ProfileDoctor = ({ id }: Props) => {
   const [doctor, getDoctor, updateDoctor] = useFetch();
   useEffect(() => {
-    getDoctor(`https://e-medicine-backend.vercel.app/doctors/profileDoc/${id}`);
+    getDoctor(`http://localhost:4700/doctors/profileDoc/${id}`);
   }, []);
 
+  console.log(doctor);
+
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    updateDoctor(`http://localhost:4700/doctors/editProfileDoc/${id}`, data);
+  };
   /* Format Dates */
 
-  /* const date = doctor?.doctor.clinicalData.dateOfBirth;
+  const date = doctor?.doctor.dateOfBirth;
   const formatDate = format(date, "YYYY-MM-DD", "es");
   const formatMinusDate = format(date, "YYYY-MM-DD", "es")
     .replaceAll("-", " ")
@@ -30,7 +47,7 @@ const ProfileDoctor = ({ id }: Props) => {
     .replaceAll("-", " ")
     .split(" ")
     .reverse();
-  const userDate = +formatToday[2] - +formatMinusDate[2]; */
+  const userDate = +formatToday[2] - +formatMinusDate[2];
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
@@ -102,20 +119,33 @@ const ProfileDoctor = ({ id }: Props) => {
       </div>
 
       {/* Form */}
-      <form className="flex flex-col gap-[26px] text-[12px] max-w-[325px]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-[26px] text-[12px] max-w-[325px]"
+      >
         {/* Fecha de nacimiento y Edad */}
         <label className="flex gap-1 items-center justify-between">
           <div className="flex items-end">
             <span> Fecha de Nacimiento</span>
-            <input
-              type="date"
-              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[105px]`}
-            />
+            {doctor?.doctor.dateOfBirth ? (
+              <input
+                readOnly
+                className="border-b border-solid pt-1 bg-transparent border-[#35799F] px-2  w-[105px]"
+                type="date"
+                value={formatDate}
+              />
+            ) : (
+              <input
+                type="date"
+                {...register("dateOfBirth")}
+                className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[105px]`}
+              />
+            )}
           </div>
 
           <div className="flex items-end">
             <span>Edad</span>
-            <InputReadOnly twClass="w-[53px]" type="string" />
+            <InputReadOnly twClass="w-[53px]" value={userDate} type="string" />
           </div>
         </label>
         {/* Género */}
@@ -182,38 +212,89 @@ const ProfileDoctor = ({ id }: Props) => {
         <label className="flex justify-between">
           <div className="flex items-end">
             <span>ID</span>
-            <InputReadOnly twClass="w-[89px]" type="string" />
+            {doctor?.doctor.idType ? (
+              <InputReadOnly
+                value={doctor?.doctor.idType}
+                twClass="w-[89px]"
+                type="string"
+              />
+            ) : (
+              <select
+                {...register("idType")}
+                className="w-[89px] bg-[#f3f4f6] border-b border-[#35799F]"
+              >
+                <option value="DNI" selected>
+                  DNI
+                </option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+            )}
           </div>
 
           <div className="flex items-end">
             <span>Número</span>
-            <InputReadOnly twClass="w-[145px]" type="string" />
+
+            {doctor?.doctor.idNumber ? (
+              <InputReadOnly value={doctor?.doctor.idNumber} type="string" />
+            ) : (
+              <input
+                type="string"
+                {...register("idNumber")}
+                className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[145px]`}
+              />
+            )}
           </div>
         </label>
         {/* Teléfono */}
         <label className="flex justify-between">
           <div className="flex items-end justify-between ">
             <span>Telefono</span>
-            <InputReadOnly
-              twClass="w-[110px]"
-              type="string"
+            <input
+              readOnly
               value={doctor?.doctor.phone}
+              type="string"
+              className="border-b border-solid pt-1 bg-transparent border-[#35799F] px-2  w-[110px]"
             />
           </div>
           <div className="flex items-end justify-between ">
             <span>Cod Postal</span>
-            <InputReadOnly twClass="w-[90px]" type="string" />
+            {doctor?.doctor.postalCode ? (
+              <InputReadOnly
+                value={doctor?.doctor.postalCode}
+                type="string"
+                twClass="w-[98px]"
+              />
+            ) : (
+              <input
+                type="string"
+                {...register("postalCode")}
+                className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[98px]`}
+              />
+            )}
           </div>
         </label>
         {/* Dirección */}
         <label className="flex items-end justify-between ">
-          <span>Direccion</span>
-          <InputReadOnly twClass="w-[260px]" type="string" />
+          <span>Dirección</span>
+          {doctor?.doctor.address ? (
+            <InputReadOnly
+              value={doctor?.doctor.address}
+              type="string"
+              twClass="w-[260px]"
+            />
+          ) : (
+            <input
+              type="string"
+              {...register("address")}
+              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[260px]`}
+            />
+          )}
         </label>
         {/* País */}
         <label className="flex justify-between">
           <div className="flex items-end">
             <span>Pais</span>
+
             <InputReadOnly
               twClass="w-[119px]"
               value={doctor?.doctor.country}
@@ -222,22 +303,47 @@ const ProfileDoctor = ({ id }: Props) => {
           </div>
           <div className="flex items-end justify-between ">
             <span>Ciudad</span>
-            <InputReadOnly twClass="w-[120px]" type="string" />
+            {doctor?.doctor.city ? (
+              <InputReadOnly
+                type="string"
+                value={doctor?.doctor.city}
+                twClass="w-[120px]"
+              />
+            ) : (
+              <input
+                type="string"
+                {...register("city")}
+                className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[120px]`}
+              />
+            )}
           </div>
         </label>
         {/* Email */}
         <label className="justify-between flex items-end ">
           <span>Email</span>
+
           <InputReadOnly
             twClass="w-[285px]"
             value={doctor?.doctor.email}
             type="string"
           />
         </label>
-
-        <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
-          Guardar
-        </button>
+        {doctor?.doctor.address &&
+        doctor?.doctor.dateOfBirth &&
+        doctor?.doctor.city &&
+        doctor?.doctor.country &&
+        doctor?.doctor.email &&
+        doctor?.doctor.idNumber &&
+        doctor?.doctor.idType &&
+        doctor?.doctor.postalCode ? (
+          <button className="hidden w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
+            Guardar
+          </button>
+        ) : (
+          <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">
+            Guardar
+          </button>
+        )}
       </form>
     </div>
   );
