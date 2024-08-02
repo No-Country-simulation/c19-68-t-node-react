@@ -8,6 +8,7 @@ import doctorsRoutes from "./routes/doctors.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
 import videoCallRoutes from "./routes/videoCallRoutes.js";
+import {initializeServer} from "./config/socketConfig.js"
 //config app express
 const app = express();
 app.use(
