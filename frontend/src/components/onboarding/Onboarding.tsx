@@ -6,6 +6,7 @@ import Secound from "@/components/onboarding/Secound";
 import Finaly from "@/components/onboarding/Finaly";
 import { useRouter } from "next/navigation";
 import Header from "@/components/onboarding/Header";
+import BallBackground from "../ui/ballBackground";
 
 const Onboarding = () => {
   const [counter, setCounter] = useState<number>(1);
@@ -21,6 +22,7 @@ const Onboarding = () => {
 
   return (
     <section className="h-screen w-screen bg-[#FAFAFA]">
+      <BallBackground />
       <div className="h-[90%] w-full flex flex-col items-center">
         <Header />
 

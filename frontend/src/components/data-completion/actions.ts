@@ -7,7 +7,7 @@ export const doctorCompleteData = async (data: any, id: string) => {
     const response = await fetch(
       `http://localhost:4700/doctors/editProfileDoc/${id}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },

@@ -11,7 +11,8 @@ import ConsultationValue from "./ConsultationValue";
 import useSWR from "swr";
 import { fetcher } from "@/utils/lib/fetcher";
 import { doctorCompleteData } from "./actions";
-import './page.css'
+import "./page.css";
+import { redirect } from "next/navigation";
 
 const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
   const URL = `https://e-medicine-backend.vercel.app/doctors/getDoc/${doctorId}/`;
@@ -76,7 +77,7 @@ const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
 
     const result = await doctorCompleteData(formData, doctorId);
     if (result.success) {
-      console.log("Datos enviados correctamente");
+      redirect(`/doctor/${doctorId}`);
     } else {
       console.error("Error al enviar los datos");
     }

@@ -5,7 +5,7 @@ import React from "react";
 const AuthHeader = () => {
   return (
     <div className="flex w-full flex-col items-center h-[300px] justify-center overflow-hidden">
-      <BallBackground />
+      {/* <BallBackground /> */}
 
       <div className="header-container">
         <div className="text-center">

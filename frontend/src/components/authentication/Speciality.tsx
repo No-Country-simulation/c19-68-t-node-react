@@ -23,7 +23,8 @@ const Speciality = () => {
             <label htmlFor="speciality">Especialidad</label>
           </div>
           <select
-            className="bg-gray-300 py-2 px-3 rounded-lg w-full"
+            className="bg-transparent border-b-2 border-[#35799F] appearance-none focus:outline-none py-2 px-3 w-full"
+            // w-full bg-transparent border-b-2 border-[#35799F] appearance-none focus:outline-none
             name="speciality"
             id="speciality"
           >

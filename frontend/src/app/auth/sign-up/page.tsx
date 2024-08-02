@@ -3,6 +3,7 @@
 import SignupForm from "@/components/authentication/signupForm";
 import Image from "next/image";
 import { SetStateAction, useState } from "react";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const SignUp = () => {
   const [role, setRole] = useState("");
@@ -18,7 +19,7 @@ const SignUp = () => {
     setStep(step + 1);
   };
   return (
-    <div className="signup-page w-full h-full p-8">
+    <div className="signup-page w-full h-full p-8 pt-0">
       {step === 1 && (
         <>
           <h1 className="flex justify-center font-bold text-[1.2rem] pb-5">
@@ -81,8 +82,10 @@ const SignUp = () => {
       {step === 2 && (
         <div>
           <SignupForm role={role} />
-          <div>
-            <button onClick={() => setStep(step - 1)}>Atras</button>
+          <div className="absolute top-10 left-10">
+            <button onClick={() => setStep(step - 1)}>
+              <IoArrowBackOutline className="text-[#35799f] text-2xl" />
+            </button>
           </div>
         </div>
       )}

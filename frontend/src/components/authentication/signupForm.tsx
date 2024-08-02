@@ -141,7 +141,7 @@ const SignupForm = ({ role }: { role: string }) => {
       </div>
 
       {/* Login Redirect */}
-      <div className="signup-footer-login w-full flex pt-10 gap-2">
+      <div className="signup-footer-login w-full h-16 flex pt-10  gap-2">
         <p>¿Ya tienes una cuenta?</p>
         <Link className="text-blue-700 underline" href="/auth/login">
           Inicia sesión

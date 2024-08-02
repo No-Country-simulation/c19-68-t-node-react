@@ -8,7 +8,7 @@
   height: 15px;
 }
 .check {
-  accent-color: #89bad8 ;
+  accent-color: #89bad8;
   width: 20px;
   height: 20px;
 }
@@ -50,4 +50,21 @@
 
 .scrollbar-custom::-webkit-scrollbar-track {
   background: rgba(209, 213, 219, 0.2); /* Tailwind color gray-300 */
+}
+
+/* styles/globals.css o el archivo CSS correspondiente */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.border-gradient-animated {
+  border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #812b75, #89bad8, #35799f) 1;
+  border-radius: 50%;
 }

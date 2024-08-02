@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <section>
-      <BallBackground />
+      {/* <BallBackground /> */}
       {children}
       <Navbar />
     </section>

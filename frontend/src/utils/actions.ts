@@ -6,7 +6,7 @@ import {
   signUpPatientFormSchema,
 } from "./definitions";
 import { createDoctor, createPatient, userLogin } from "./handlers";
-import { createSession } from "./session";
+import { createSession, deleteSession } from "./session";
 
 export const login = async (
   prevState: { error: undefined | string },
@@ -37,6 +37,10 @@ export const login = async (
   await createSession(result, false);
 
   return result;
+};
+
+export const logout = async () => {
+  await deleteSession();
 };
 
 export const signup = async (
