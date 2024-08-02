@@ -122,7 +122,6 @@ const DataCompletionPatient = (id: any) => {
             </select>
           </div>
         </div>
-
         {/* Alergias */}
         <div>
           <div className="flex w-full">
