@@ -2,6 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getDay, isBefore, startOfDay } from "date-fns";
+import "./customCalendar.css";
 
 interface CalendarProps {
   onDateSelect: (date: Date) => void;
@@ -42,7 +43,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({
       minDate={today}
       name={name}
       filterDate={filterDays}
-      className="bg-slate-600"
+      className=""
     />
   );
 };

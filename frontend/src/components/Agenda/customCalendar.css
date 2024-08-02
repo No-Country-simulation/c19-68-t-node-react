@@ -1,0 +1,33 @@
+.react-datepicker {
+  background: transparent;
+  width: 100%;
+  border: none;
+}
+
+.react-datepicker__month-container {
+  width: 100%;
+  background: #35799f;
+  color: white;
+  border: none;
+}
+
+.react-datepicker__header {
+  background: #35799f;
+  color: white;
+  border: none;
+}
+
+.react-datepicker__month {
+  background: #35799f;
+  color: white;
+  border: none;
+}
+
+.react-datepicker__day-name {
+  color: white;
+}
+
+.react-datepicker__week {
+  background: #35799f;
+  color: white;
+}

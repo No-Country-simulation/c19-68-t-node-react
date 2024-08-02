@@ -42,7 +42,7 @@ const DoctorDisponibility = ({ day, doctorId }: DoctorDisponibilityProps) => {
 
   const { data, error, isLoading } = useSWR(
     selectedDate
-      ? `https://e-medicine-backend.vercel.app/appointments/getFreeSlotDoc/${doctorId}/${selectedDate}`
+      ? `http://e-medicine-backend.vercel.app/appointments/getFreeSlotDoc/${doctorId}/${selectedDate}`
       : null,
     fetcher
   );
