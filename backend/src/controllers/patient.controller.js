@@ -31,7 +31,7 @@ const patientController = {
       );
       res.status(201).json({
         id: patient._id,
-        rol: "paciente",
+        rol: "paciente"
       });
     } catch (error) {
       res.status(error.statusCode || 500).json({ message: error.message });
@@ -60,13 +60,10 @@ const patientController = {
 
   async editProfilePat(req, res) {
     const { id } = req.params;
-    const update = req.body;
-
     try {
-      const updatePatient = await servicePat.updateInfoPat(id, update);
-
+      const updatePatient = await patientManager.update(id, req.body);
       res.status(200).json({
-        message: "Patien's profile edited successfully",
+        message: "Doctor's profile edited successfully",
         updatePatient,
       });
     } catch (error) {

@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.radio {
+  accent-color: #812b75;
+  width: 15px;
+  height: 15px;
+}
+
+.gradient {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(
+      to left,
+      #812b75 18.9%,
+      #89bad8 57.9%,
+      #35799f 100%
+    )
+    1;
+}

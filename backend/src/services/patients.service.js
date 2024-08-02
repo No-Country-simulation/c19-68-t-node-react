@@ -3,18 +3,16 @@ import { hashPassword } from "../helpers/password.helper.js";
 import CustomError from "../middlewares/error.middleware.js";
 
 class PatientService {
-  async registerPat(
-    photo,
-    firstName,
-    lastName,
-    gender,
-    email,
-    phone,
-    password,
-    country,
-    creditCard,
-    clinicalData
-  ) {
+  async registerPat(photo, 
+                     firstName, 
+                     lastName, 
+                     gender, 
+                     email, 
+                     phone, 
+                     password, 
+                     country, 
+                     creditCard, 
+                     clinicalData) {
     try {
       if (!firstName || !lastName || !email || !password) {
         throw new CustomError("All fields are required", 400);
@@ -37,7 +35,7 @@ class PatientService {
         password: hashedPassword,
         country,
         creditCard,
-        clinicalData,
+        clinicalData
       });
 
       const credentials = await patientManager.findOne({
@@ -49,28 +47,7 @@ class PatientService {
       if (error instanceof CustomError) {
         throw error;
       } else {
-        throw new CustomError(
-          "Error registering patient: " + error.message,
-          500
-        );
-      }
-    }
-  }
-  async updateInfoPat(id, update) {
-    try {
-      const changesById = await patientManager.update(id, update);
-
-      if (!changesById) {
-        console.error("ERROR: El paciente no se encuentra");
-        throw new CustomError("ID patient not found", 404);
-      }
-      return changesById;
-
-    } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      } else {
-        throw new CustomError(error.message, 500);
+        throw new CustomError("Error registering patient: " + error.message, 500);
       }
     }
   }
