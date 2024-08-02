@@ -20,30 +20,30 @@ const Speciality = () => {
         <div className="w-1/2">
           <div className="signup-label flex items-center gap-1 mb-3 justify-start">
             <MdOutlineBadge />
-            <label htmlFor="specialty">Especialidad</label>
+            <label htmlFor="speciality">Especialidad</label>
           </div>
           <select
             className="bg-gray-300 py-2 px-3 rounded-lg w-full"
-            name="specialty"
-            id="specialty"
+            name="speciality"
+            id="speciality"
           >
             <option disabled value=""></option>
-            <option value="cardiology">Cardiología</option>
-            <option value="dermatology">Dermatología</option>
-            <option value="endocrinology">Endocrinología</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Dermatology">Dermatology</option>
+            <option value="Endocrinology">Endocrinology</option>
           </select>
         </div>
         <div className="w-1/2">
           <div className="signup-label flex items-center gap-1 mb-3 justify-start">
             <IoDocumentOutline />
-            <label htmlFor="certificado" className="text-xs">
-              Certificado Profesional
+            <label htmlFor="professionalCertificates" className="text-xs">
+              URL del Certificado Profesional
             </label>
           </div>
           <Input
-            type="file"
-            id="certificado"
-            name="certificado"
+            type="text"
+            id="professionalCertificates"
+            name="professionalCertificates"
             twClass="bg-gray-300 py-2 px-3 rounded-lg w-full"
           />
         </div>

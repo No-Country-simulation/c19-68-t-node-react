@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { SetStateAction, useState } from "react";
 
 const AuthGenderField = () => {
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("test");
 
   const handleGenderChange = (event: {
     target: { value: SetStateAction<string> };
@@ -14,10 +14,7 @@ const AuthGenderField = () => {
   console.log("gender: ", gender);
 
   return (
-    <label
-      htmlFor="gender-patiend"
-      className="w-full flex justify-between py-5"
-    >
+    <label htmlFor="gender" className="w-full flex justify-between py-5">
       <div className="flex gap-2 ">
         <Image
           src="/assets/signup/gender-icon.png"
@@ -28,29 +25,32 @@ const AuthGenderField = () => {
         <span>Sexo</span>
       </div>
       <div className="flex gap-3 ">
-        <label htmlFor="woman" className="flex gap-1">
+        <label htmlFor="woman" className="flex items-center gap-1">
           <span>Mujer</span>
           <input
+            className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="woman"
+            value="female"
           />
         </label>
 
-        <label htmlFor="man" className="flex gap-1">
+        <label htmlFor="man" className="flex  items-center gap-1">
           <span>Hombre</span>
           <input
+          className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}
-            value="man"
+            value="male"
           />
         </label>
 
-        <label htmlFor="other" className="flex gap-1">
+        <label htmlFor="other" className="flex items-center gap-1">
           <span>Otro</span>
           <input
+          className="radio"
             type="radio"
             name="gender"
             onChange={handleGenderChange}

@@ -1,7 +1,5 @@
 "use client";
-import Input from "@/components/Input";
-import { LuUser2 } from "react-icons/lu";
-import { IoKeyOutline } from "react-icons/io5";
+
 import Link from "next/link";
 import { login } from "@/utils/actions";
 import { useFormState } from "react-dom";
@@ -28,7 +26,9 @@ const LoginForm = () => {
             iconInputSrc={"/assets/login/email-input-icon.png"}
             placeholder={"pepitoperez@email.com"}
           />
-          {state?.errors.email && <p>{state.errors.email}</p>}
+          {state?.errors.email && (
+            <p className="text-red-500 text-balance">{state.errors.email}</p>
+          )}
           {/* Password field */}
           <AuthField
             id="password-field"
@@ -39,7 +39,9 @@ const LoginForm = () => {
             iconInputSrc={"/assets/login/password-input-icon.png"}
             placeholder={" ******* "}
           />
-          {state?.errors.password && <p>{state.errors.password}</p>}
+          {state?.errors.password && (
+            <p className="text-red-500 text-balance">{state.errors.password}</p>
+          )}
           <div>
             <Link
               href="/auth/forgot-password"

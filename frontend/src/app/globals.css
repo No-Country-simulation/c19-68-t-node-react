@@ -2,24 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+.radio {
+  accent-color: #812b75;
+  width: 15px;
+  height: 15px;
+}
+.check {
+  accent-color: #89bad8 ;
+  width: 20px;
+  height: 20px;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
+.gradient {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(
+      to right,
+      #812b75 18.9%,
+      #89bad8 57.9%,
+      #35799f 100%
+    )
+    1;
 }
-
-#root,
-#__next {
-  width: 100%;
-  height: 100%;
-} */

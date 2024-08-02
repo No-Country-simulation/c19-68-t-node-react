@@ -39,9 +39,9 @@ const SignUp = () => {
               <input
                 type="radio"
                 name="role"
-                value="patient"
+                value="paciente"
                 className="peer hidden"
-                checked={role === "patient"}
+                checked={role === "paciente"}
                 onChange={handleRoleChange}
               />
               <div className="w-4 h-4 border-2 border-gray-300 rounded-full peer-checked:border-white peer-checked:bg-[#1e435b]"></div>
@@ -60,9 +60,9 @@ const SignUp = () => {
               <input
                 type="radio"
                 name="role"
-                value="professional"
+                value="doctor"
                 className="peer hidden"
-                checked={role === "professional"}
+                checked={role === "doctor"}
                 onChange={handleRoleChange}
               />
               <div className="w-4 h-4 border-2 border-gray-300 rounded-full peer-checked:border-white peer-checked:bg-[#1e435b]"></div>

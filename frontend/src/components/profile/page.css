@@ -1,0 +1,16 @@
+.user{
+  display: grid;
+  grid-template-rows: 50px 150px 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+.transparent{
+  background-color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .grid__profile {
+    grid-template-rows: 28px 350px 180px;
+  }
+}

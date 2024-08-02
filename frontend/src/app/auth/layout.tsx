@@ -9,11 +9,9 @@ export default function LoginLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={manrope.className}>
-        <AuthHeader />
-        {children}
-      </body>
-    </html>
+    <div className={manrope.className}>
+      <AuthHeader />
+      {children}
+    </div>
   );
 }

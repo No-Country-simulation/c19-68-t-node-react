@@ -1,6 +1,11 @@
 "use server";
 
-import { loginSchema, signUpFormSchema } from "./definitions";
+import {
+  loginSchema,
+  signUpFormSchema,
+  signUpPatientFormSchema,
+} from "./definitions";
+import { createDoctor, createPatient, userLogin } from "./handlers";
 import { createSession } from "./session";
 
 export const login = async (
@@ -20,50 +25,77 @@ export const login = async (
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  // 2. Peticion para traer datos luego de l avalidacion
+  const result = await userLogin(data);
 
-  // 3. Crear session
-  const user = { id: "2", name: "fullname usertest" };
+  if (result.message) {
+    return { error: result.message };
+  }
+  console.log(result);
 
-  await createSession(user.id);
+  // Create session
+
+  await createSession(result, false);
+
+  return result;
 };
 
 export const signup = async (
   prevState: { error: undefined | string },
   formData: FormData
 ) => {
-  // Comprobando la llegada de la data
-
-  // const data = {
-  //   fullName: formData.get("fullName"),
-  //   lastName: formData.get("lastName"),
-  //   country: formData.get("country"),
-  //   phone: formData.get("phone"),
-  //   email: formData.get("email"),
-  //   bornDate: formData.get("bornDate"),
-  // };
-  // 1. Validate fields
-
-  const validationResult = signUpFormSchema.safeParse({
-    fullName: formData.get("fullName"),
+  const data = {
+    firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
-    country: formData.get("country"),
-    phone: formData.get("phone"),
+    gender: formData.get("gender"),
     email: formData.get("email"),
-    bornDate: formData.get("bornDate"),
-  });
+    country: formData.get("country"),
+    speciality: formData.get("speciality"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+    repassword: formData.get("repassword"),
+    professionalCertificates: formData.get("professionalCertificates"),
+  };
+
+  const validationResult = signUpFormSchema.safeParse(data);
 
   if (!validationResult.success) {
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  // Create user
-  // Encrypt password with bcrypt
-  // try catch
-  // const data = await createUserPost()
+  const result = await createDoctor(data);
 
-  const user = { id: "1", fullName: "User complete name" }; //para pruebas
+  if (result.message) {
+    return { error: result.message };
+  }
 
-  // Create session
-  await createSession(user.id);
+  await createSession(result, true);
+};
+
+export const signupPatient = async (
+  prevState: { error: undefined | string },
+  formData: FormData
+) => {
+  const data = {
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    gender: formData.get("gender"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+    repassword: formData.get("repassword"),
+  };
+
+  const validationResult = signUpPatientFormSchema.safeParse(data);
+
+  if (!validationResult.success) {
+    return { errors: validationResult.error.flatten().fieldErrors };
+  }
+
+  // User Registration
+  const result = await createPatient(data);
+
+  if (result.message) {
+    return { error: result.message };
+  }
+  await createSession(result, true);
 };
