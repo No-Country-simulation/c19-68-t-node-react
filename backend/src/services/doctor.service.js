@@ -64,23 +64,6 @@ class doctorService {
       }
     }
   }
-  async updateInfoDoc(id, update) {
-    try {
-      const changesById = await doctorManager.update(id, update);
-
-      if (!changesById) {
-        console.error("ERROR: El paciente no se encuentra");
-        throw new CustomError("ID patient not found", 404);
-      }
-      return changesById;
-    } catch (error) {
-      if (error instanceof CustomError) {
-        throw error;
-      } else {
-        throw new CustomError(error.message, 500);
-      }
-    }
-  }
 }
 
 export default new doctorService();
