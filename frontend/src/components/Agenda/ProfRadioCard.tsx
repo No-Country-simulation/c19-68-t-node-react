@@ -33,7 +33,11 @@ const ProfRadioCard: React.FC<ProfRadioCardProps> = ({
             <div className="flex w-full justify-between">
               <div className="contenedorimagen pl-3 flex gap-3 w-full justify-center">
                 <Image
-                  src={professional.photo}
+                  src={
+                    professional.photo
+                ? professional.photo
+                : "/assets/data-completion/user-icon-edit.png"
+                  }
                   alt={`${professional.firstName} ${professional.lastName}`}
                   width={40}
                   height={40}
