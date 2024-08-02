@@ -58,7 +58,7 @@ const DataCompletionPatient = (id: any) => {
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
+    <div className="h-screen h-min-[100vh] bg-gray-100 flex flex-col items-center p-4 md:p-8 lg:w-full lg:grid lg:grid-cols-2">
       {/* Header */}
 
       <SectionTitle title="Mis datos medicos" />
@@ -96,66 +96,119 @@ const DataCompletionPatient = (id: any) => {
         {/* Peso y altura */}
         {/* <CustomField /> */}
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 justify-between">
           {/* Estatura */}
-          <div className="flex items-center">
-            <label htmlFor="">Estatura</label>
+          <div className="flex items-center gap-2">
+            <label className="flex items-end">
+              <span>Estatura</span>
+              <Input twClass="w-[53px]" type="string" name="height" />
+            </label>
 
-            <Input twClass="w-[53px]" type="string" name="height" />
-            <select name="" id="">
+            <select className="bg-transparent border-b-[1px] border-[#35799F] self-end">
               <option value="">Metros</option>
             </select>
           </div>
           {/* Pëso */}
-          <div className="flex items-center">
-            <label htmlFor="">Peso</label>
+          <div className="flex">
+            <label>
+              <span>Peso</span>
+              <Input twClass="w-[53px]" type="string" name="weight" />
+            </label>
 
-            <Input twClass="w-[53px]" type="string" name="weight" />
-            <select name="unity" id="">
-              <option value="">Kg</option>
+            <select className="bg-transparent">
+              <option value="" selected>
+                Kg
+              </option>
             </select>
           </div>
         </div>
-
         {/* Alergias */}
         <div>
           <div className="flex w-full">
-            <label htmlFor="">Alergias</label>
-            <div className="flex gap-2 px-2">
-              <label htmlFor="">Si</label>
-              <input type="radio" value="yes" name="allergies" />
-              <label htmlFor="">No</label>
-              <input type="radio" value="no" name="allergies" />
+            <span>Alergias</span>
+            <div className="flex gap-4 px-2">
+              <label htmlFor="" className="flex items-center gap-1">
+                <span>Si</span>
+                <input
+                  type="radio"
+                  className="radio"
+                  value="yes"
+                  name="allergies"
+                />
+              </label>
+              <label htmlFor="" className="flex items-center gap-1">
+                <span>No</span>
+                <input
+                  type="radio"
+                  className="radio"
+                  value="no"
+                  name="allergies"
+                />
+              </label>
             </div>
           </div>
         </div>
 
         {/* Medicamentos */}
 
-        <div className="flex items-center">
+        <div className="flex items-center justify-between">
           <label htmlFor="">Medicamentos</label>
-          <div className="flex gap-2 px-2">
-            <label htmlFor="">Si</label>
-            <input type="radio" value="si" name="medications" />
-            <label htmlFor="">No</label>
-            <input type="radio" value="no" name="medications" />
+          <div className="flex gap-4 px-2">
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>Si</span>
+              <input
+                type="radio"
+                className="radio"
+                value="si"
+                name="medications"
+              />
+            </label>
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>No</span>
+              <input
+                type="radio"
+                className="radio"
+                value="no"
+                name="medications"
+              />
+            </label>
           </div>
           <div className="flex">
-            <label htmlFor="">Cuales</label>
-            <Input type="text" name="medicationName" />
+            <label htmlFor="" className="flex items-end gap-1">
+              <span>Cuales</span>
+              <Input type="text" twClass="w-[90px]" name="medicationName" />
+            </label>
           </div>
         </div>
 
         {/* Discapacidad */}
-        <div className="flex">
+        <div className="flex justify-between">
           <label htmlFor="">Discapacidad</label>
-          <div className="flex gap-2 px-2">
-            <label htmlFor="">Si</label>
-            <input type="radio" value="si" name="disability" />
-            <label htmlFor="">No</label>
-            <input type="radio" value="no" name="disability" />
+          <div className="flex gap-4 px-2">
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>Si</span>
+              <input
+                type="radio"
+                className="radio"
+                value="si"
+                name="disability"
+              />
+            </label>
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>No</span>
+              <input
+                type="radio"
+                className="radio"
+                value="no"
+                name="disability"
+              />
+            </label>
           </div>
-          <select name="disability-type" id="">
+          <select
+            name="disability-type"
+            id=""
+            className="bg-transparent border-b-[1px] w-[100px] border-[#35799F]"
+          >
             <option value="Cognitive">Cognitiva</option>
             <option value="Visual">Visual</option>
             <option value="Auditory">Auditory</option>
@@ -163,43 +216,85 @@ const DataCompletionPatient = (id: any) => {
         </div>
 
         {/* Fumador */}
-        <div className="flex">
-          <label htmlFor="">¿Fuma?</label>
-          <div className="flex gap-2 px-2">
-            <label htmlFor="">Si</label>
-            <input type="radio" value="Yes" name="smoking" />
-            <label htmlFor="">No</label>
-            <input type="radio" value="No" name="smoking" />
+        <div className="flex gap-2 justify-between">
+          <span>¿Fuma?</span>
+          <div className="flex gap-4">
+
+          <label htmlFor="" className="flex items-center gap-1">
+            <span>Si</span>
+
+            <input type="radio" className="radio" value="Yes" name="smoking" />
+          </label>
+          <label htmlFor="" className="flex items-center gap-1">
+            <span>No</span>
+            <input type="radio" className="radio" value="No" name="smoking" />
+          </label>
           </div>
-          <select name="smokingFrecuency" id="">
+
+          <select
+            name="smokingFrecuency"
+            id=""
+            className="bg-transparent border-b-[1px] border-[#35799F]"
+          >
             <option value="Occasionally">Occasionally</option>
             <option value="daily">Daily</option>
           </select>
         </div>
         {/* Consume alcohol */}
-        <div className="flex">
+        <div className="flex justify-between">
           <label htmlFor="">¿Bebe Alcohol?</label>
-          <div className="flex gap-2 px-2">
-            <label htmlFor="">Si</label>
-            <input type="radio" value="Yes" name="alcoholConsumption" />
-            <label htmlFor="">No</label>
-            <input type="radio" value="No" name="alcoholConsumption" />
+          <div className="flex gap-4 px-2">
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>Si</span>
+
+              <input
+                type="radio"
+                className="radio"
+                value="Yes"
+                name="alcoholConsumption"
+              />
+            </label>
+            <label htmlFor="" className="flex items-center gap-1">
+              <span>No</span>
+              <input
+                type="radio"
+                className="radio"
+                value="No"
+                name="alcoholConsumption"
+              />
+            </label>
           </div>
-          <select name="drinkFrecuency" id="">
+          <select
+            name="drinkFrecuency"
+            id=""
+            className="bg-transparent border-b-[1px] border-[#35799F]"
+          >
             <option value="ocacionalmente">Ocacionalmente</option>
             <option value="daily">Daily</option>
           </select>
         </div>
 
         {/* Sustancias psicoactivas */}
-        <div className="flex">
-          <label htmlFor="">¿Usa sustancias psicoactivas?</label>
-          <div className="flex gap-2 px-2">
-            <label htmlFor="">Si</label>
-            <input type="radio" value="Yes" name="psychoactiveSubstances" />
-            <label htmlFor="">No</label>
-            <input type="radio" value="No" name="psychoactiveSubstances" />
-          </div>
+        <div className="flex gap-2">
+          <span>¿Usa sustancias psicoactivas?</span>
+          <label htmlFor="" className="flex items-center gap-1">
+            <span>Si</span>
+            <input
+              type="radio"
+              className="radio"
+              value="Yes"
+              name="psychoactiveSubstances"
+            />
+          </label>
+          <label htmlFor="" className="flex items-center gap-1">
+            <span>No</span>
+            <input
+              type="radio"
+              className="radio"
+              value="No"
+              name="psychoactiveSubstances"
+            />
+          </label>
         </div>
 
         <button

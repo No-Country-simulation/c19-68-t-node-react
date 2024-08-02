@@ -13,7 +13,7 @@ const useFetch = () => {
     } 
 
     const update = (url: string, data: any) => {
-        axios.post(url, data)
+        axios.patch(url, data)
         .then(res => setResponse(res.data))
         .catch(err => console.log(err))
     }

@@ -5,7 +5,9 @@
   align-items: center;
 }
 
-
+.transparent{
+  background-color: transparent;
+}
 
 @media (min-width: 1024px) {
   .grid__profile {

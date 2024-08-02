@@ -14,7 +14,7 @@ const PhoneNumberInput = ({
 }) => {
   return (
     <div className="flex flex-col justify-between p-[0.38rem] w-[40vw]">
-      <div className="flex">
+      <div className="flex items-center gap-1">
         <Image
           src="/assets/signup/phone-input-icon.png"
           width={20}
@@ -29,7 +29,7 @@ const PhoneNumberInput = ({
         value={value}
         onChange={onChange}
         name={name}
-        className=" border-b-2 border-[#89bad8] focus:outline-none focus:border-[#35799f] "
+        className=" w-[130px] bg-transparent  border-b-[1px] border-[#35799f]"
       />
     </div>
   );

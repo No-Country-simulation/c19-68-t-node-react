@@ -7,10 +7,21 @@ import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import { format } from "@formkit/tempo";
 import InputReadOnly from "../InputReadOnly";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface Props {
   id: string;
 }
+
+type FormValues = {
+  dateOfBirth: string;
+  adress: string;
+  city: string;
+  postalCode: string;
+  idType: string;
+  idNumber: string;
+  number: string;
+};
 
 const ProfilePatient = ({ id }: Props) => {
   const [patient, getPatient] = useFetch();
@@ -18,6 +29,11 @@ const ProfilePatient = ({ id }: Props) => {
   useEffect(() => {
     getPatient(`http://localhost:4700/patients/profilePat/${id}`);
   }, []);
+
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+  };
 
   /* Format Dates */
 
@@ -105,7 +121,7 @@ const ProfilePatient = ({ id }: Props) => {
       </div>
 
       {/* Form */}
-      <form className="flex flex-col gap-[26px] text-[12px] max-w-[325px]">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-[26px] text-[12px] max-w-[325px]">
         {/* Fecha de nacimiento y Edad */}
         <label className="flex gap-1 items-center justify-between">
           <div className="flex items-end ">
@@ -189,14 +205,23 @@ const ProfilePatient = ({ id }: Props) => {
         </article>
         {/* Identificación */}
         <label className="flex justify-between">
-          <div className="flex items-end">
+          <div className="flex items-end gap-2">
             <span>ID</span>
-            <InputReadOnly twClass="w-[89px]" type="string" />
+
+              <select {...register('idType')} className="w-[89px] bg-[#f3f4f6] border-b border-[#35799F]">
+                <option value="DNI" selected>DNI</option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+            
           </div>
 
           <div className="flex items-end">
             <span>Número</span>
-            <InputReadOnly twClass="w-[145px]" type="string" />
+            <input
+              type="string"
+              {...register("number")}
+              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[145px]`}
+            />
           </div>
         </label>
         {/* Teléfono */}
@@ -207,13 +232,21 @@ const ProfilePatient = ({ id }: Props) => {
           </div>
           <div className="flex items-end justify-between ">
             <span>Cod Postal</span>
-            <InputReadOnly twClass="w-[90px]" type="string" />
+            <input
+              type="string"
+              {...register("postalCode")}
+              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[95px]`}
+            />
           </div>
         </label>
         {/* Dirección */}
         <label className="flex items-end justify-between ">
           <span>Direccion</span>
-          <InputReadOnly twClass="w-[260px]" type="string" />
+          <input
+              type="string"
+              {...register("adress")}
+              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[260px]`}
+            />
         </label>
         {/* País */}
         <label className="flex justify-between">
@@ -223,7 +256,11 @@ const ProfilePatient = ({ id }: Props) => {
           </div>
           <div className="flex items-end justify-between">
             <span>Ciudad</span>
-            <InputReadOnly twClass="w-[120px]" type="string" />
+            <input
+              type="string"
+              {...register("city")}
+              className={`border-b border-solid pt-1 bg-transparent border-[#35799F] px-2 w-[120px]`}
+            />
           </div>
         </label>
         {/* Email */}
