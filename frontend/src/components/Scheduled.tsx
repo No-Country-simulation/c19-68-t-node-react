@@ -97,7 +97,7 @@ const Scheduled = ({ appointment }: Props) => {
         </div>
 
         <p
-          className="absolute top-2 right-4 text-[20px] button__open"
+          className="absolute top-2 right-4 text-[20px] button__open cursor-pointer"
           onClick={handleOpenSheduled}
         >
           <Image
@@ -108,7 +108,7 @@ const Scheduled = ({ appointment }: Props) => {
           />
         </p>
         <p
-          className="absolute top-2 right-4 text-[20px] button__close"
+          className="absolute top-2 right-4 text-[20px] button__close cursor-pointer"
           onClick={handleCloseSheduled}
         >
           <Image src={"/arrow-up.png"} alt="arrow up" width={12} height={12} />
