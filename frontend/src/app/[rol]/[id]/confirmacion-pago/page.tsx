@@ -1,7 +1,7 @@
-import SuccessfulPaymentForm from "@/components/successfulPayment";
+import SuccessfulPaymentForm from "@/components/SuccessfulPayment";
 const Success = ({ params }: { params: { id: string; rol: string } }) => {
   return (
-    <div className="w-screen h-[100svh] flex justify-center overflow-hidden">
+    <div className="w-screen h-[100dvh] flex items-center justify-center overflow-hidden">
       <SuccessfulPaymentForm userId={params.id} userRol={params.rol} />
     </div>
   );

@@ -10,7 +10,7 @@ const SuccessfulPaymentForm = ({ userId, userRol }) => {
   };
 
   return (
-    <div className="login-container overflow-hidden w-[80%] h-full flex flex-col items-center bg-white px-4">
+    <div className="login-container overflow-hidden w-[80%] h-full justify-center flex flex-col items-center bg-white px-4">
       {/* Contenedor del formulario */}
       <div className="login-form w-full max-w-[400px] bg-white rounded-lg shadow-lg p-6">
         <form onSubmit={handleRedirect} className="flex flex-col gap-4">

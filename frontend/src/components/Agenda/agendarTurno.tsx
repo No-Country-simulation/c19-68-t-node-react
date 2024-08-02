@@ -120,7 +120,7 @@ const AgendarTurno = () => {
   if (!data) return <div>Cargando...</div>;
 
   return (
-    <section className="w-full h-[100dvh] bg-[#FFF] flex flex-col gap-3 p-12">
+    <section className="w-full h-full min-h-[100vh] bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
 
       <form action={formAction}>
@@ -132,17 +132,29 @@ const AgendarTurno = () => {
             onSelect={handleSpecialtyChange}
           />
         </div>
-        <ProfRadioCard
-          professionals={professionals}
-          selectedProfessional={selectedProfessional?._id}
-          onProfessionalSelect={handleProfessionalSelect}
-        />
-        <CustomCalendar
-          // startDate={new Date()}
-          onDateSelect={handleDateSelect}
-          name="selectedDate"
-          availableDays={availableDates}
-        />
+        {selectedSpecialty ? (
+          <div className="w-full min-h-40 mt-10 mb-8 ">
+            <ProfRadioCard
+              professionals={professionals}
+              selectedProfessional={selectedProfessional?._id}
+              onProfessionalSelect={handleProfessionalSelect}
+            />
+          </div>
+        ) : (
+          <div className="w-full flex items-center min-h-40 mt-8 mb-8 justify-center p-4 border border-gray-300 rounded-xl shadow-xl bg-white text-gray-700">
+            Please select a speciality to see available doctors
+          </div>
+        )}
+
+        <div className="w-full h-full p-1 shadow-xl">
+          <CustomCalendar
+            // startDate={new Date()}
+            onDateSelect={handleDateSelect}
+            name="selectedDate"
+            availableDays={availableDates}
+          />
+        </div>
+
         <input
           type="hidden"
           name="selectedDate"
