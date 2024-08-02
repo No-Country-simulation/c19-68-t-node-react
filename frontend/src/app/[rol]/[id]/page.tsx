@@ -6,7 +6,7 @@ const HomePage = ({ params }: { params: { rol: string; id: string } }) => {
   return (
     <section>
       {params.rol === "paciente" ? (
-        <HomePatient />
+        <HomePatient patientId={params.id}/>
       ) : (
         <HomeDoctor doctorId={params.id} />
       )}

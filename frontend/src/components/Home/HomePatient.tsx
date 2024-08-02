@@ -1,14 +1,23 @@
+"use client"
 import Image from 'next/image';
 import { format } from "@formkit/tempo";
 import { Manrope } from "next/font/google";
 import Calendar from "@/components/Calendar";
+import useFetch from '@/hooks/useFetch';
+import { useEffect } from 'react';
 
 export const manrope = Manrope({
     subsets: ["latin"],
     display: "swap",
 });
 
-const HomePage = () => {
+interface Props {
+    patientId:string
+}
+
+const HomePage = ({
+    patientId
+}:Props) => {
 
     const date = new Date("2024-07-07");
     const day = format(date, "dddd, MMMM D, YYYY", 'es');
@@ -22,21 +31,26 @@ const HomePage = () => {
             formulacion: "Terapia fisica, naproxeno",
         },
     ];
-
+    
+    const [patient, getPatient] = useFetch()
+    useEffect(() => {
+        getPatient(`http://localhost:4700/patients/profilePat/${patientId}`)
+    }, [])
+    console.log(patient);
     return (
         <section className="w-screen h-screen z-20">
             <div className="w-[375.83px] m-auto h-[100%] p-4">
-                <header className="flex items-center justify-between mb-5 relative w-full mt-10">
-                    <div className="flex items-center space-x-4 w-[180px] h-[44px] ml-[42px] -mt-2 gradient">
-                        <div className="w-10 h-10 -mt-2 bg-[#89BAD8] rounded-full flex items-center justify-center">
-                            <Image src="/home/lets-icons_user-light.png" alt="Avatar" width={24} height={24} />
-                        </div>
-                        <span className="font-semibold text[20px] -mt-2">Pepito Perez</span>
-                    </div>
-                    <div className="absolute top-0 right-0 p-2 ">
-                        <Image src="/logo.png" alt="Logo" width={24} height={24} />
-                    </div>
-                </header>
+            <header className="flex items-center justify-between mb-5 relative w-full mt-10">
+            <div className="flex items-center space-x-2 w-[180px] h-[44px] ml-[6px] gradient">
+                <div className="w-[48px] h-[35px] bg-[#89BAD8] rounded-full flex items-center justify-center overflow-hidden">
+                    <Image src={patient?.patient.photo} alt="Avatar" width={48} height={48} className='rounded-full h-[48px]' />
+                </div>
+                <span className="font-semibold text-[20px]">{patient?.patient.firstName}</span>
+            </div>
+            <div className="absolute top-0 right-0 p-2">
+                <Image src="/logo.png" alt="Logo" width={24} height={24} />
+            </div>
+        </header>
                 <main>
                     {/* Image Slider */}
                     <div className="relative w-full h-40 mb-15 bg-gray-300">

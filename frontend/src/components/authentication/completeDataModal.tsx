@@ -13,9 +13,8 @@ const CompleteDataModal: React.FC<ModalProps> = ({
   onClose,
   userId,
 }) => {
-  if (!isOpen) return null;
-
   const router = useRouter();
+  if (!isOpen) return null;
 
   const handleOption = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

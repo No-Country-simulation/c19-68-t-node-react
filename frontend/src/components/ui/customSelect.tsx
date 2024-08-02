@@ -3,6 +3,7 @@ import React from "react";
 interface Option {
   value: string | number;
   label: string;
+  endTime?: string;
 }
 
 interface CustomSelectProps {
@@ -10,6 +11,7 @@ interface CustomSelectProps {
   name: string;
   options: Option[];
   onSelect: (value: string) => void;
+  horarios?: boolean;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -17,6 +19,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   name,
   options,
   onSelect,
+  horarios,
 }) => {
   return (
     <div className="w-full">
@@ -30,8 +33,15 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         >
           <option value=""></option>
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+            <option
+              key={option.endTime}
+              value={
+                horarios
+                  ? [option.value, option.endTime].toString()
+                  : option.value.toString()
+              }
+            >
+              {option.label} {option.endTime ? `- ${option.endTime}` : ""}
             </option>
           ))}
         </select>

@@ -14,28 +14,28 @@ export const manrope = Manrope({
   display: "swap",
 });
 
-interface Props{
-  id: string
+interface Props {
+  id: string;
 }
 
-const PatientAppointment = ({ id }:Props) => {
+const PatientAppointment = ({ id }: Props) => {
   const [citas, getCitas] = useFetch();
   const [doctors, getDoctors] = useFetch();
 
   const principalAppointment = citas?.patientDate.slice(0, 1);
   const limitDoctors = doctors?.slice(0, 3);
   const previousAppointments = doctors?.slice(0, 1);
-  
-  const router = useRouter()
-  
+
+  const router = useRouter();
+
   useEffect(() => {
     getCitas(`http://localhost:4700/appointments/getAllAppo/${id}/pending`);
     getDoctors("https://669e59d19a1bda36800656ad.mockapi.io/doctor");
   }, []);
 
   const handleClick = () => {
-    router.push(`/paciente/${id}/agendar-turnos`)
-  }
+    router.push(`/paciente/${id}/agendar-turnos`);
+  };
 
   return (
     <section className={`w-screen h-full bg-[#FAFAFA]`}>
@@ -49,7 +49,10 @@ const PatientAppointment = ({ id }:Props) => {
 
         <>
           {principalAppointment?.map((appointment: any) => (
-            <PrincipalAppointment appointment={appointment} />
+            <PrincipalAppointment
+              key={appointment._id}
+              appointment={appointment}
+            />
           ))}
         </>
 
@@ -59,7 +62,10 @@ const PatientAppointment = ({ id }:Props) => {
           ))}
         </div>
 
-        <div onClick={handleClick} className="flex cursor-pointer self-start justify-center rounded-[12.17px] items-center gap-2 w-[142px] h-[35px] bg-[#35799F] text-[#F2F2F2]">
+        <div
+          onClick={handleClick}
+          className="flex cursor-pointer self-start justify-center rounded-[12.17px] items-center gap-2 w-[142px] h-[35px] bg-[#35799F] text-[#F2F2F2]"
+        >
           <Image
             src={"/calendar-scheduled.png"}
             alt="arrow up"
@@ -68,21 +74,22 @@ const PatientAppointment = ({ id }:Props) => {
             className="w-[13px] h-[13px] "
           />
 
-          <p   className="font-medium text-[15px] ">Agendar Cita</p>
+          <p className="font-medium text-[15px] ">Agendar Cita</p>
         </div>
 
         <h2 className="text-center font-bold text-[15.58px]">
           Doctores cerca de ti
         </h2>
         {limitDoctors?.map((doctor: any) => (
-          <Doctor doctor={doctor} />
+          <Doctor doctor={doctor} key={doctor._id} />
         ))}
 
         <h2 className="text-[15.58px] font-bold text-center">
           Ultimas consultas
         </h2>
 
-        <div>{previousAppointments?.map((doctor: any) => (
+        <div>
+          {previousAppointments?.map((doctor: any) => (
             <PreviousAppointment key={doctor.id} doctor={doctor} />
           ))}
         </div>
@@ -90,4 +97,4 @@ const PatientAppointment = ({ id }:Props) => {
     </section>
   );
 };
-export default PatientAppointment
+export default PatientAppointment;
