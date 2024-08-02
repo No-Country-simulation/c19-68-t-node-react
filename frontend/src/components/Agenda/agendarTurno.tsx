@@ -7,10 +7,8 @@ import ProfRadioCard from "@/components/Agenda/ProfRadioCard";
 import CustomSelect from "@/components/ui/customSelect";
 import SectionTitle from "@/components/ui/sectionTitle";
 import { useState, useEffect } from "react";
-import { dateFormater } from "@/utils/lib/helpers";
 import { useFormState } from "react-dom";
 import { appointmentRegister } from "@/app/[rol]/[id]/agendar-turnos/actions";
-import { set } from "date-fns";
 
 export interface Doctor {
   _id: string | number;
@@ -46,7 +44,6 @@ const AgendarTurno = () => {
     appointmentRegister,
     undefined
   );
-  console.log("Lo que trae state: ", state);
 
   const endpoint = `http://localhost:4700/doctors/getAllDoc`;
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
@@ -62,6 +59,8 @@ const AgendarTurno = () => {
 
   useEffect(() => {
     if (data) {
+      console.log("Datos de doctores: ", data.doctors);
+
       const uniqueSpecialties = Array.from(
         new Set(
           data?.doctors.map((doctor: { speciality: any }) => doctor.speciality)
@@ -71,17 +70,25 @@ const AgendarTurno = () => {
         label: speciality.charAt(0).toUpperCase() + speciality.slice(1),
         value: speciality.toLowerCase().replace(/\s+/g, ""),
       }));
+
+      console.log("Opciones de especialidades: ", options);
+
       setSpecialityOptions(options);
     }
   }, [data]);
 
   const handleSpecialtyChange = (value: string) => {
+    console.log("Especialidad seleccionada: ", value);
+
     setSelectedSpecialty(value);
     const filteredProfessionals =
       data?.doctors.filter(
         (doctor: { speciality: string }) =>
           doctor.speciality.toLowerCase().replace(/\s+/g, "") === value
       ) || [];
+
+    console.log("Profesionales filtrados: ", filteredProfessionals);
+
     setProfessionals(filteredProfessionals);
   };
 
@@ -101,11 +108,6 @@ const AgendarTurno = () => {
     setSelectedProfessional(profSelect[0]);
   };
 
-  console.log(
-    "Profesional seleccionado con datos completos: ",
-    selectedProfessional
-  );
-
   const handleDateSelect = (date: Date) => {
     console.log("Fecha seleccionada: ", date);
     console.log(typeof date);
@@ -117,14 +119,8 @@ const AgendarTurno = () => {
   if (!data) return <div>Cargando...</div>;
 
   return (
-    <section className="w-full h-full bg-[#FFF] flex flex-col gap-3 p-12">
+    <section className="w-full h-[100dvh] bg-[#FFF] flex flex-col gap-3 p-12">
       <SectionTitle title={"Agenda"} />
-
-      {/* <div className="flex-1 overflow-auto">
-        <pre className="bg-gray-100 p-4 rounded-lg">
-          {JSON.stringify(data, null, 2)}
-        </pre>
-      </div> */}
 
       <form action={formAction}>
         <div className="filtro-especialidad mb-4">

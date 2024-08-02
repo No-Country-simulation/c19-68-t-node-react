@@ -11,19 +11,20 @@ interface DoctorDisponibilityProps {
 }
 
 const DoctorDisponibility = ({ day, doctorId }: DoctorDisponibilityProps) => {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState(["", ""]);
   const [reminder, setReminder] = useState("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [filteredDisponibility, setFilteredDisponibility] =
     useState<string[]>();
 
-  const handleTimeSelect = (value: string) => {
-    setTime(value);
+  const handleTimeSelect = (value: string, key: string) => {
+    setTime([value, key]);
   };
 
   const handleReminderSelect = (value: string) => {
     setReminder(value);
   };
+  console.log("El dia y su formato: ", day);
 
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
@@ -60,7 +61,7 @@ const DoctorDisponibility = ({ day, doctorId }: DoctorDisponibilityProps) => {
 
   useEffect(() => {
     if (data) {
-      // console.log("data", data);
+      console.log("data", data);
     }
   }, [data]);
 
@@ -79,15 +80,16 @@ const DoctorDisponibility = ({ day, doctorId }: DoctorDisponibilityProps) => {
       <CustomSelect
         title="Horarios disponibles"
         options={hourExample}
-        onSelect={handleTimeSelect}
+        onSelect={(value: string, key: string) => handleTimeSelect(value, key)}
         name="timeschedule"
+        horarios={true}
       />
-      <CustomSelect
+      {/* <CustomSelect
         title="Crear recordatorio"
         options={reminderEx}
         onSelect={handleReminderSelect}
         name="reminder"
-      />
+      /> */}
     </div>
   );
 };
