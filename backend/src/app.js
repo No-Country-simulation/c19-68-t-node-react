@@ -8,6 +8,8 @@ import doctorsRoutes from "./routes/doctors.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import medicalRoutes from "./routes/medicalRecords.routes.js"
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
+import videoCallRoutes from "./routes/videoCallRoutes.js";
+import {initializeServer} from "./config/socketConfig.js"
 //config app express
 const app = express();
 app.use(
@@ -37,5 +39,14 @@ app.use("/medicalRec", medicalRoutes);
 app.use("/patients", patientsRoutes);
 app.use("/doctors", doctorsRoutes);
 app.use("/auth", authRoutes);
+app.use("/api/videocall", videoCallRoutes);
+
+// Inicializar servidor y socket.io
+const server = initializeServer(app);
+
+const SocketPORT = process.env.SocketPORT || 3001;
+server.listen(SocketPORT, () => {
+  console.log(`Server Socket running on port ${SocketPORT}`);
+});
 
 export default app;
