@@ -28,6 +28,8 @@ const ProfileDoctor = ({ id }: Props) => {
     getDoctor(`http://localhost:4700/doctors/profileDoc/${id}`);
   }, []);
 
+  console.log(doctor)
+
   const { register, handleSubmit } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     updateDoctor(`http://localhost:4700/doctors/editProfileDoc/${id}`, data);

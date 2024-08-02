@@ -22,6 +22,7 @@ const DayCheckbox = ({
         value={day}
         checked={isChecked}
         onChange={handleChange}
+        className="check"
       />
     </div>
   );

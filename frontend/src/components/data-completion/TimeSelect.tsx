@@ -20,7 +20,7 @@ const TimeSelect = ({
   };
 
   return (
-    <div className="p-2 w-full bg-transparent rounded-lg shadow-xl flex flex-col gap-3">
+    <div className="p-1 w-[155px] flex border-b-[1px] border-[#35799f] gap-3">
       <span>{title}</span>
       <TimePicker
         onChange={handleChange}
@@ -28,7 +28,7 @@ const TimeSelect = ({
         format="hh a"
         disableClock={true}
         clearIcon={null}
-        className="w-full bg-transparent text-sm appearance-none outline-none"
+        className="w-full text-sm bg-transparent"
       />
     </div>
   );
