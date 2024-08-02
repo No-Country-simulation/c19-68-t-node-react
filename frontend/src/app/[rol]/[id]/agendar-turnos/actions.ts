@@ -60,13 +60,13 @@ export const appointmentRegister = async (
       unit_amount: 3000, //Se pone en centimos, 20000 equivale a 200.00 dolares
       quantity: 1,
       mode: "payment",
-      success_url: `http://localhost:3000/${user.rol}/${user.id}/confirmacion-pago`,
+      success_url: `https://e-medicine-backend.vercel.app/${user.rol}/${user.id}/confirmacion-pago`,
       cancel_url: "http://localhost:6000/cancel",
     };
 
     let response = (
       await axios.post(
-        "http://localhost:4700/paymentGateway/createCheckoutSession",
+        "https://e-medicine-backend.vercel.app/paymentGateway/createCheckoutSession",
         data
       )
     ).data;

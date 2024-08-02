@@ -25,7 +25,7 @@ export const login = async (
     return { errors: validationResult.error.flatten().fieldErrors };
   }
 
-  const result = await userLogin(data);
+  const result: any = await userLogin(data);
 
   if (result.message) {
     return { error: result.message };

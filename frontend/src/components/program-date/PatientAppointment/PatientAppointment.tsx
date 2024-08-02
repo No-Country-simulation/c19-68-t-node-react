@@ -29,7 +29,9 @@ const PatientAppointment = ({ id }: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    getCitas(`http://localhost:4700/appointments/getAllAppo/${id}/pending`);
+    getCitas(
+      `https://e-medicine-backend.vercel.app/appointments/getAllAppo/${id}/pending`
+    );
     getDoctors("https://669e59d19a1bda36800656ad.mockapi.io/doctor");
   }, []);
 

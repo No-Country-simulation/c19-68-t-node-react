@@ -16,7 +16,9 @@ const ProfilePatient = ({ id }: Props) => {
   const [patient, getPatient] = useFetch();
 
   useEffect(() => {
-    getPatient(`http://localhost:4700/patients/profilePat/${id}`);
+    getPatient(
+      `https://e-medicine-backend.vercel.app/patients/profilePat/${id}`
+    );
   }, []);
 
   /* Format Dates */
@@ -115,7 +117,6 @@ const ProfilePatient = ({ id }: Props) => {
               type="date"
               value={formatDate ? formatDate : ""}
             />
-
           </div>
 
           <div className="flex items-end">
@@ -203,7 +204,11 @@ const ProfilePatient = ({ id }: Props) => {
         <label className="flex justify-between">
           <div className="flex items-end justify-between ">
             <span>Telefono</span>
-            <InputReadOnly twClass="w-[110px]" value={patient?.patient.phone} type="string" />
+            <InputReadOnly
+              twClass="w-[110px]"
+              value={patient?.patient.phone}
+              type="string"
+            />
           </div>
           <div className="flex items-end justify-between ">
             <span>Cod Postal</span>
@@ -219,7 +224,11 @@ const ProfilePatient = ({ id }: Props) => {
         <label className="flex justify-between">
           <div className="flex items-end">
             <span>Pais</span>
-            <InputReadOnly twClass="w-[119px]" value={patient?.patient.country} type="string" />
+            <InputReadOnly
+              twClass="w-[119px]"
+              value={patient?.patient.country}
+              type="string"
+            />
           </div>
           <div className="flex items-end justify-between">
             <span>Ciudad</span>
@@ -229,7 +238,11 @@ const ProfilePatient = ({ id }: Props) => {
         {/* Email */}
         <label className="justify-between flex items-end ">
           <span>Email</span>
-          <InputReadOnly twClass="w-[285px]" value={patient?.patient.email} type="string" />
+          <InputReadOnly
+            twClass="w-[285px]"
+            value={patient?.patient.email}
+            type="string"
+          />
         </label>
 
         <button className="w-[70%] text-white rounded-lg bg-[#812B75] py-3 m-auto my-4">

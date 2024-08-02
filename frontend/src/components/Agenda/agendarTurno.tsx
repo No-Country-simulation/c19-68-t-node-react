@@ -45,7 +45,7 @@ const AgendarTurno = () => {
     undefined
   );
 
-  const endpoint = `http://localhost:4700/doctors/getAllDoc`;
+  const endpoint = `https://e-medicine-backend.vercel.app/doctors/getAllDoc`;
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
   const [professionals, setProfessionals] = useState<Doctor[]>([]);
   const [selectedProfessional, setSelectedProfessional] = useState<Doctor>();

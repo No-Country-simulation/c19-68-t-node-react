@@ -13,7 +13,7 @@ import { fetcher } from "@/utils/lib/fetcher";
 import { doctorCompleteData } from "./actions";
 
 const DataCompletionDoctor = ({ doctorId }: { doctorId: string }) => {
-  const URL = `http://localhost:4700/doctors/getDoc/${doctorId}/`;
+  const URL = `https://e-medicine-backend.vercel.app/doctors/getDoc/${doctorId}/`;
 
   const [phone, setPhone] = useState<string>("");
 
