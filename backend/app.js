@@ -6,6 +6,7 @@ import appointmentsRoutes from "./routes/appointments.routes.js";
 import patientsRoutes from "./routes/patients.routes.js";
 import doctorsRoutes from "./routes/doctors.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import medicalRoutes from "./routes/medicalRecords.routes.js"
 import { logResponseStatus } from "./middlewares/loggerRes.middleware.js";
 //config app express
 const app = express();
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 app.use('/', logResponseStatus)
 app.use("/paymentGateway", paymentGatewayRoutes);
 app.use("/appointments", appointmentsRoutes);
+app.use("/medicalRec", medicalRoutes);
 app.use("/patients", patientsRoutes);
 app.use("/doctors", doctorsRoutes);
 app.use("/auth", authRoutes);
