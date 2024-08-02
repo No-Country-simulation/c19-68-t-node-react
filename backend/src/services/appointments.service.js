@@ -224,7 +224,7 @@ class AppointmentService {
           doctor_id,
         },
         "patient_id",
-        "-_id -creditCard -clinicalData -gender -phone -password -confirmationString -confirmed"
+        "-creditCard -clinicalData -gender -phone -password -confirmationString -confirmed"
       );
 
       if (appointDoctor.length === 0) {
