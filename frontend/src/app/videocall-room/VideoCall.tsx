@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -181,8 +180,10 @@ const VideoCall: React.FC = () => {
   }
 
   .split-screen {
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
+    width: 100%;
   }
 
   .video-wrapper {
@@ -244,7 +245,43 @@ const VideoCall: React.FC = () => {
       padding: 8px;
     }
   }
+
+  @media only screen and (min-width: 430px) and (max-width: 820px) {
+    .video {
+      max-width: 100%;
+    }
+  }
+
+  @media only screen and (min-width: 820px) {
+    .video-container {
+      padding: 15px;
+    }
+    
+    .split-screen {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .video-wrapper {
+      margin: 15px;
+    }
+
+    .video {
+      max-width: 400px;
+    }
+
+    .controls {
+      margin-top: 25px;
+    }
+
+    button, input {
+      font-size: 18px;
+      max-width: 220px;
+      padding: 12px;
+    }
+  }
 `}</style>
+
     </div>
   );
 };
