@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/tempo": "^0.1.2",
     "@react-hook/window-size": "^3.1.1",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",

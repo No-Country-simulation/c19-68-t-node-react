@@ -219,9 +219,13 @@ class AppointmentService {
         return appointDocDate;
       }
 
-      const appointDoctor = await appointmentsManager.find({
-        doctor_id,
-      });
+      const appointDoctor = await appointmentsManager.findPopulate(
+        {
+          doctor_id,
+        },
+        "patient_id",
+        "-creditCard -clinicalData -gender -phone -password -confirmationString -confirmed"
+      );
 
       if (appointDoctor.length === 0) {
         console.error(`ERROR: No tiene citas asignadas`);

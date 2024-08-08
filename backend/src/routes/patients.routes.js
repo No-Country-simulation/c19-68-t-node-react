@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/registerPat", controllerPat.registerPat);
 
-router.post("/editProfilePat/:id", controllerPat.editProfilePat);
+router.patch("/editProfilePat/:id", controllerPat.editProfilePat);
 
 router.get("/getPatId/:id", controllerPat.getPatId);
 

@@ -36,3 +36,4 @@
 {"level":"fatal","message":"POST /createCheckoutSession - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-02T02:41:22.035Z"}
 {"level":"fatal","message":"POST /createCheckoutSession - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-02T02:41:51.211Z"}
 {"level":"fatal","message":"POST /registerDoc - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-04T14:30:20.502Z"}
+{"level":"fatal","message":"GET /getAppoDoc/66aa0257c0536e9f7b548e49/:date - Status: 500 (Server Error) - Internal server error occurred while processing the request","timestamp":"2024-08-02T17:58:59.840Z"}
