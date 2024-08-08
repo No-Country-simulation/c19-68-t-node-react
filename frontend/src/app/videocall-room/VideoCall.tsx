@@ -15,7 +15,7 @@ const VideoCall: React.FC = () => {
   const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io('http://localhost:4001');
     setSocket(newSocket);
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -81,8 +81,7 @@ const VideoCall: React.FC = () => {
 
     try {
       const randomRoomId = Math.random().toString(36).substring(2, 15);
-      //const randomIduser1 = Math.random().toString(36).substring(2, 15);
-      const response = await fetch('http://localhost:3001/api/videocall/initiate', {
+      const response = await fetch('http://localhost:4001/api/videocall/initiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomId: randomRoomId })
@@ -104,10 +103,10 @@ const VideoCall: React.FC = () => {
 
     try {
       const randomParticipantId = Math.random().toString(36).substring(2, 15);
-      const response = await fetch('http://localhost:3001/api/videocall/join', {
+      const response = await fetch('http://localhost:4001/api/videocall/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roomId: callId, participant: randomParticipantId })
+        body: JSON.stringify({ roomId: callId, participantId: randomParticipantId })
       });
       await response.json();
 
@@ -118,6 +117,28 @@ const VideoCall: React.FC = () => {
       setIsJoined(true);
     } catch (error) {
       console.error('Error joining call:', error);
+    }
+  };
+
+  const joinCreatedCall = async () => {
+    if (!myStream || !socket || !callId) return;
+
+    try {
+      const randomParticipant0Id = Math.random().toString(36).substring(2, 15);
+      const response = await fetch('http://localhost:4001/api/videocall/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: callId, participantId: randomParticipant0Id })
+      });
+      await response.json();
+
+      const newPeer = createPeer(false);
+      if (newPeer) {
+        setPeer(newPeer);
+      }
+      setIsJoined(true);
+    } catch (error) {
+      console.error('Error joining created call:', error);
     }
   };
 
@@ -138,10 +159,9 @@ const VideoCall: React.FC = () => {
     setIsJoined(false);
 
     try {
-      await fetch('http://localhost:3001/api/videocall/end', {
+      await fetch(`http://localhost:4001/api/videocall/end/${callId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roomId: callId })
+        headers: { 'Content-Type': 'application/json' }
       });
     } catch (error) {
       console.error('Error ending call:', error);
@@ -169,123 +189,122 @@ const VideoCall: React.FC = () => {
           placeholder="ID de la llamada"
         />
         {!peer && <button onClick={joinCall}>Unirse a la llamada</button>}
+        {peer && !isJoined && <button onClick={joinCreatedCall}>Unirse a mi llamada</button>}
         {peer && <button onClick={endCall}>Finalizar llamada</button>}
       </div>
       <style jsx>{`
-  .video-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-  }
+        .video-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px;
+        }
 
-  .split-screen {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-  }
+        .split-screen {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          width: 100%;
+        }
 
-  .video-wrapper {
-    text-align: center;
-    margin: 10px;
-  }
+        .video-wrapper {
+          text-align: center;
+          margin: 10px;
+        }
 
-  .video {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    border: 2px solid #333;
-    border-radius: 8px;
-  }
+        .video {
+          width: 100%;
+          max-width: 400px;
+          height: auto;
+          border: 2px solid #333;
+          border-radius: 8px;
+        }
 
-  .controls {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+        .controls {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
 
-  button, input {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 200px;
-  }
+        button, input {
+          margin: 5px;
+          padding: 10px;
+          font-size: 16px;
+          width: 100%;
+          max-width: 200px;
+        }
 
-  @media only screen and (max-width: 820px) {
-    .video-container {
-      padding: 5px;
-    }
-    
-    .split-screen {
-      flex-direction: column;
-      align-items: center;
-    }
+        @media only screen and (max-width: 820px) {
+          .video-container {
+            padding: 5px;
+          }
+          
+          .split-screen {
+            flex-direction: column;
+            align-items: center;
+          }
 
-    .video-wrapper {
-      margin: 5px;
-    }
+          .video-wrapper {
+            margin: 5px;
+          }
 
-    .video {
-      width: 100%;
-      max-width: none;
-      border: 2px solid #333;
-      border-radius: 8px;
-    }
+          .video {
+            width: 100%;
+            max-width: none;
+            border: 2px solid #333;
+            border-radius: 8px;
+          }
 
-    .controls {
-      margin-top: 10px;
-    }
+          .controls {
+            margin-top: 10px;
+          }
 
-    button, input {
-      font-size: 14px;
-      max-width: 180px;
-      padding: 8px;
-    }
-  }
+          button, input {
+            font-size: 14px;
+            max-width: 180px;
+            padding: 8px;
+          }
+        }
 
-  @media only screen and (min-width: 430px) and (max-width: 820px) {
-    .video {
-      max-width: 100%;
-    }
-  }
+        @media only screen and (min-width: 430px) and (max-width: 820px) {
+          .video {
+            max-width: 100%;
+          }
+        }
 
-  @media only screen and (min-width: 820px) {
-    .video-container {
-      padding: 15px;
-    }
-    
-    .split-screen {
-      flex-direction: row;
-      align-items: center;
-    }
+        @media only screen and (min-width: 820px) {
+          .video-container {
+            padding: 15px;
+          }
+          
+          .split-screen {
+            flex-direction: row;
+            align-items: center;
+          }
 
-    .video-wrapper {
-      margin: 15px;
-    }
+          .video-wrapper {
+            margin: 15px;
+          }
 
-    .video {
-      max-width: 400px;
-    }
+          .video {
+            max-width: 400px;
+          }
 
-    .controls {
-      margin-top: 25px;
-    }
+          .controls {
+            margin-top: 25px;
+          }
 
-    button, input {
-      font-size: 18px;
-      max-width: 220px;
-      padding: 12px;
-    }
-  }
-`}</style>
-
+          button, input {
+            font-size: 18px;
+            max-width: 220px;
+            padding: 12px;
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
 export default VideoCall;
-
 
