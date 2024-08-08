@@ -1,39 +1,30 @@
 
-import VideoCall from "./models/VideoCall.js"
+import VideoCall from './models/VideoCall.js';
 
 class VideoCallDAO {
-  static async createCall(roomId) { 
-      const videoCall = new VideoCall({
-      roomId,
-      participants:[], 
-    });
-    return await videoCall.save();
+  static async createCall(roomId) {
+    const call = new VideoCall({ roomId });
+    return await call.save();
   }
 
-  static async updateCall(roomId, participant) {
+  static async getCall(roomId) {
+    return await VideoCall.findOne({ roomId });
+  }
+
+  static async addParticipant(roomId, participantId) {
     return await VideoCall.findOneAndUpdate(
       { roomId },
-      { $addToSet: { participants: participant } },
-      { new: true, runValidators: true }
+      { $addToSet: { participants: participantId } },
+      { new: true }
     );
   }
 
   static async endCall(roomId) {
     return await VideoCall.findOneAndUpdate(
       { roomId },
-      { endTime: new Date() },
-      { new: true, runValidators: true }
+      { status: 'ended', endTime: Date.now() },
+      { new: true }
     );
-  }
-
-  static async getCallInfo(roomId) {
-    return await VideoCall.findOne({ roomId });
-  }
-
-  // Nuevo método para verificar si una llamada está activa
-  static async isCallActive(roomId) {
-    const call = await VideoCall.findOne({ roomId, endTime: { $exists: false } });
-    return !!call;
   }
 }
 

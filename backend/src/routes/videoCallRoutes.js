@@ -1,13 +1,10 @@
-import { Router } from "express";
+import express from 'express';
 import VideoCallController from '../controllers/videoCallController.js';
 
-const router = Router();
-
-// Ruta base: /api/videocall
+const router = express.Router();
 
 router.post('/initiate', VideoCallController.initiateCall);
 router.post('/join', VideoCallController.joinCall);
-router.post('/end', VideoCallController.endCall);
-router.get('/info/:roomId', VideoCallController.getCallInfo);
+router.post('/end/:roomId', VideoCallController.endCall);
 
 export default router;

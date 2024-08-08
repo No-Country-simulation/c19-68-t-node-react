@@ -1,6 +1,7 @@
 
 import { Server } from 'socket.io';
 import http from 'http';
+import { ExpressPeerServer } from 'peer';
 import VideoCallService from '../services/videoCallService.js';
 
 export const initializeServer = (app) => {
@@ -12,24 +13,32 @@ export const initializeServer = (app) => {
     }
   });
 
+  const peerServer = ExpressPeerServer(server, {
+    debug: true,
+    path: '/peerjs'
+  });
+
+  app.use('/peerjs', peerServer);
+
   io.on('connection', (socket) => {
     console.log('A user connected');
 
-    socket.on('initiate', async ({ signal }) => {
+    socket.on('initiate', async ({ peerId }) => {
       try {
-        const roomId = socket.id; // Usando el ID del socket como roomId*/
+        const roomId = socket.id;
+        console.log(roomId);
         const call = await VideoCallService.initiateCall(roomId);
-        socket.emit('call-initiated', { callId: call.roomId });
+        socket.emit('call-initiated', { callId: call.roomId, initiatorId: peerId });
       } catch (error) {
         console.error('Error initiating call:', error);
       }
     });
 
-    socket.on('join', async ({ callId, signal }) => {
+    socket.on('join', async ({ callId, peerId }) => {
       try {
-        const call = await VideoCallService.joinCall(callId, socket.id);
+        const call = await VideoCallService.joinCall(callId, peerId);
         socket.join(callId);
-        socket.to(callId).emit('call-joined', { signal, participantId: socket.id });
+        socket.to(callId).emit('user-joined', { peerId });
       } catch (error) {
         console.error('Error joining call:', error);
       }
@@ -50,7 +59,5 @@ export const initializeServer = (app) => {
   });
 
   return server;
-}; 
-
-
+};
 
