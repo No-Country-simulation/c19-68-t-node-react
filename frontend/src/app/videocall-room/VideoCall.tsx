@@ -152,7 +152,7 @@ const VideoCall: React.FC = () => {
     if (myStream) {
       myStream.getTracks().forEach(track => track.stop());
     }
-    setMyStream(null);
+     setMyStream(null);
     setRemoteStream(null);
     setCallId('');
     setPeer(null);
