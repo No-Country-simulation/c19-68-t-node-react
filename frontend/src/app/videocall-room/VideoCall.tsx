@@ -1,3 +1,298 @@
+/*'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
+import Peer, { Instance, SignalData } from 'simple-peer';
+
+interface SignalPayload {
+  id: string;
+  signal: SignalData;
+}
+
+interface UserJoinedPayload {
+  id: string;
+  stream: MediaStream;
+}
+
+interface UserLeftPayload {
+  id: string;
+}
+
+interface PeerWithId {
+  id: string;
+  peer: Instance;
+}
+
+const VideoCall: React.FC = () => {
+  const [myStream, setMyStream] = useState<MediaStream | null>(null);
+  const [remoteStreams, setRemoteStreams] = useState<MediaStream[]>([]);
+  const [callId, setCallId] = useState<string>('');
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [peers, setPeers] = useState<PeerWithId[]>([]);
+  const [isJoined, setIsJoined] = useState<boolean>(false);
+  const myVideo = useRef<HTMLVideoElement>(null);
+  const remoteVideos = useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    const newSocket = io('http://localhost:4001');
+    setSocket(newSocket);
+    
+    console.log('Requesting media permission...');
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        console.log('Media permission granted');
+        setMyStream(stream);
+        if (myVideo.current) {
+          myVideo.current.srcObject = stream;
+        }
+      })
+      .catch(error => {
+        console.error('Error accessing media devices:', error);
+      });
+
+    return () => {
+      console.log('Disconnecting socket and stopping media tracks');
+      newSocket.disconnect();
+      if (myStream) {
+        myStream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    console.log('Listening for socket events');
+    socket.on('signal', ({ id, signal }: SignalPayload) => {
+      console.log(`Received signal from peer ${id}`);
+      const peer = peers.find(p => p.id === id)?.peer;
+      if (peer) {
+        peer.signal(signal);
+      }
+    });
+
+    socket.on('user-joined', ({ id, stream }: UserJoinedPayload) => {
+      console.log(`User ${id} joined the call`);
+      const newPeer = createPeer(false, id, stream);
+      if (newPeer) {
+        setPeers(prevPeers => [...prevPeers, { id, peer: newPeer }]);
+        setRemoteStreams(prevStreams => [...prevStreams, stream]);
+      }
+    });
+
+    socket.on('user-left', ({ id }: UserLeftPayload) => {
+      console.log(`User ${id} left the call`);
+      const updatedPeers = peers.filter(p => p.id !== id);
+      setPeers(updatedPeers);
+      setRemoteStreams(prevStreams => prevStreams.filter((_, index) => index !== updatedPeers.length));
+    });
+
+    return () => {
+      console.log('Disconnecting socket event listeners');
+      socket.off('signal');
+      socket.off('user-joined');
+      socket.off('user-left');
+    };
+  }, [socket, peers]);
+
+  const createPeer = (initiator: boolean, id?: string, stream?: MediaStream): Instance | null => {
+    if (!myStream) return null;
+
+    console.log(`Creating new peer with id ${id}`);
+    const newPeer = new Peer({ initiator, stream: myStream, trickle: false });
+
+    newPeer.on('signal', (signal: SignalData) => {
+      console.log(`Emitting signal for peer ${id}`);
+      if (socket) {
+        socket.emit('signal', { id, signal });
+      }
+    });
+
+    newPeer.on('stream', (stream: MediaStream) => {
+      console.log(`Received stream from peer ${id}`);
+      setRemoteStreams(prevStreams => [...prevStreams, stream]);
+    });
+
+    newPeer.on('error', (error) => {
+      console.error('Peer error:', error);
+    });
+
+    return newPeer;
+  };
+
+  const initiateCall = async () => {
+    if (!myStream || !socket) return;
+
+    try {
+      const randomRoomId = Math.random().toString(36).substring(2, 15);
+      const response = await fetch('http://localhost:4001/api/videocall/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: randomRoomId })
+      });
+      const data = await response.json();
+      setCallId(data.roomId);
+
+      const newPeer = createPeer(true);
+      if (newPeer) {
+        setPeers(prevPeers => [...prevPeers, { id: data.roomId, peer: newPeer }]);
+      }
+    } catch (error) {
+      console.error('Error initiating call:', error);
+    }
+  };
+
+  const joinCall = async () => {
+    if (!myStream || !socket || !callId) return;
+
+    try {
+      const randomParticipantId = Math.random().toString(36).substring(2, 15);
+      const response = await fetch('http://localhost:4001/api/videocall/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: callId, participantId: randomParticipantId })
+      });
+      const data = await response.json();
+      const { stream } = data;
+      const newPeer = createPeer(false, randomParticipantId, stream);
+      if (newPeer) {
+        setPeers(prevPeers => [...prevPeers, { id: randomParticipantId, peer: newPeer }]);
+        setRemoteStreams(prevStreams => [...prevStreams, stream]);
+      }
+      setIsJoined(true);
+    } catch (error) {
+      console.error('Error joining call:', error);
+    }
+  };
+
+  const joinCreatedCall = async () => {
+    if (!myStream || !socket || !callId) return;
+
+    try {
+      const response = await fetch('http://localhost:4001/api/videocall/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: callId, participantId: callId })
+      });
+      const data = await response.json();
+      const { stream } = data;
+      const newPeer = createPeer(false, callId, stream);
+      if (newPeer) {
+        setPeers(prevPeers => [...prevPeers, { id: callId, peer: newPeer }]);
+        setRemoteStreams(prevStreams => [...prevStreams, stream]);
+      }
+      setIsJoined(true);
+    } catch (error) {
+      console.error('Error joining created call:', error);
+    }
+  };
+
+  const endCall = async () => {
+    peers.forEach(({ peer }) => peer.destroy());
+    if (socket) {
+      socket.emit('end', { roomId: callId });
+    }
+    if (myStream) {
+      myStream.getTracks().forEach(track => track.stop());
+    }
+    setMyStream(null);
+    setRemoteStreams([]);
+    setCallId('');
+    setPeers([]);
+    setIsJoined(false);
+
+    try {
+      await fetch(`http://localhost:4001/api/videocall/end/${callId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('Error ending call:', error);
+    }
+  };
+
+  return (
+    <div className={`video-container ${isJoined ? 'split-screen' : ''}`}>
+      <div className="video-wrapper">
+        <video ref={myVideo} autoPlay muted playsInline className="video my-video" />
+        <p>Mi cámara</p>
+      </div>
+      {remoteStreams.map((stream, index) => (
+        <div key={index} className="video-wrapper">
+          <video
+            ref={(el) => {
+              if (el) {
+                remoteVideos.current[index] = el;
+              }
+            }}
+            autoPlay
+            playsInline
+            className="video remote-video"
+            style={{ width: '100%', height: '100%' }}
+          />
+          <p>Cámara remota {index + 1}</p>
+        </div>
+      ))}
+      <div className="controls">
+        {peers.length === 0 && <button onClick={initiateCall}>Iniciar llamada</button>}
+        <input
+          type="text"
+          value={callId}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCallId(e.target.value)}
+          placeholder="ID de la llamada"
+        />
+        {peers.length === 0 && <button onClick={joinCall}>Unirse a la llamada</button>}
+        {peers.length > 0 && !isJoined && <button onClick={joinCreatedCall}>Unirme a mi llamada</button>}
+        {peers.length > 0 && <button onClick={endCall}>Finalizar llamada</button>}
+      </div>
+      <style jsx>{`
+        .video-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        }
+
+        .split-screen {
+          justify-content: space-around;
+        }
+
+        .video-wrapper {
+          margin: 10px;
+          text-align: center;
+        }
+
+        .video {
+          width: 100%;
+          max-width: 400px;
+          height: auto;
+          border: 2px solid #333;
+          border-radius: 8px;
+        }
+
+        .controls {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        button, input {
+          margin: 5px;
+          padding: 10px;
+          font-size: 16px;
+          width: 100%;
+          max-width: 200px;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default VideoCall;
+*/
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -36,9 +331,11 @@ const VideoCall: React.FC = () => {
   useEffect(() => {
     const newSocket = io('http://localhost:4001');
     setSocket(newSocket);
-
+    
+    console.log('Requesting media permission...');
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then(stream => {
+        console.log('Media permission granted');
         setMyStream(stream);
         if (myVideo.current) {
           myVideo.current.srcObject = stream;
@@ -49,6 +346,7 @@ const VideoCall: React.FC = () => {
       });
 
     return () => {
+      console.log('Disconnecting socket and stopping media tracks');
       newSocket.disconnect();
       if (myStream) {
         myStream.getTracks().forEach(track => track.stop());
@@ -59,7 +357,9 @@ const VideoCall: React.FC = () => {
   useEffect(() => {
     if (!socket) return;
 
+    console.log('Listening for socket events');
     socket.on('signal', ({ id, signal }: SignalPayload) => {
+      console.log(`Received signal from peer ${id}`);
       const peer = peers.find(p => p.id === id)?.peer;
       if (peer) {
         peer.signal(signal);
@@ -67,6 +367,7 @@ const VideoCall: React.FC = () => {
     });
 
     socket.on('user-joined', ({ id, stream }: UserJoinedPayload) => {
+      console.log(`User ${id} joined the call`);
       const newPeer = createPeer(false, id, stream);
       if (newPeer) {
         setPeers(prevPeers => [...prevPeers, { id, peer: newPeer }]);
@@ -75,30 +376,46 @@ const VideoCall: React.FC = () => {
     });
 
     socket.on('user-left', ({ id }: UserLeftPayload) => {
+      console.log(`User ${id} left the call`);
       const updatedPeers = peers.filter(p => p.id !== id);
       setPeers(updatedPeers);
-      setRemoteStreams(prevStreams => prevStreams.filter((_, index) => index !== updatedPeers.length));
+      setRemoteStreams(prevStreams => prevStreams.filter((_, index) => peers[index]?.id !== id));
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('Socket connection error:', err);
+    });
+
+    socket.on('reconnect_attempt', () => {
+      console.log('Attempting to reconnect...');
     });
 
     return () => {
+      console.log('Disconnecting socket event listeners');
       socket.off('signal');
       socket.off('user-joined');
       socket.off('user-left');
+      socket.off('connect_error');
+      socket.off('reconnect_attempt');
     };
   }, [socket, peers]);
 
   const createPeer = (initiator: boolean, id?: string, stream?: MediaStream): Instance | null => {
     if (!myStream) return null;
 
+    const peerId = id || Math.random().toString(36).substring(2, 15);
+    console.log(`Creating new peer with id ${peerId}`);
     const newPeer = new Peer({ initiator, stream: myStream, trickle: false });
 
     newPeer.on('signal', (signal: SignalData) => {
+      console.log(`Emitting signal for peer ${peerId}`);
       if (socket) {
-        socket.emit('signal', { id, signal });
+        socket.emit('signal', { id: peerId, signal });
       }
     });
 
     newPeer.on('stream', (stream: MediaStream) => {
+      console.log(`Received stream from peer ${peerId}`);
       setRemoteStreams(prevStreams => [...prevStreams, stream]);
     });
 
@@ -122,7 +439,7 @@ const VideoCall: React.FC = () => {
       const data = await response.json();
       setCallId(data.roomId);
 
-      const newPeer = createPeer(true);
+      const newPeer = createPeer(true, data.roomId);
       if (newPeer) {
         setPeers(prevPeers => [...prevPeers, { id: data.roomId, peer: newPeer }]);
       }
