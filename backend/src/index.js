@@ -1,21 +1,18 @@
-// cd a la carpeta backend y npm i para instalar las dependencias,
-// no tenemos todavia la base de datos por ende el .env de la url esta vacia
-// el archivo .env esta dentro de la carpeta config "/config/.env"
-// actualmente el .env solo contiene el PORT=8080
+import app from "./app.js";
+import connectDB from "./config/db.js";
+import dotenv from "dotenv";
 
-import express from 'express';
-import mongoose from 'mongoose';
-import { MONGODB_URL, PORT } from './config/config.js';
+//config environment variables
+dotenv.config();
 
-await mongoose.connect(`${MONGODB_URL}`);
-console.log(`Base de datos conectada`);
+//alternative port
+//const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 8080;
 
-export const app = express();
-
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
+//connect to database from config/db.js
+connectDB();
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
