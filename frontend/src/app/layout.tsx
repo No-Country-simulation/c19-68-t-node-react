@@ -8,6 +8,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "E-medicine",
   description: "E-medicine appointment scheduling made easy.",
+  icons: [
+    {
+      rel: "icon",
+      href: "/logo.png",
+      url: "/logo.png",
+    },
+  ],
 };
 
 export default function RootLayout({

@@ -1,24 +1,12 @@
 import Link from "next/link";
 import React from "react";
 import "./page.css";
-import { logout } from "@/utils/actions";
 
 interface Props {
   rol: string;
   id: string;
 }
 const SettingsPatient = ({ rol, id }: Props) => {
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Cerrando sesión");
-
-    try {
-      await logout(); // Espera a que se elimine la sesión
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
-
   return (
     <div className="w-[430px] h-[932px] setting flex flex-col items-center p-4 ">
       {/* Header */}
@@ -105,10 +93,7 @@ const SettingsPatient = ({ rol, id }: Props) => {
       </div>
       {/* Logout Button */}
       <div className="flex justify-center items-center ">
-        <button
-          onClick={handleLogout}
-          className="w-[205px] h-[43px] bg-[#812B75] align-bottom text-[#F2F2F2] py-3 rounded-lg flex items-center justify-center"
-        >
+        <button className="w-[205px] h-[43px] bg-[#812B75] align-bottom text-[#F2F2F2] py-3 rounded-lg flex items-center justify-center">
           <span className="font-bold ">Cerrar sesión</span>
         </button>
       </div>
